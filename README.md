@@ -24,9 +24,9 @@ npm run env:pull        # baixa as env vars para .env.local
 npm run logs            # logs de runtime
 ```
 
-> **O projeto ainda não está conectado ao GitHub.** Hoje só sobe pelo CLI — um
-> `git push` não publica nada. Para ligar o deploy automático:
-> `vercel git connect`.
+O projeto **está conectado ao GitHub**: um push na `main` já dispara deploy de
+produção sozinho, e cada PR ganha uma URL de preview. Os scripts acima servem
+para publicar fora desse fluxo.
 
 ## A marca
 
