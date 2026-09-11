@@ -1,17 +1,48 @@
-import { Geist, Geist_Mono, Inter, Lora } from "next/font/google"
+import type { Metadata } from "next"
+import { Geist_Mono, Inter, Playfair_Display } from "next/font/google"
 
 import "./globals.css"
+import { SiteFooter } from "@/components/site-footer"
+import { SiteHeader } from "@/components/site-header"
 import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils";
+import { site } from "@/lib/site"
+import { cn } from "@/lib/utils"
 
-const loraHeading = Lora({subsets:['latin'],variable:'--font-heading'});
+const fontHeading = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-heading",
+})
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'})
+const fontSans = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
 })
+
+export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
+  title: {
+    default: `${site.name} — ${site.tagline}`,
+    template: `%s — ${site.name}`,
+  },
+  description: site.description,
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    siteName: site.name,
+    title: site.name,
+    description: site.description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: site.name,
+    description: site.description,
+  },
+}
 
 export default function RootLayout({
   children,
@@ -20,12 +51,24 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="pt-BR"
       suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", inter.variable, loraHeading.variable)}
+      className={cn(
+        "antialiased",
+        "font-sans",
+        fontSans.variable,
+        fontHeading.variable,
+        fontMono.variable
+      )}
     >
-      <body>
-        <ThemeProvider>{children}</ThemeProvider>
+      <body className="min-h-svh">
+        <ThemeProvider>
+          <div className="flex min-h-svh flex-col">
+            <SiteHeader />
+            <main className="flex-1">{children}</main>
+            <SiteFooter />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   )
