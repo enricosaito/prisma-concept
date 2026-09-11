@@ -38,10 +38,29 @@ direita) e as serifas caem nos pés, exatamente onde o "A" da Playfair as tem.
 O caractere grego literal (U+039B) não serve — a Playfair Display não tem
 subset grego, então ele cairia para Times New Roman e destoaria do resto.
 
-Detalhe que custa caro se for esquecido: o Λ fica **fora** do `GradientWaveText`.
-Aquele componente pinta o gradiente com `background-clip: text`, e o navegador
-calcula esse recorte a partir do texto **sem** a rotação — um glifo girado lá
-dentro aparece como um "V" em pé. Fora do recorte, ele pinta normal.
+### Por que o Λ é montado de um jeito estranho
+
+`background-clip: text` calcula o recorte a partir do texto **sem** a rotação.
+Um glifo girado dentro do span recortado dá dois problemas: ele aparece em pé
+(um "V") *e* deixa um fantasma de si mesmo no começo da palavra. Por isso o Λ:
+
+- vai no slot `trailing` do `GradientWaveText` — dentro da raiz animada (para
+  herdar o `--gi` que roda a varredura), mas fora do span recortado;
+- pinta **o próprio** gradiente recortado, senão não teria cor nenhuma;
+- usa o gradiente na direção invertida (`flip`), porque a rotação de 180° vira
+  o fundo dele junto;
+- corrige o `background-position` em `0.11em`, cancelando o empurrão de
+  baseline abaixo — sem isso a faixa do Λ sai deslocada das outras letras.
+
+A varredura é **linear e vertical** (`radial: false`), não radial: um gradiente
+radial se centraliza na caixa de cada elemento, e o Λ (estreito) brilharia fora
+de compasso com o PRISM (largo).
+
+O empurrão de baseline existe porque girar 180° pivota no centro da caixa, o que
+joga os pés do glifo abaixo da linha de base em
+`(fontBoundingBoxAscent − fontBoundingBoxDescent) − capHeight`. Medido na
+Playfair via `measureText` no canvas, dá 11% do tamanho da fonte; a
+entrelinha se cancela na conta, então essa constante vale em qualquer tamanho.
 
 ## Estrutura
 

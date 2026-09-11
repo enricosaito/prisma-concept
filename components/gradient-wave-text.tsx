@@ -2,17 +2,11 @@
 
 import { useRef, useEffect, useMemo, useCallback, useState } from "react"
 import { cn } from "@/lib/utils"
+import { buildWaveStops, defaultWaveColors } from "@/lib/wave-gradient"
 
 type Align = "left" | "center" | "right"
 
-const defaultColors = [
-  "#8d6869",
-  "#5a8ea6",
-  "#b9c96e",
-  "#c7c571",
-  "#cb706f",
-  "#7e5e5f",
-]
+const defaultColors = defaultWaveColors
 
 interface GradientWaveTextProps {
   children?: React.ReactNode
@@ -37,6 +31,17 @@ interface GradientWaveTextProps {
   onMouseLeave?: (e: React.MouseEvent) => void
 
   ariaLabel?: string
+
+  /**
+   * Rendered inside the animated root but OUTSIDE the text-clipped span, so it
+   * still inherits the running `--gi` while painting its own background.
+   *
+   * Needed for any transformed glyph: `background-clip: text` derives its clip
+   * from the un-rotated text run, so a rotated child of the clipped span both
+   * renders unrotated *and* leaves a ghost of itself at the wrong offset.
+   * Give such an element its own clipped background and pass it here instead.
+   */
+  trailing?: React.ReactNode
 }
 
 export function GradientWaveText({
@@ -62,6 +67,7 @@ export function GradientWaveText({
   onMouseLeave,
 
   ariaLabel,
+  trailing,
 }: GradientWaveTextProps) {
   const elRef = useRef<HTMLDivElement | null>(null)
   const rafRef = useRef(0)
@@ -108,17 +114,7 @@ export function GradientWaveText({
   }, [customColors])
 
   const stops = useMemo(() => {
-    const arr: string[] = []
-    const baseColor = "var(--gradient-wave-base, rgb(29,29,31))"
-    arr.push(`${baseColor} calc((var(--gi) + 0) * 1%)`)
-    for (let i = 0; i < bandCount && i < resolvedColors.length * 2; i++) {
-      const color = resolvedColors[i % resolvedColors.length]
-      const offset = (i + 2) * bandGap
-      arr.push(`${color} calc((var(--gi) + ${offset}) * 1%)`)
-    }
-    const endOffset = (bandCount + 2) * bandGap
-    arr.push(`${baseColor} calc((var(--gi) + ${endOffset}) * 1%)`)
-    return arr.join(", ")
+    return buildWaveStops(resolvedColors, bandGap, bandCount)
   }, [resolvedColors, bandGap, bandCount])
 
   const gradient = useMemo(() => {
@@ -265,6 +261,7 @@ export function GradientWaveText({
       >
         {children}
       </span>
+      {trailing}
     </div>
   )
 }
