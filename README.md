@@ -130,15 +130,18 @@ dos três componentes (`ui/button`, `flow-button`, `ui/rainbow-button`), não no
 pontos de uso.
 
 O "Assinar" do header e do menu mobile é o **rainbow button do Magic UI**
-(`npx shadcn add https://magicui.design/r/rainbow-button.json`), com dois
-ajustes:
+(`npx shadcn add https://magicui.design/r/rainbow-button.json`), na variante
+`outline` com raio de `10px`, com dois ajustes:
 
 - `--color-1..5` em `globals.css` passaram do arco-íris saturado de fábrica para
   o mesmo espectro discreto do wordmark — um prisma dispersando luz, e não um
   degradê neon em cima de uma paleta editorial;
-- as cores do corpo saíram de `#121213`/`#fff` fixos para `var(--primary)`, que
-  já vira sozinho com o tema; com isso o `dark:` do componente foi removido e o
-  botão fica creme no escuro, em vez de branco puro.
+- as cores do corpo saíram de valores fixos (`#121213`/`#fff` na `default`,
+  `#ffffff`/`#0a0a0a` na `outline`) para `var(--primary)` e `var(--background)`,
+  que já viram sozinhos com o tema; com isso o `dark:` das duas variantes foi
+  removido. A `outline` também trocou `text-accent-foreground` por
+  `text-foreground`: neste tema o primeiro é tinta escura nos **dois** modos, o
+  que deixaria o texto invisível no botão escuro.
 
 ### Ajustes feitos neles
 

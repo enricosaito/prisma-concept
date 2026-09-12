@@ -94,7 +94,11 @@ function SiteHeader() {
             <RiInstagramLine className="size-[18px]" />
           </a>
 
-          <RainbowButton asChild className="ml-2 h-9 rounded-full px-5 text-xs">
+          <RainbowButton
+            asChild
+            variant="outline"
+            className="ml-2 h-9 rounded-[10px] px-5 text-xs"
+          >
             <Link href={subscribeHref}>Assinar</Link>
           </RainbowButton>
         </nav>
@@ -153,7 +157,8 @@ function SiteHeader() {
             ))}
             <RainbowButton
               asChild
-              className="mt-5 h-11 w-full rounded-full text-xs"
+              variant="outline"
+              className="mt-5 h-11 w-full rounded-[10px] text-xs"
             >
               <Link href={subscribeHref}>Assinar a carta</Link>
             </RainbowButton>
