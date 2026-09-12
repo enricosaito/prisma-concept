@@ -6,6 +6,8 @@ import { RiCheckLine } from "@remixicon/react"
 import { Spinner } from "@/components/spinner"
 import { Input } from "@/components/ui/input"
 import { RainbowButton } from "@/components/ui/rainbow-button"
+import { ShineBorder } from "@/components/ui/shine-border"
+import { SPECTRUM } from "@/lib/spectrum"
 import { cn } from "@/lib/utils"
 
 type Status = "idle" | "loading" | "success" | "error"
@@ -70,17 +72,28 @@ function SubscribeForm({ className }: { className?: string }) {
         <label htmlFor="subscribe-email" className="sr-only">
           Seu e-mail
         </label>
-        <Input
-          id="subscribe-email"
-          type="email"
-          required
-          autoComplete="email"
-          placeholder="seu@email.com"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          aria-invalid={status === "error" || undefined}
-          className={cn(FIELD, "px-4 sm:flex-1")}
-        />
+        {/* ShineBorder is an absolutely-positioned mask-composite overlay, so
+            the field needs a positioned wrapper carrying the same radius for
+            its `rounded-[inherit]` to land on. */}
+        <div className={cn("relative sm:flex-1", FIELD)}>
+          <ShineBorder
+            shineColor={[...SPECTRUM]}
+            borderWidth={1}
+            duration={14}
+            className="rounded-[inherit]"
+          />
+          <Input
+            id="subscribe-email"
+            type="email"
+            required
+            autoComplete="email"
+            placeholder="seu@email.com"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            aria-invalid={status === "error" || undefined}
+            className={cn(FIELD, "w-full px-4")}
+          />
+        </div>
         <RainbowButton
           type="submit"
           disabled={status === "loading"}

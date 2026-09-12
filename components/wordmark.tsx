@@ -1,19 +1,7 @@
 import { GradientWaveText } from "@/components/gradient-wave-text"
 import { site } from "@/lib/site"
+import { SPECTRUM } from "@/lib/spectrum"
 import { cn } from "@/lib/utils"
-
-/**
- * A prism disperses white light, so the wordmark sweeps a spectrum — but a
- * muted one, warmed toward the bronze accent so it stays inside the palette.
- */
-const spectrum = [
-  "#b89062",
-  "#c9a86c",
-  "#a98f7e",
-  "#87879b",
-  "#6f8a9c",
-  "#9c7f76",
-]
 
 /* ---------------------------------------------------------------------------
  * The Playfair PRISM + Λ approach — currently parked.
@@ -94,7 +82,7 @@ function Wordmark({
     <GradientWaveText
       key={waveKey}
       align="left"
-      customColors={spectrum}
+      customColors={[...SPECTRUM]}
       radial={false}
       bottomOffset={0}
       className={cn(

@@ -42,9 +42,11 @@ function SiteHeader() {
         // is unsupported, otherwise the text would sit on bare content.
         "bg-background/90 supports-[backdrop-filter]:bg-background/68",
         "backdrop-blur-xl backdrop-saturate-150",
-        // Bronze hairline along the bottom edge, fading out at both ends.
-        "after:absolute after:inset-x-0 after:-bottom-px after:h-px",
-        "after:bg-gradient-to-r after:from-transparent after:via-accent/40 after:to-transparent"
+        // The dispersed spectrum along the bottom edge, masked to fade out at
+        // both ends so it reads as a hairline, not a stripe.
+        "after:absolute after:inset-x-0 after:-bottom-px after:h-px after:opacity-60",
+        "after:[background-image:var(--spectrum)]",
+        "after:[mask-image:linear-gradient(90deg,transparent,black_18%,black_82%,transparent)]"
       )}
     >
       {/* Full-bleed on purpose: the bar spans the viewport and pins the
@@ -85,7 +87,7 @@ function SiteHeader() {
             >
               {item.label}
               {isActive(pathname, item.href) ? (
-                <span className="absolute inset-x-3 -bottom-px h-px bg-accent" />
+                <span className="absolute inset-x-3 -bottom-px h-px [background-image:var(--spectrum)]" />
               ) : null}
             </Link>
           ))}

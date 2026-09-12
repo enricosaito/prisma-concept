@@ -5,11 +5,13 @@ import { BlurReveal } from "@/components/blur-reveal"
 import { Highlight } from "@/components/highlight"
 import { FeaturedPostCard, PostCard } from "@/components/post-card"
 import { SubscribeForm } from "@/components/subscribe-form"
-import { LightRays } from "@/components/ui/light-rays"
-import { getFeaturedPost, getRecentPosts } from "@/lib/posts"
+import { GridPattern } from "@/components/ui/grid-pattern"
+import { getFeaturedPost, getRecentPosts, type Category } from "@/lib/posts"
 import { site } from "@/lib/site"
+import { CATEGORY_COLOR } from "@/lib/spectrum"
+import { cn } from "@/lib/utils"
 
-const topics = ["Tecnologia", "Arte", "Design", "Escrita"]
+const topics: Category[] = ["Tecnologia", "Arte", "Design", "Escrita"]
 
 export default function Page() {
   const featured = getFeaturedPost()
@@ -19,16 +21,17 @@ export default function Page() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        {/* Light dispersing through the page, behind the opening lines.
-            `screen` only lightens, so it would vanish on the pale theme —
-            normal blending there, screen in the dark. */}
-        <LightRays
-          aria-hidden
-          color="var(--hero-ray-color)"
-          blur={48}
-          speed={18}
-          length="80vh"
-          className="isolation-auto [--hero-ray-color:rgba(184,144,98,0.34)] [--light-rays-blend:normal] dark:[--hero-ray-color:rgba(201,168,108,0.30)] dark:[--light-rays-blend:screen]"
+        {/* Dashed grid, barely there — masked to a soft radial so it fades out
+            before it reaches the edges of the section. */}
+        <GridPattern
+          width={44}
+          height={44}
+          strokeDasharray="3 5"
+          className={cn(
+            "fill-none stroke-foreground/[0.07] dark:stroke-foreground/[0.09]",
+            "[mask-image:radial-gradient(420px_circle_at_18%_28%,black,transparent)]",
+            "sm:[mask-image:radial-gradient(680px_circle_at_22%_30%,black,transparent)]"
+          )}
         />
         <div className="relative mx-auto max-w-5xl px-5 pt-16 pb-14 sm:px-8 sm:pt-24 sm:pb-20">
           <BlurReveal
@@ -69,7 +72,11 @@ export default function Page() {
           <ul className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-border/70 pt-6 font-mono text-[0.7rem] tracking-[0.18em] text-muted-foreground uppercase">
             {topics.map((topic) => (
               <li key={topic} className="flex items-center gap-2">
-                <span aria-hidden className="size-1 rounded-full bg-accent" />
+                <span
+                  aria-hidden
+                  className="size-1 rounded-full"
+                  style={{ backgroundColor: CATEGORY_COLOR[topic] }}
+                />
                 {topic}
               </li>
             ))}

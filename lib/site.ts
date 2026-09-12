@@ -1,7 +1,7 @@
 export const site = {
-  name: "Prisma",
+  name: "PRISMA",
   wordmark: "PRISMA",
-  tagline: "Uma carta sobre tecnologia, arte, design e escrita.",
+  tagline: "Tech, arte, filosofia.",
   description:
     "Prisma é uma carta quinzenal sobre tecnologia, arte, design e escrita — e sobre o que acontece quando essas quatro coisas se atravessam.",
   author: "Enrico Saito",

@@ -1,4 +1,5 @@
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text"
+import { SPECTRUM } from "@/lib/spectrum"
 import { cn } from "@/lib/utils"
 
 /**
@@ -17,8 +18,8 @@ function Highlight({
 }) {
   return (
     <AnimatedGradientText
-      colorFrom="#b89062"
-      colorTo="#6f8a9c"
+      colorFrom={SPECTRUM[0]}
+      colorTo={SPECTRUM[4]}
       speed={0.6}
       className={cn("italic", className)}
     >

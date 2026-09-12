@@ -21,6 +21,9 @@ function SignOff({ className }: { className?: string }) {
       <div className="mt-2 text-foreground">
         <Signature
           text={site.author}
+          // The component's default looks at the public root; the file lives
+          // under /fonts alongside the display faces.
+          fontSrc="/fonts/LastoriaBoldRegular.otf"
           color="currentColor"
           fontSize={52}
           duration={1.2}

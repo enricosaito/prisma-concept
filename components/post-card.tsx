@@ -3,6 +3,7 @@ import { RiArrowRightLine } from "@remixicon/react"
 
 import { TiltCard } from "@/components/tilt-card"
 import { formatDate, formatDateShort, type Post } from "@/lib/posts"
+import { CATEGORY_COLOR } from "@/lib/spectrum"
 import { cn } from "@/lib/utils"
 
 /**
@@ -25,7 +26,9 @@ function PostMeta({
         className
       )}
     >
-      <span className="text-accent">{post.category}</span>
+      <span style={{ color: CATEGORY_COLOR[post.category] }}>
+        {post.category}
+      </span>
       <span aria-hidden className="text-border">
         /
       </span>
@@ -96,7 +99,10 @@ function PostCard({ post }: { post: Post }) {
         <div className="mt-auto flex items-baseline justify-between gap-3 pt-6">
           <span className="flex items-center gap-2 text-sm font-medium text-foreground">
             Ler
-            <RiArrowRightLine className="size-3.5 text-accent transition-transform duration-300 group-hover:translate-x-1" />
+            <RiArrowRightLine
+              style={{ color: CATEGORY_COLOR[post.category] }}
+              className="size-3.5 transition-transform duration-300 group-hover:translate-x-1"
+            />
           </span>
           <span className="font-mono text-[0.7rem] tracking-[0.14em] text-muted-foreground uppercase">
             {post.readingMinutes} min

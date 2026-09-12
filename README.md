@@ -132,17 +132,15 @@ Vindos do registry `@spell` (`components.json`), ficam soltos em `components/`:
 | `rainbow-button`        | "Assinar" do header e do menu mobile (`outline`)      |
 | `animated-gradient-text`| `components/highlight.tsx` — palavras em destaque      |
 | `animated-theme-toggler` | Troca de tema no header (`components/theme-toggle`)   |
-| `light-rays`            | Fundo do hero da home                                  |
+| `grid-pattern`          | Grade tracejada no fundo do hero                      |
+| `shine-border`          | Borda animada do campo de e-mail                      |
 
 Os três foram retunados para o espectro discreto da marca em vez dos padrões
 neon de fábrica. Dois ajustes que valem nota:
 
-- **`light-rays`** sorteava os raios com `Math.random()` dentro de um
-  `useEffect` — o que o lint do React Compiler rejeita e ainda arrisca
-  divergência entre servidor e cliente. Agora usa um PRNG com semente
-  (`seed`), então os raios são construídos no render, iguais dos dois lados.
-  Ganhou também `blend`: o `mix-blend-screen` original só clareia e sumia no
-  tema claro, então o hero usa `normal` no claro e `screen` no escuro.
+- **`light-rays`** foi trocada pela `grid-pattern` no hero e **não é mais
+  usada** (o arquivo fica, já corrigido: PRNG com semente em vez de
+  `Math.random()` dentro de um `useEffect`, mais um prop `blend`).
 - **`animated-theme-toggler`** é usado em modo **controlado**. Solto, ele grava
   `localStorage.theme` e observa a classe `dark` por conta própria, brigando com
   o next-themes — que é a fonte da verdade aqui — e os dois divergiriam no
@@ -156,6 +154,29 @@ neon de fábrica. Dois ajustes que valem nota:
 
 `dia-text-reveal.tsx` também está instalado, ainda sem uso, e **reprova no
 lint** (escreve em refs durante o render).
+
+## O espectro como cor de destaque
+
+O cobre deixou de ser o único destaque. `lib/spectrum.ts` é a fonte única das
+cinco cores (espelhadas como `--color-1..5` em `globals.css`, nos dois temas)
+e mapeia **uma faixa por categoria** — um prisma dividindo a luz nas quatro
+coisas sobre as quais a carta fala:
+
+| Categoria  | Faixa           |
+| ---------- | --------------- |
+| Tecnologia | azul-aço        |
+| Arte       | bronze          |
+| Design     | violeta-ardósia |
+| Escrita    | ouro quente     |
+
+Usada em: o rótulo de categoria e a seta Ler de cada card, os quatro pontos
+da lista de temas no hero, a borda do campo de e-mail (`ShineBorder`), o
+wordmark e os destaques em itálico. A régua do header e o sublinhado do link
+ativo usam a rampa inteira (`var(--spectrum)`), mascarada nas pontas.
+
+`--accent` continua sólido (bronze) onde uma cor única é obrigatória: anéis de
+foco, bordas, links do texto longo. O bronze é uma das faixas, então isso não
+briga com o resto.
 
 ## Botões
 
