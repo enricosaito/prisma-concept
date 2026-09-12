@@ -60,7 +60,7 @@ function SiteHeader() {
           <Wordmark
             wave
             waveKey={waveKey}
-            className="font-heading text-3xl font-semibold tracking-[0.22em] sm:text-4xl"
+            className="text-3xl tracking-[0.18em] sm:text-4xl"
           />
         </Link>
 

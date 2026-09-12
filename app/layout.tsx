@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Geist_Mono, Inter, Playfair_Display } from "next/font/google"
+import localFont from "next/font/local"
 
 import "./globals.css"
 import { SiteFooter } from "@/components/site-footer"
@@ -11,6 +12,14 @@ import { cn } from "@/lib/utils"
 const fontHeading = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-heading",
+})
+
+// Display face for the wordmark. The .otf carries no usable name table, which
+// is fine — next/font/local writes its own @font-face.
+const fontDisplay = localFont({
+  src: "../public/fonts/against regular.otf",
+  variable: "--font-display",
+  display: "swap",
 })
 
 const fontSans = Inter({
@@ -58,6 +67,7 @@ export default function RootLayout({
         "font-sans",
         fontSans.variable,
         fontHeading.variable,
+        fontDisplay.variable,
         fontMono.variable
       )}
     >

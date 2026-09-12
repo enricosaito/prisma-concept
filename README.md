@@ -30,43 +30,24 @@ para publicar fora desse fluxo.
 
 ## A marca
 
-`components/wordmark.tsx` desenha **PRISMΛ** — o "A" sem a barra do meio.
+O wordmark é **PRISMA** em `against regular` (`public/fonts/`, carregada com
+`next/font/local` como `--font-display`). É texto puro: essa fonte já traz um
+"A" sem barra, com um swash fino no lugar dela, então não há cirurgia de glifo
+nenhuma — e a varredura do gradiente atravessa todas as letras de uma vez.
 
-O Λ é o próprio "V" da Playfair girado 180°, não um desenho novo: assim ele
-mantém o contraste de traço da fonte (diagonal fina à esquerda, grossa à
-direita) e as serifas caem nos pés, exatamente onde o "A" da Playfair as tem.
-O caractere grego literal (U+039B) não serve — a Playfair Display não tem
-subset grego, então ele cairia para Times New Roman e destoaria do resto.
+### O PRISM + Λ da Playfair ficou para trás
 
-### Por que o Λ é montado de um jeito estranho
+Enquanto o wordmark era Playfair, o "A" sem barra era o próprio "V" da fonte
+girado 180°. Testado lado a lado, esse truque **piora** na `against regular`:
+as constantes de baseline e kern foram medidas na Playfair e não transferem, e
+o Λ sai menor e desalinhado em relação às outras capitais.
 
-`background-clip: text` calcula o recorte a partir do texto **sem** a rotação.
-Um glifo girado dentro do span recortado dá dois problemas: ele aparece em pé
-(um "V") *e* deixa um fantasma de si mesmo no começo da palavra. Por isso o Λ:
-
-- vai no slot `trailing` do `GradientWaveText` — dentro da raiz animada (para
-  herdar o `--gi` que roda a varredura), mas fora do span recortado;
-- pinta **o próprio** gradiente recortado, senão não teria cor nenhuma;
-- usa o gradiente na direção invertida (`flip`), porque a rotação de 180° vira
-  o fundo dele junto;
-- corrige o `background-position` em `0.11em`, cancelando o empurrão de
-  baseline abaixo — sem isso a faixa do Λ sai deslocada das outras letras.
-
-A varredura é **linear e vertical** (`radial: false`), não radial: um gradiente
-radial se centraliza na caixa de cada elemento, e o Λ (estreito) brilharia fora
-de compasso com o PRISM (largo).
-
-Há ainda um **kern óptico** de `-0.12em` antes do Λ. Não é correção de métrica:
-rasterizando as duas grafias e varrendo as colunas de pixel, a tinta do Λ já cai
-a 0,005em de onde cairia um "A" de verdade. Mas o "A" fecha o contraforma com a
-barra e o Λ deixa aberta, então aquele branco se junta ao entreletra e o vão
-*parece* maior. O kern fecha essa impressão sem espremer o M.
-
-O empurrão de baseline existe porque girar 180° pivota no centro da caixa, o que
-joga os pés do glifo abaixo da linha de base em
-`(fontBoundingBoxAscent − fontBoundingBoxDescent) − capHeight`. Medido na
-Playfair via `measureText` no canvas, dá 11% do tamanho da fonte; a
-entrelinha se cancela na conta, então essa constante vale em qualquer tamanho.
+Toda a lógica (e o porquê de cada constante) está comentada no topo de
+`components/wordmark.tsx`, para não precisar ser redescoberta se a fonte mudar
+de novo. O resumo: `background-clip: text` calcula o recorte a partir do texto
+**sem** a rotação, então o glifo girado não podia morar dentro do span
+recortado; e as duas constantes (`0.12em` de baseline, `-0.15em` de kern
+óptico) vinham de medição no canvas, não de chute.
 
 ## Estrutura
 
@@ -113,7 +94,7 @@ Vindos do registry `@spell` (`components.json`), ficam soltos em `components/`:
 
 | Componente          | Onde aparece                                             |
 | ------------------- | -------------------------------------------------------- |
-| `GradientWaveText`  | Wordmark PRISMΛ no header — varredura de espectro         |
+| `GradientWaveText`  | Wordmark PRISMA no header — varredura de espectro         |
 | `BlurReveal`        | Hero da home (olho, título, descrição)                    |
 | `TiltCard`          | Cards de carta nas grades (home e "Continue lendo")       |
 | `FlowButton`        | Botão "Assinar" do formulário                             |
@@ -208,6 +189,6 @@ marcado nesse arquivo.
 - **Textos do site, Instagram, e-mail:** `lib/site.ts`
 - **Cores:** tokens em `app/globals.css` (`:root` e `.dark`). A paleta atual é
   papel `#f6f7f8`, tinta `#101112` e bronze `#b89062`.
-- **Fontes:** Playfair Display (títulos) + Inter (texto) + Geist Mono (rótulos),
-  configuradas em `app/layout.tsx`.
+- **Fontes:** `against regular` (wordmark) + Playfair Display (títulos) + Inter
+  (texto) + Geist Mono (rótulos), configuradas em `app/layout.tsx`.
 - **Tema:** claro/escuro seguem o sistema; `d` alterna manualmente.

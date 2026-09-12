@@ -1,5 +1,4 @@
 import { GradientWaveText } from "@/components/gradient-wave-text"
-import { buildWaveGradient } from "@/lib/wave-gradient"
 import { site } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
@@ -16,91 +15,47 @@ const spectrum = [
   "#9c7f76",
 ]
 
-/**
- * Vertical rather than the component's default radial sweep: a linear gradient
- * along the block axis has no horizontal term, so the narrow Λ and the wide
- * PRISM paint the same band and the sweep reads as one. A radial gradient
- * centres on each element's own box, and the Λ would shimmer out of step.
+/* ---------------------------------------------------------------------------
+ * The Playfair PRISM + Λ approach — currently parked.
+ * ---------------------------------------------------------------------------
  *
- * The Λ is rotated 180°, which flips its background with it, so it gets the
- * gradient built in the opposite direction to come out matching.
- */
-const waveGradientFlipped = buildWaveGradient({
-  colors: spectrum,
-  radial: false,
-  flip: true,
-})
+ * While the wordmark was set in Playfair Display, the crossbar-less "A" was
+ * built by rotating Playfair's own "V" 180°. That kept the face's
+ * thin-left/thick-right diagonal contrast and landed the serifs at the feet,
+ * exactly where a Playfair "A" has them. The literal Greek Λ (U+039B) was no
+ * use: Playfair ships no Greek subset, so it fell back to Times New Roman.
+ *
+ * Three things it needed, all of which are easy to lose and expensive to
+ * rediscover, so they are recorded here rather than deleted:
+ *
+ * 1. BASELINE_FIX = "0.12em". Rotating 180° pivots about the box centre, which
+ *    drops the glyph's feet below the baseline by
+ *    `(fontBoundingBoxAscent − fontBoundingBoxDescent) − capHeight`. Measured
+ *    on Playfair via canvas `measureText`. Line-height cancels out of that
+ *    derivation so it held at any size, but cap height moves with weight on a
+ *    variable font — 0.11em at 500, 0.12em at 600.
+ *
+ * 2. OPTICAL_KERN = "-0.15em". Not a metric correction: rasterising PRISMA and
+ *    PRISMΛ and scanning pixel columns put the Λ's ink within 0.005em of where
+ *    a real "A" lands. It simply *read* too far from the M, because an "A"
+ *    closes its counter with the crossbar while a Λ leaves it open, so that
+ *    white joined the letter-spacing into one gap.
+ *
+ * 3. The Λ could not live inside GradientWaveText's text-clipped span.
+ *    `background-clip: text` derives its clip from the un-rotated text run, so
+ *    a rotated glyph in there rendered upright *and* ghosted a second V over
+ *    the P. It went in the `trailing` slot instead — inside the animated root
+ *    so it still inherited `--gi`, but outside the clip — painting its own
+ *    gradient, built flipped (its rotation flips the background with it) and
+ *    offset by BASELINE_FIX to keep the band aligned.
+ *
+ * "against regular" has its own distinctive A, so none of this is needed while
+ * the wordmark is set in it. Restore from git history if the face changes back.
+ * ------------------------------------------------------------------------- */
 
 /**
- * Rotating 180° pivots about the box centre, which drops the glyph's feet below
- * the baseline by `(fontBoundingBoxAscent − fontBoundingBoxDescent) − capHeight`.
- * Measured against Playfair Display via canvas `measureText`, that is 12% of the
- * font size at weight 600, the weight the header sets.
- *
- * Line-height cancels out of the derivation so this holds at every *size*, but
- * cap height moves with *weight* on a variable font — it is 0.11em at 500. Re-
- * measure if the wordmark's weight changes.
- */
-const BASELINE_FIX = "0.12em"
-
-/**
- * Optical kern, not a metric correction: measured by rasterising both spellings
- * and scanning pixel columns, the Λ's ink already sits within 0.005em of where
- * a real "A" would. It still *reads* too far from the M, because an "A" closes
- * its counter with the crossbar while the Λ leaves it open, so that white runs
- * together with the letter-spacing into one gap. Pulling it back closes the
- * perceived gap without crowding the M.
- */
-const OPTICAL_KERN = "0.15em"
-
-/**
- * The crossbar-less "A": Playfair's own "V" turned 180°.
- *
- * Using the real glyph rather than a drawn shape keeps the face's
- * thin-left/thick-right diagonal contrast and lands the serifs at the feet,
- * exactly where a Playfair "A" has them. The literal Greek Λ (U+039B) is no
- * good here — Playfair Display ships no Greek subset, so it falls back to
- * Times New Roman and stops matching the other letters.
- *
- * It paints its own clipped gradient and is passed to GradientWaveText's
- * `trailing` slot rather than nested in its text-clipped span; see that prop
- * for why a rotated glyph cannot live inside the clip.
- */
-function Lambda({ wave }: { wave?: boolean }) {
-  return (
-    <span
-      aria-hidden="true"
-      className="inline-block"
-      style={{
-        // The wave variant also backs out GradientWaveText's 2px inline padding
-        // on the clipped span, which would widen this gap further.
-        marginLeft: wave ? `calc(-2px - ${OPTICAL_KERN})` : `-${OPTICAL_KERN}`,
-        rotate: "180deg",
-        translate: `0 ${BASELINE_FIX}`,
-        ...(wave
-          ? {
-              backgroundImage: waveGradientFlipped,
-              // Cancels the baseline nudge above, which would otherwise carry
-              // the background down with the glyph and offset the band.
-              backgroundPosition: `0 ${BASELINE_FIX}`,
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              color: "transparent",
-            }
-          : null),
-      }}
-    >
-      V
-    </span>
-  )
-}
-
-/**
- * PRISMΛ.
- *
- * The letters are hidden from assistive tech and the name is announced once via
- * the visually-hidden span, otherwise the mark would read as "PRISM V".
+ * PRISMA, set in "against regular" — the display face carries its own
+ * high-contrast A, so the letters are plain text with no per-glyph surgery.
  */
 function Wordmark({
   className,
@@ -114,29 +69,24 @@ function Wordmark({
 }) {
   if (!wave) {
     return (
-      <span className={cn("inline-flex items-baseline", className)}>
-        <span className="sr-only">{site.wordmark}</span>
-        <span aria-hidden="true">PRISM</span>
-        <Lambda />
-      </span>
+      <span className={cn("font-display", className)}>{site.wordmark}</span>
     )
   }
 
   return (
-    <span className={cn("inline-flex items-baseline", className)}>
-      <span className="sr-only">{site.wordmark}</span>
-      <GradientWaveText
-        key={waveKey}
-        align="left"
-        customColors={spectrum}
-        radial={false}
-        bottomOffset={0}
-        trailing={<Lambda wave />}
-        className="h-auto w-auto items-baseline [--gradient-wave-base:var(--foreground)] dark:[--gradient-wave-base:var(--foreground)]"
-      >
-        <span aria-hidden="true">PRISM</span>
-      </GradientWaveText>
-    </span>
+    <GradientWaveText
+      key={waveKey}
+      align="left"
+      customColors={spectrum}
+      radial={false}
+      bottomOffset={0}
+      className={cn(
+        "h-auto w-auto font-display [--gradient-wave-base:var(--foreground)] dark:[--gradient-wave-base:var(--foreground)]",
+        className
+      )}
+    >
+      {site.wordmark}
+    </GradientWaveText>
   )
 }
 
