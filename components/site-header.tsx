@@ -3,11 +3,11 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { RiCloseLine, RiInstagramLine, RiMenuLine } from "@remixicon/react"
+import { RiCloseLine, RiMenuLine } from "@remixicon/react"
 
 import { RainbowButton } from "@/components/ui/rainbow-button"
 import { Wordmark } from "@/components/wordmark"
-import { nav, site } from "@/lib/site"
+import { nav } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 const subscribeHref = "/assinar"
@@ -46,7 +46,10 @@ function SiteHeader() {
         "after:bg-gradient-to-r after:from-transparent after:via-accent/40 after:to-transparent"
       )}
     >
-      <div className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-4 px-5 sm:h-16 sm:px-8">
+      {/* Full-bleed on purpose: the bar spans the viewport and pins the
+          wordmark and nav to the gutters, while page sections keep their
+          centred max-w-5xl measure. */}
+      <div className="flex h-14 w-full items-center justify-between gap-4 px-5 sm:h-16 sm:px-8">
         <Link
           href="/"
           onMouseEnter={() => setWaveKey((n) => n + 1)}
@@ -71,7 +74,7 @@ function SiteHeader() {
               href={item.href}
               aria-current={isActive(pathname, item.href) ? "page" : undefined}
               className={cn(
-                "relative rounded-sm px-3 py-2 text-sm transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+                "relative rounded-sm px-3 py-2 font-heading text-xs tracking-[0.18em] uppercase transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
                 isActive(pathname, item.href)
                   ? "text-foreground"
                   : "text-muted-foreground hover:text-foreground"
@@ -84,16 +87,6 @@ function SiteHeader() {
             </Link>
           ))}
 
-          <a
-            href={site.instagram}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Instagram"
-            className="ml-1 rounded-sm p-2 text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
-          >
-            <RiInstagramLine className="size-[18px]" />
-          </a>
-
           <RainbowButton
             asChild
             variant="outline"
@@ -104,15 +97,6 @@ function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-1 sm:hidden">
-          <a
-            href={site.instagram}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Instagram"
-            className="rounded-sm p-2 text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
-          >
-            <RiInstagramLine className="size-[18px]" />
-          </a>
           <button
             type="button"
             onClick={() => setOpen((value) => !value)}
@@ -146,7 +130,7 @@ function SiteHeader() {
                   isActive(pathname, item.href) ? "page" : undefined
                 }
                 className={cn(
-                  "border-b border-border/60 py-3.5 font-heading text-lg transition-colors",
+                  "border-b border-border/60 py-3.5 font-heading text-base tracking-[0.18em] uppercase transition-colors",
                   isActive(pathname, item.href)
                     ? "text-accent"
                     : "text-foreground"

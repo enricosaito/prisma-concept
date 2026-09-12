@@ -48,7 +48,7 @@ const BASELINE_FIX = "0.11em"
  * together with the letter-spacing into one gap. Pulling it back closes the
  * perceived gap without crowding the M.
  */
-const OPTICAL_KERN = "0.12em"
+const OPTICAL_KERN = "0.15em"
 
 /**
  * The crossbar-less "A": Playfair's own "V" turned 180°.
