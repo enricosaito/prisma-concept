@@ -82,6 +82,35 @@ export default function Page() {
           ))}
         </div>
       </section>
+
+      {/* Por quê? */}
+      <section className="mx-auto mt-24 max-w-5xl px-5 sm:px-8">
+        <h2 className="font-mono text-[0.7rem] tracking-[0.22em] text-muted-foreground uppercase">
+          Por quê?
+        </h2>
+        {/* Two columns rather than another card grid: the Biblioteca above is
+            already a list, and a second one would read as more of the same. */}
+        <div className="mt-6 grid gap-7 border-t border-border pt-9 md:grid-cols-[0.85fr_1.15fr] md:gap-14">
+          <p className="font-heading text-2xl leading-snug font-medium tracking-tight text-balance sm:text-[1.75rem]">
+            Porque separar as coisas em prateleiras é{" "}
+            <Highlight>conveniente</Highlight> — e quase sempre errado.
+          </p>
+          <div className="space-y-5 text-lg leading-relaxed text-pretty text-muted-foreground">
+            <p>
+              Tecnologia de um lado, arte do outro, filosofia numa sala em que
+              ninguém entra. Na prática nada disso acontece separado: quem
+              desenha uma interface está fazendo uma escolha estética, e quem
+              escreve um parágrafo está resolvendo um problema de engenharia.
+            </p>
+            <p>
+              Um prisma não inventa cor nenhuma. As cores já estavam ali, dentro
+              da mesma luz — ele só muda o ângulo até dar para ver. É o que esta
+              carta tenta fazer a cada quinze dias: pegar um assunto só e
+              virá-lo devagar, até aparecer o que sempre esteve junto.
+            </p>
+          </div>
+        </div>
+      </section>
     </>
   )
 }

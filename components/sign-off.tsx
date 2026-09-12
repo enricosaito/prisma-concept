@@ -20,7 +20,7 @@ function SignOff({ className }: { className?: string }) {
       </p>
       <div className="mt-2 text-foreground">
         <Signature
-          text={site.author}
+          text={site.signature}
           // The component's default looks at the public root; the file lives
           // under /fonts alongside the display faces.
           fontSrc="/fonts/LastoriaBoldRegular.otf"
@@ -28,9 +28,12 @@ function SignOff({ className }: { className?: string }) {
           fontSize={52}
           duration={1.2}
           inView
-          className="h-28 w-auto"
+          // The signature is 4.58x as wide as it is tall, so h-28 (513px) needs
+          // the 576px a 640px screen leaves; below that it has to come down to
+          // h-16 or it spills out of the column.
+          className="h-16 w-auto sm:h-28"
           fallback={
-            <p className="font-heading text-3xl italic">{site.author}</p>
+            <p className="font-heading text-3xl italic">{site.signature}</p>
           }
         />
       </div>

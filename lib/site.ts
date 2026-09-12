@@ -4,7 +4,7 @@ export const site = {
   tagline: "Novas perspectivas",
   description:
     "PRISMA CONCEPT é uma carta quinzenal sobre cultura, filosofia, tecnologia e arte — e sobre o que acontece quando essas quatro coisas se atravessam.",
-  author: "Enrico Saito",
+  signature: "Prisma Concept",
   url: "https://prismaconcept.com",
   instagram: "https://instagram.com/theprismaconcept",
   instagramHandle: "@theprismaconcept",
