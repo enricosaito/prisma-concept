@@ -2,8 +2,13 @@ import Link from "next/link"
 import { RiArrowRightLine } from "@remixicon/react"
 
 import { TiltCard } from "@/components/tilt-card"
-import { formatDate, formatDateShort, type Post } from "@/lib/posts"
-import { CATEGORY_COLOR } from "@/lib/spectrum"
+import {
+  formatDate,
+  formatDateShort,
+  formatIssue,
+  type Post,
+} from "@/lib/posts"
+import { issueColor } from "@/lib/spectrum"
 import { cn } from "@/lib/utils"
 
 /**
@@ -26,8 +31,8 @@ function PostMeta({
         className
       )}
     >
-      <span style={{ color: CATEGORY_COLOR[post.category] }}>
-        {post.category}
+      <span style={{ color: issueColor(post.issue) }}>
+        {formatIssue(post.issue)}
       </span>
       <span aria-hidden className="text-border">
         /
@@ -100,7 +105,7 @@ function PostCard({ post }: { post: Post }) {
           <span className="flex items-center gap-2 text-sm font-medium text-foreground">
             Ler
             <RiArrowRightLine
-              style={{ color: CATEGORY_COLOR[post.category] }}
+              style={{ color: issueColor(post.issue) }}
               className="size-3.5 transition-transform duration-300 group-hover:translate-x-1"
             />
           </span>

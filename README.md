@@ -86,6 +86,7 @@ home se atualizam sozinhos — `generateStaticParams` cria a página a partir do
 
 ```ts
 {
+  issue: 6,                     // vira #006; explícito, não derivado da ordem
   slug: "titulo-em-kebab-case",
   title: "Título da carta",
   dek: "Uma linha que aparece nas listagens.",
@@ -159,20 +160,17 @@ lint** (escreve em refs durante o render).
 
 O cobre deixou de ser o único destaque. `lib/spectrum.ts` é a fonte única das
 cinco cores (espelhadas como `--color-1..5` em `globals.css`, nos dois temas)
-e mapeia **uma faixa por categoria** — um prisma dividindo a luz nas quatro
-coisas sobre as quais a carta fala:
+e dá **uma faixa por edição** (`issueColor`, ciclando a cada cinco) — uma grade
+de cartas lê como um feixe dividido entre elas, e não como uma coluna de cobre
+repetido.
 
-| Categoria  | Faixa           |
-| ---------- | --------------- |
-| Tecnologia | azul-aço        |
-| Arte       | bronze          |
-| Design     | violeta-ardósia |
-| Escrita    | ouro quente     |
+Usada em: o número da edição e a seta "Ler" de cada card, a borda do campo de
+e-mail (`ShineBorder`), o wordmark e os destaques em itálico. A régua do header
+e o sublinhado do link ativo usam a rampa inteira (`var(--spectrum)`),
+mascarada nas pontas.
 
-Usada em: o rótulo de categoria e a seta Ler de cada card, os quatro pontos
-da lista de temas no hero, a borda do campo de e-mail (`ShineBorder`), o
-wordmark e os destaques em itálico. A régua do header e o sublinhado do link
-ativo usam a rampa inteira (`var(--spectrum)`), mascarada nas pontas.
+As categorias continuam no dado (`lib/posts.ts`), só não aparecem mais na
+interface — o lugar delas foi para o número da edição.
 
 `--accent` continua sólido (bronze) onde uma cor única é obrigatória: anéis de
 foco, bordas, links do texto longo. O bronze é uma das faixas, então isso não

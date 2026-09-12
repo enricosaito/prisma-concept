@@ -1,5 +1,3 @@
-import type { Category } from "@/lib/posts"
-
 /**
  * The dispersed spectrum — muted and warmed toward bronze so it stays inside
  * the editorial palette rather than reading as a neon rainbow.
@@ -17,15 +15,12 @@ export const SPECTRUM = [
 ] as const
 
 /**
- * A prism splits one beam into the four things this letter is about, so each
- * category gets its own band instead of every label being the same copper.
+ * Each issue takes the next band of the spectrum, so a grid of letters reads
+ * as one beam split across them rather than as a column of identical copper.
+ * Cycles every five.
  */
-export const CATEGORY_COLOR: Record<Category, string> = {
-  Tecnologia: "var(--color-5)", // steel blue
-  Arte: "var(--color-1)", // bronze
-  Design: "var(--color-4)", // slate violet
-  Escrita: "var(--color-2)", // warm gold
+export function issueColor(issue: number): string {
+  const band =
+    (((issue - 1) % SPECTRUM.length) + SPECTRUM.length) % SPECTRUM.length
+  return `var(--color-${band + 1})`
 }
-
-/** Ordered to match the hero's topic list. */
-export const TOPIC_COLOR: Record<string, string> = CATEGORY_COLOR

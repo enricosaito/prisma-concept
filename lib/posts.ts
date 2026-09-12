@@ -7,6 +7,11 @@ export type Block =
   | { type: "list"; items: string[] }
 
 export type Post = {
+  /**
+   * Issue number, shown as #001. Explicit rather than derived from sort order
+   * so inserting an older letter never renumbers the ones already published.
+   */
+  issue: number
   slug: string
   title: string
   /** One-line standfirst shown under the title in listings. */
@@ -21,6 +26,7 @@ export type Post = {
 
 export const posts: Post[] = [
   {
+    issue: 5,
     slug: "o-que-um-prisma-faz-com-a-luz",
     title: "O que um prisma faz com a luz",
     dek: "Sobre separar o que parecia uma coisa só — e por que esta carta existe.",
@@ -66,6 +72,7 @@ export const posts: Post[] = [
     ],
   },
   {
+    issue: 4,
     slug: "ferramentas-que-pensam-por-voce",
     title: "Ferramentas que pensam por você",
     dek: "Toda ferramenta tem uma opinião embutida. A questão é se você percebeu qual é.",
@@ -99,6 +106,7 @@ export const posts: Post[] = [
     ],
   },
   {
+    issue: 3,
     slug: "o-espaco-em-branco-nao-e-sobra",
     title: "O espaço em branco não é sobra",
     dek: "Quase todo layout ruim que já vi tinha o mesmo problema: medo de deixar espaço.",
@@ -130,6 +138,7 @@ export const posts: Post[] = [
     ],
   },
   {
+    issue: 2,
     slug: "copiar-ate-nao-parecer-copia",
     title: "Copiar até não parecer cópia",
     dek: "Sobre referência, plágio e a distância honesta entre os dois.",
@@ -157,6 +166,7 @@ export const posts: Post[] = [
     ],
   },
   {
+    issue: 1,
     slug: "escrever-e-descobrir-o-que-voce-pensa",
     title: "Escrever é descobrir o que você pensa",
     dek: "Você não escreve o que pensa. Você descobre pensando por escrito — e quase sempre é outra coisa.",
@@ -226,4 +236,9 @@ export function formatDateShort(iso: string): string {
   })
     .format(new Date(iso))
     .replace(/\./g, "")
+}
+
+/** Issue number as it is shown: 1 -> "#001". */
+export function formatIssue(issue: number): string {
+  return "#" + String(issue).padStart(3, "0")
 }

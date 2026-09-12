@@ -6,12 +6,9 @@ import { Highlight } from "@/components/highlight"
 import { FeaturedPostCard, PostCard } from "@/components/post-card"
 import { SubscribeForm } from "@/components/subscribe-form"
 import { GridPattern } from "@/components/ui/grid-pattern"
-import { getFeaturedPost, getRecentPosts, type Category } from "@/lib/posts"
+import { getFeaturedPost, getRecentPosts } from "@/lib/posts"
 import { site } from "@/lib/site"
-import { CATEGORY_COLOR } from "@/lib/spectrum"
 import { cn } from "@/lib/utils"
-
-const topics: Category[] = ["Tecnologia", "Arte", "Design", "Escrita"]
 
 export default function Page() {
   const featured = getFeaturedPost()
@@ -68,19 +65,6 @@ export default function Page() {
           </BlurReveal>
 
           <SubscribeForm className="mt-9 max-w-md" />
-
-          <ul className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-border/70 pt-6 font-mono text-[0.7rem] tracking-[0.18em] text-muted-foreground uppercase">
-            {topics.map((topic) => (
-              <li key={topic} className="flex items-center gap-2">
-                <span
-                  aria-hidden
-                  className="size-1 rounded-full"
-                  style={{ backgroundColor: CATEGORY_COLOR[topic] }}
-                />
-                {topic}
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 
@@ -96,7 +80,7 @@ export default function Page() {
       <section className="mx-auto mt-20 max-w-5xl px-5 sm:px-8">
         <div className="mb-6 flex items-baseline justify-between gap-4">
           <h2 className="font-mono text-[0.7rem] tracking-[0.22em] text-muted-foreground uppercase">
-            No arquivo
+            Biblioteca
           </h2>
           <Link
             href="/biblioteca"
