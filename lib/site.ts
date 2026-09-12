@@ -1,9 +1,9 @@
 export const site = {
   name: "PRISMA",
   wordmark: "PRISMA",
-  tagline: "Tech, arte, filosofia.",
+  tagline: "Novas perspectivas",
   description:
-    "Prisma é uma carta quinzenal sobre tecnologia, arte, design e escrita — e sobre o que acontece quando essas quatro coisas se atravessam.",
+    "PRISMA CONCEPT é uma carta quinzenal sobre cultura, filosofia, tecnologia e arte — e sobre o que acontece quando essas quatro coisas se atravessam.",
   author: "Enrico Saito",
   url: "https://prismaconcept.com",
   instagram: "https://instagram.com/theprismaconcept",

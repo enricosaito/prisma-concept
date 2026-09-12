@@ -30,27 +30,22 @@ export default function Page() {
           )}
         />
         <div className="relative mx-auto max-w-5xl px-5 pt-16 pb-14 sm:px-8 sm:pt-24 sm:pb-20">
-          <BlurReveal
-            as="p"
-            speedReveal={2.4}
-            className="font-mono text-[0.7rem] tracking-[0.22em] text-muted-foreground uppercase"
-          >
-            Carta quinzenal
-          </BlurReveal>
-
-          {/* Three reveals inside one heading so the bronze italic survives —
-            BlurReveal only accepts a plain string as its children. */}
-          <h1 className="mt-6 max-w-3xl font-heading text-4xl leading-[1.08] font-medium tracking-tight text-balance sm:text-6xl">
+          {/* Separate reveals inside one heading: BlurReveal only accepts a
+              plain string, so the highlighted phrase needs its own. */}
+          <h1 className="max-w-4xl font-heading text-4xl leading-[1.08] font-medium tracking-tight sm:text-[3.25rem] lg:text-6xl">
             <BlurReveal as="span" className="inline" delay={0.15}>
-              A mesma luz,
+              Ideias sob novas
             </BlurReveal>{" "}
             <Highlight>
               <BlurReveal as="span" className="inline" delay={0.45}>
-                separada
+                perspectivas
               </BlurReveal>
-            </Highlight>{" "}
-            <BlurReveal as="span" className="inline" delay={0.7}>
-              em quatro cores.
+            </Highlight>
+            {/* Hard break where the manifesto asks for one; the second line
+                still wraps on its own at narrow widths. */}
+            <br />
+            <BlurReveal as="span" className="inline" delay={0.75}>
+              para quem pensa além do óbvio.
             </BlurReveal>
           </h1>
 

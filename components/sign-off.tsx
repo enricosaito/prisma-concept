@@ -28,7 +28,7 @@ function SignOff({ className }: { className?: string }) {
           fontSize={52}
           duration={1.2}
           inView
-          className="h-16 w-auto"
+          className="h-28 w-auto"
           fallback={
             <p className="font-heading text-3xl italic">{site.author}</p>
           }

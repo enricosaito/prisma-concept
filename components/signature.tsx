@@ -12,6 +12,7 @@ type SignatureGlyph = {
     fontSize: number
   ) => {
     toPathData: (decimalPlaces?: number) => string
+    getBoundingBox: () => { x1: number; y1: number; x2: number; y2: number }
   }
 }
 
@@ -19,6 +20,8 @@ type SignatureFont = {
   unitsPerEm: number
   charToGlyph: (char: string) => SignatureGlyph
 }
+
+type Box = { x: number; y: number; width: number; height: number }
 
 const SVG_HEIGHT = 100
 const PATH_DELAY_STEP = 0.2
@@ -92,24 +95,56 @@ async function buildSignaturePaths({
   baseline: number
   horizontalPadding: number
   fontSrc: string[]
-}): Promise<{ paths: string[]; width: number }> {
+}): Promise<{ paths: string[]; box: Box }> {
   const font = await loadFontFromPaths(fontSrc)
 
   let x = horizontalPadding
   const nextPaths: string[] = []
+
+  // Union of the glyph outlines. A script face throws ascenders, descenders and
+  // swashes well past the em box, so the viewBox has to follow the actual ink —
+  // an SVG clips to its viewBox, and a fixed box silently cut this signature.
+  let x1 = Infinity
+  let y1 = Infinity
+  let x2 = -Infinity
+  let y2 = -Infinity
 
   for (const char of text) {
     const glyph = font.charToGlyph(char)
     const path = glyph.getPath(x, baseline, fontSize)
     nextPaths.push(path.toPathData(3))
 
+    const bb = path.getBoundingBox()
+    if (Number.isFinite(bb.x1)) {
+      x1 = Math.min(x1, bb.x1)
+      y1 = Math.min(y1, bb.y1)
+      x2 = Math.max(x2, bb.x2)
+      y2 = Math.max(y2, bb.y2)
+    }
+
     const advanceWidth = glyph.advanceWidth ?? font.unitsPerEm
     x += advanceWidth * (fontSize / font.unitsPerEm)
   }
 
+  // Nothing measurable (all-whitespace text): fall back to the advance run.
+  if (!Number.isFinite(x1)) {
+    return {
+      paths: nextPaths,
+      box: { x: 0, y: 0, width: x + horizontalPadding, height: fontSize },
+    }
+  }
+
+  // Room for the 2px outline stroke, which is drawn centred on the outline.
+  const pad = fontSize * 0.06
+
   return {
     paths: nextPaths,
-    width: x + horizontalPadding,
+    box: {
+      x: x1 - pad,
+      y: y1 - pad,
+      width: x2 - x1 + pad * 2,
+      height: y2 - y1 + pad * 2,
+    },
   }
 }
 
@@ -180,7 +215,7 @@ export function Signature({
 }: SignatureProps) {
   const [paths, setPaths] = useState<string[]>([])
   const [failed, setFailed] = useState(false)
-  const [width, setWidth] = useState<number>(300)
+  const [box, setBox] = useState<Box>({ x: 0, y: 0, width: 300, height: 100 })
   const horizontalPadding = fontSize * 0.1
   const topMargin = Math.max(5, (SVG_HEIGHT - fontSize) / 2)
   const baseline = Math.min(SVG_HEIGHT - 5, topMargin + fontSize)
@@ -194,21 +229,20 @@ export function Signature({
 
     async function loadSignaturePaths() {
       try {
-        const { paths: nextPaths, width: nextWidth } =
-          await buildSignaturePaths({
-            text,
-            fontSize,
-            baseline,
-            horizontalPadding,
-            fontSrc: fontKey.split(","),
-          })
+        const { paths: nextPaths, box: nextBox } = await buildSignaturePaths({
+          text,
+          fontSize,
+          baseline,
+          horizontalPadding,
+          fontSrc: fontKey.split(","),
+        })
 
         if (isCancelled) {
           return
         }
 
         setPaths(nextPaths)
-        setWidth(nextWidth)
+        setBox(nextBox)
         setFailed(false)
       } catch {
         if (isCancelled) {
@@ -216,7 +250,12 @@ export function Signature({
         }
 
         setPaths([])
-        setWidth(text.length * fontSize * 0.6)
+        setBox({
+          x: 0,
+          y: 0,
+          width: text.length * fontSize * 0.6,
+          height: fontSize,
+        })
         setFailed(true)
       }
     }
@@ -236,9 +275,9 @@ export function Signature({
   return (
     <motion.svg
       key={paths.length}
-      width={width}
-      height={SVG_HEIGHT}
-      viewBox={`0 0 ${width} ${SVG_HEIGHT}`}
+      width={box.width}
+      height={box.height}
+      viewBox={`${box.x} ${box.y} ${box.width} ${box.height}`}
       fill="none"
       className={className}
       initial="hidden"
