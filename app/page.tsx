@@ -82,6 +82,35 @@ export default function Page() {
           ))}
         </div>
       </section>
+
+      {/* Por quê? */}
+      <section className="mx-auto mt-24 max-w-5xl px-5 sm:px-8">
+        <h2 className="font-mono text-[0.7rem] tracking-[0.22em] text-muted-foreground uppercase">
+          Por quê?
+        </h2>
+        {/* Two columns rather than another card grid: the Biblioteca above is
+            already a list, and a second one would read as more of the same. */}
+        <div className="mt-6 grid gap-7 border-t border-border pt-9 md:grid-cols-[0.85fr_1.15fr] md:gap-14">
+          <p className="font-heading text-2xl leading-snug font-medium tracking-tight text-balance sm:text-[1.75rem]">
+            A internet está cheia de opiniões rasas, conteúdo de IA{" "}
+            e super estímulos — nosso objetivo é fazer o oposto.
+          </p>
+          <div className="space-y-5 text-lg leading-relaxed text-pretty text-muted-foreground">
+            <p>
+              Nós te damos um espaço para pensar profundamente sobre o mundo,
+              para você se tornar um pensador mais afiado e mais criativo.
+              Viver melhor, ter uma visão mais ampla e mais clara. Tomar melhores decisões,
+              ter melhores relacionamentos e construir algo para si mesmo.
+            </p>
+            <p>
+              Um prisma não inventa cor nenhuma. As cores já estavam ali, dentro
+              da mesma luz — ele só muda o ângulo até que você consiga ver. É o que esta
+              carta tenta fazer a cada quinze dias: pegar um assunto só e
+              virá-lo devagar, até aparecer o que sempre esteve junto.
+            </p>
+          </div>
+        </div>
+      </section>
     </>
   )
 }

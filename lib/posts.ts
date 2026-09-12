@@ -71,34 +71,6 @@ export const posts: Post[] = [
   },
   {
     issue: 2,
-    slug: "copiar-ate-nao-parecer-copia",
-    title: "Copiar até não parecer cópia",
-    dek: "Sobre referência, plágio e a distância honesta entre os dois.",
-    category: "Arte",
-    date: "2026-07-24",
-    readingMinutes: 7,
-    content: [
-      {
-        type: "p",
-        text: "Ninguém começa do zero. Todo trabalho que parece original é uma mistura tão densa de influências que as fontes deixaram de ser identificáveis individualmente. Isso não é um defeito do processo — é o processo.",
-      },
-      { type: "h2", text: "A diferença está no quê" },
-      {
-        type: "p",
-        text: "Copiar o resultado é plágio. Copiar a decisão é aprendizado. Quando você olha para um trabalho que admira e pergunta o que foi resolvido ali — qual problema, com qual restrição — você leva embora algo que funciona em contextos que o original nunca visitou.",
-      },
-      {
-        type: "quote",
-        text: "Imite abertamente. Roube o problema, não a solução.",
-      },
-      {
-        type: "p",
-        text: "O sintoma de que você copiou bem é conseguir explicar por que cada escolha está ali. Se a única justificativa é que a referência fazia assim, você copiou a superfície.",
-      },
-    ],
-  },
-  {
-    issue: 1,
     slug: "escrever-e-descobrir-o-que-voce-pensa",
     title: "Escrever é descobrir o que você pensa",
     dek: "Você não escreve o que pensa. Você descobre pensando por escrito — e quase sempre é outra coisa.",
@@ -122,6 +94,59 @@ export const posts: Post[] = [
       {
         type: "p",
         text: "Escreva o rascunho ruim rápido e sem carinho. O trabalho de verdade começa quando você já sabe o que estava tentando dizer.",
+      },
+    ],
+  },
+  {
+    issue: 1,
+    slug: "tudo-que-precisava-ser-dito-ja-foi-dito",
+    title:
+      "Tudo que precisava ser dito já foi dito, mas ninguém estava ouvindo",
+    dek: "Nada é completamente original — e por que essa deveria ser a melhor notícia do seu dia.",
+    category: "Arte",
+    date: "2026-06-26",
+    readingMinutes: 5,
+    content: [
+      {
+        type: "p",
+        text: "Li essa frase pela primeira vez em Roube como um artista: 10 coisas que ninguém te conta sobre criatividade, do Austin Kleon. Ela não é dele. Kleon pega emprestado de André Gide, que escreveu algo muito parecido em 1891 — o que, para uma frase sobre originalidade, é provavelmente a coisa mais honesta que ela poderia fazer.",
+      },
+      {
+        type: "quote",
+        text: "Tudo que precisava ser dito já foi dito. Mas, como ninguém estava ouvindo, é preciso dizer tudo de novo.",
+        cite: "André Gide, citado por Austin Kleon em Roube como um artista",
+      },
+      { type: "h2", text: "Nada vem do nada" },
+      {
+        type: "p",
+        text: "A ideia por trás dela é simples e um pouco desconfortável: nada é completamente original. Todo trabalho criativo é construído em cima do que veio antes. Não existe página em branco absoluta — existe uma pilha de coisas que você leu, viu e ouviu, e um recorte seu feito em cima dela.",
+      },
+      {
+        type: "p",
+        text: "Isso não é uma descoberta moderna, nem um sintoma da internet. Está no Eclesiastes, alguns milhares de anos antes de qualquer discussão sobre plágio em rede social:",
+      },
+      {
+        type: "quote",
+        text: "Não há nada novo debaixo do sol.",
+        cite: "Eclesiastes 1:9",
+      },
+      { type: "h2", text: "Quando alguém diz que algo é original" },
+      {
+        type: "p",
+        text: "Repare no que costuma acontecer quando chamam alguma coisa de original: nove em cada dez vezes, quem diz isso apenas não conhece a referência. Não viu a fonte, não sabe de onde aquilo saiu, não reconhece a linhagem. Originalidade, na prática, é muitas vezes o nome que damos a uma influência que não identificamos.",
+      },
+      { type: "h2", text: "Por que isso é uma boa notícia" },
+      {
+        type: "p",
+        text: "Se tudo que precisava ser dito já foi dito, mas ninguém estava ouvindo, então tudo precisa ser dito de novo. Algumas pessoas acham essa ideia deprimente. A mim ela enche de esperança.",
+      },
+      {
+        type: "p",
+        text: "Porque ela devolve o trabalho ao tamanho certo. Livres do peso de tentar ser totalmente originais, podemos parar de tentar criar algo do nada e passar a abraçar as influências, em vez de fugir delas. O que sobra não é menos: é a sua versão, dita com a sua voz, para quem ainda não estava ouvindo.",
+      },
+      {
+        type: "p",
+        text: "Ninguém está esperando uma cor nova. Está esperando o seu ângulo.",
       },
     ],
   },

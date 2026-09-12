@@ -26,7 +26,7 @@ export function AnimatedGradientText({
         } as React.CSSProperties
       }
       className={cn(
-        `inline animate-gradient bg-linear-to-r from-(--color-from) via-(--color-to) to-(--color-from) bg-size-[var(--bg-size)_100%] bg-clip-text text-transparent`,
+        `gradient-text inline animate-gradient bg-linear-to-r from-(--color-from) via-(--color-to) to-(--color-from) bg-size-[var(--bg-size)_100%]`,
         className
       )}
       {...props}

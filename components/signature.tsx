@@ -4,6 +4,8 @@ import { useEffect, useId, useState } from "react"
 import { motion } from "motion/react"
 import { parse as parseFont } from "opentype.js"
 
+import { cn } from "@/lib/utils"
+
 type SignatureGlyph = {
   advanceWidth?: number
   getPath: (
@@ -279,7 +281,14 @@ export function Signature({
       height={box.height}
       viewBox={`${box.x} ${box.y} ${box.width} ${box.height}`}
       fill="none"
-      className={className}
+      // Fluid by default. Sizing this by height and letting the width fall out
+      // of the aspect ratio overflows the column on narrow screens — a script
+      // signature is four to five times as wide as it is tall, so the width is
+      // what has to be pinned to the container. Call sites cap it with max-w-*.
+      className={cn("block h-auto w-full", className)}
+      // Belt to `h-auto`'s braces: an `height: auto` SVG can collapse to zero
+      // height as a flex item in Safari, and the footer puts this in one.
+      style={{ aspectRatio: `${box.width} / ${box.height}` }}
       initial="hidden"
       whileInView={inView ? "visible" : undefined}
       animate={inView ? undefined : "visible"}
