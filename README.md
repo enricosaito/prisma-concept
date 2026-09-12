@@ -70,8 +70,8 @@ recortado; e as duas constantes (`0.12em` de baseline, `-0.15em` de kern
 | Caminho                  | O que é                                              |
 | ------------------------ | ---------------------------------------------------- |
 | `app/page.tsx`           | Home — hero, última carta, prévia do arquivo, CTA    |
-| `app/carta/page.tsx`     | Arquivo completo                                     |
-| `app/carta/[slug]/`      | Página de leitura (pré-renderizada por slug)         |
+| `app/biblioteca/page.tsx`| Biblioteca — arquivo completo                        |
+| `app/biblioteca/[slug]/` | Página de leitura (pré-renderizada por slug)         |
 | `app/assinar/page.tsx`   | Página de assinatura                                 |
 | `app/api/subscribe/`     | Route handler que recebe o e-mail                    |
 | `lib/posts.ts`           | **Os textos.** Fonte de verdade do conteúdo          |
@@ -102,6 +102,11 @@ home se atualizam sozinhos — `generateStaticParams` cria a página a partir do
 }
 ```
 
+> A seção se chamava **Carta** e vivia em `/carta`. Virou **Biblioteca** em
+> `/biblioteca`; `next.config.ts` redireciona `/carta` e `/carta/:slug` com 308,
+> então qualquer link já compartilhado continua funcionando. As edições em si
+> continuam sendo "cartas" — a Biblioteca é onde elas ficam.
+
 O estilo do texto longo mora na classe `.prose-letter` em `app/globals.css`.
 
 ## Componentes Spell UI
@@ -126,6 +131,7 @@ Vindos do registry `@spell` (`components.json`), ficam soltos em `components/`:
 | ----------------------- | ----------------------------------------------------- |
 | `rainbow-button`        | "Assinar" do header e do menu mobile (`outline`)      |
 | `animated-gradient-text`| `components/highlight.tsx` — palavras em destaque      |
+| `animated-theme-toggler` | Troca de tema no header (`components/theme-toggle`)   |
 | `light-rays`            | Fundo do hero da home                                  |
 
 Os três foram retunados para o espectro discreto da marca em vez dos padrões
@@ -137,6 +143,12 @@ neon de fábrica. Dois ajustes que valem nota:
   (`seed`), então os raios são construídos no render, iguais dos dois lados.
   Ganhou também `blend`: o `mix-blend-screen` original só clareia e sumia no
   tema claro, então o hero usa `normal` no claro e `screen` no escuro.
+- **`animated-theme-toggler`** é usado em modo **controlado**. Solto, ele grava
+  `localStorage.theme` e observa a classe `dark` por conta própria, brigando com
+  o next-themes — que é a fonte da verdade aqui — e os dois divergiriam no
+  reload ou numa troca de tema do sistema. Controlado, ele só roda a view
+  transition e devolve o valor novo. `components/theme-toggle.tsx` também adia a
+  renderização até montar, porque `resolvedTheme` é `undefined` no servidor.
 - **`animated-gradient-text`** pinta com `background-clip: text`. Aqui ele
   envolve um `BlurReveal`, cujos caracteres são `inline-block` animados —
   diferente do Λ, esses assentam em transform zero, então o recorte fecha

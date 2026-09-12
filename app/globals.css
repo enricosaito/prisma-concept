@@ -208,3 +208,10 @@
     stroke-dashoffset: -10;
   }
 }
+/* AnimatedThemeToggler drives the clip-path itself; the default
+   cross-fade would fight it. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}

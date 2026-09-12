@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { RiCloseLine, RiMenuLine } from "@remixicon/react"
 
+import { ThemeToggle } from "@/components/theme-toggle"
 import { RainbowButton } from "@/components/ui/rainbow-button"
 import { Wordmark } from "@/components/wordmark"
 import { nav } from "@/lib/site"
@@ -87,6 +88,8 @@ function SiteHeader() {
             </Link>
           ))}
 
+          <ThemeToggle className="ml-1" />
+
           <RainbowButton
             asChild
             variant="outline"
@@ -97,6 +100,7 @@ function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-1 sm:hidden">
+          <ThemeToggle />
           <button
             type="button"
             onClick={() => setOpen((value) => !value)}

@@ -5,7 +5,7 @@ import { SubscribeForm } from "@/components/subscribe-form"
 import { getAllPosts } from "@/lib/posts"
 
 export const metadata: Metadata = {
-  title: "Carta",
+  title: "Biblioteca",
   description:
     "O arquivo completo da Prisma — todas as cartas sobre tecnologia, arte, design e escrita.",
 }

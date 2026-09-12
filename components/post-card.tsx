@@ -50,7 +50,7 @@ function FeaturedPostCard({ post }: { post: Post }) {
     <article className="group relative border-t border-border pt-8">
       <PostMeta post={post} />
       <h2 className="mt-4 font-heading text-3xl leading-[1.15] font-medium tracking-tight text-balance sm:text-[2.5rem]">
-        <Link href={`/carta/${post.slug}`} className="outline-none">
+        <Link href={`/biblioteca/${post.slug}`} className="outline-none">
           <span className="absolute inset-0" />
           <span className="bg-[linear-gradient(var(--accent),var(--accent))] bg-[length:0%_1px] bg-[position:0_100%] bg-no-repeat transition-[background-size] duration-500 group-hover:bg-[length:100%_1px]">
             {post.title}
@@ -83,7 +83,7 @@ function PostCard({ post }: { post: Post }) {
       <article className="group relative flex h-full flex-col p-6">
         <PostMeta post={post} compact />
         <h3 className="mt-3 font-heading text-xl leading-snug font-medium tracking-tight text-pretty">
-          <Link href={`/carta/${post.slug}`} className="outline-none">
+          <Link href={`/biblioteca/${post.slug}`} className="outline-none">
             <span className="absolute inset-0" />
             <span className="bg-[linear-gradient(var(--accent),var(--accent))] bg-[length:0%_1px] bg-[position:0_100%] bg-no-repeat transition-[background-size] duration-500 group-hover:bg-[length:100%_1px]">
               {post.title}
@@ -113,7 +113,7 @@ function PostRow({ post }: { post: Post }) {
     <article className="group relative border-t border-border/70 py-7">
       <PostMeta post={post} />
       <h3 className="mt-3 font-heading text-xl leading-snug font-medium tracking-tight text-pretty sm:text-2xl">
-        <Link href={`/carta/${post.slug}`} className="outline-none">
+        <Link href={`/biblioteca/${post.slug}`} className="outline-none">
           <span className="absolute inset-0" />
           <span className="bg-[linear-gradient(var(--accent),var(--accent))] bg-[length:0%_1px] bg-[position:0_100%] bg-no-repeat transition-[background-size] duration-500 group-hover:bg-[length:100%_1px]">
             {post.title}

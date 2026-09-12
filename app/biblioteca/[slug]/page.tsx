@@ -52,7 +52,7 @@ export default async function Page({
   return (
     <article className="mx-auto max-w-5xl px-5 pt-12 sm:px-8 sm:pt-16">
       <Link
-        href="/carta"
+        href="/biblioteca"
         className="group inline-flex items-center gap-2 font-mono text-[0.7rem] tracking-[0.18em] text-muted-foreground uppercase transition-colors hover:text-foreground"
       >
         <RiArrowLeftLine className="size-3.5 text-accent transition-transform group-hover:-translate-x-0.5" />

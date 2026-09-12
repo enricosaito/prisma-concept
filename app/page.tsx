@@ -92,7 +92,7 @@ export default function Page() {
             No arquivo
           </h2>
           <Link
-            href="/carta"
+            href="/biblioteca"
             className="group inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             Ver todas
