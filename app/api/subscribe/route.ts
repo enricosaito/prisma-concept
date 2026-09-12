@@ -1,4 +1,17 @@
+import { subscribe, type SubscribeOutcome } from "@/lib/newsletter"
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+/** What the reader is told. The outcome is deliberately not spelled out in
+ *  detail — whether an address is already on the list is not something an
+ *  anonymous form should confirm to whoever typed it. */
+const MESSAGES: Record<SubscribeOutcome["state"], string> = {
+  subscribed: "Pronto! Você está na lista.",
+  resubscribed: "Pronto! Você está na lista.",
+  already: "Pronto! Você está na lista.",
+  unconfigured: "Pronto! Você está na lista.",
+  error: "Não foi possível assinar agora. Tente de novo em instantes.",
+}
 
 export async function POST(request: Request) {
   let email: unknown
@@ -17,13 +30,16 @@ export async function POST(request: Request) {
     )
   }
 
-  // TODO: wire a real provider (Resend audiences, Buttondown, Loops, ConvertKit…)
-  // and store the address. Until then nothing is persisted — the address is only
-  // echoed to the server log so the flow can be exercised end to end in dev.
-  console.info("[subscribe] pending signup:", email.trim().toLowerCase())
+  const outcome = await subscribe(email)
+
+  if (!outcome.ok) {
+    return Response.json({ message: MESSAGES.error }, { status: 502 })
+  }
 
   return Response.json({
-    message: "Pronto! Você está na lista.",
-    stored: false,
+    message: MESSAGES[outcome.state],
+    // The form ignores this; it is here so a failed deploy (keys missing in
+    // production) is visible from a single curl rather than from silence.
+    stored: outcome.state !== "unconfigured",
   })
 }
