@@ -56,7 +56,7 @@ A varredura é **linear e vertical** (`radial: false`), não radial: um gradient
 radial se centraliza na caixa de cada elemento, e o Λ (estreito) brilharia fora
 de compasso com o PRISM (largo).
 
-Há ainda um **kern óptico** de `-0.06em` antes do Λ. Não é correção de métrica:
+Há ainda um **kern óptico** de `-0.09em` antes do Λ. Não é correção de métrica:
 rasterizando as duas grafias e varrendo as colunas de pixel, a tinta do Λ já cai
 a 0,005em de onde cairia um "A" de verdade. Mas o "A" fecha o contraforma com a
 barra e o Λ deixa aberta, então aquele branco se junta ao entreletra e o vão

@@ -46,7 +46,7 @@ function SiteHeader() {
         "after:bg-gradient-to-r after:from-transparent after:via-accent/40 after:to-transparent"
       )}
     >
-      <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-4 px-5 sm:h-20 sm:px-8">
+      <div className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-4 px-5 sm:h-16 sm:px-8">
         <Link
           href="/"
           onMouseEnter={() => setWaveKey((n) => n + 1)}
@@ -57,7 +57,7 @@ function SiteHeader() {
           <Wordmark
             wave
             waveKey={waveKey}
-            className="font-heading text-xl font-medium tracking-[0.26em] sm:text-2xl"
+            className="font-heading text-2xl font-medium tracking-[0.24em] sm:text-3xl"
           />
         </Link>
 
