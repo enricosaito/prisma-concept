@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { RiInstagramLine } from "@remixicon/react"
 
+import { Highlight } from "@/components/highlight"
 import { SubscribeForm } from "@/components/subscribe-form"
 import { site } from "@/lib/site"
 
@@ -30,7 +31,7 @@ export default function Page() {
     <div className="mx-auto max-w-5xl px-5 pt-16 sm:px-8 sm:pt-24">
       <div className="mx-auto max-w-2xl text-center">
         <h1 className="font-heading text-4xl leading-tight font-medium tracking-tight text-balance sm:text-5xl">
-          Assine a <span className="text-accent italic">Prisma</span>
+          Assine a <Highlight>Prisma</Highlight>
         </h1>
         <p className="mt-5 text-lg leading-relaxed text-pretty text-muted-foreground">
           {site.description}

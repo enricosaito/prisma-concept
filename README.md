@@ -123,6 +123,31 @@ Vindos do registry `@spell` (`components.json`), ficam soltos em `components/`:
 
 `perspective-book.tsx` também foi instalado, mas ainda não é usado.
 
+## Componentes Magic UI
+
+| Componente              | Onde aparece                                          |
+| ----------------------- | ----------------------------------------------------- |
+| `rainbow-button`        | "Assinar" do header e do menu mobile (`outline`)      |
+| `animated-gradient-text`| `components/highlight.tsx` — palavras em destaque      |
+| `light-rays`            | Fundo do hero da home                                  |
+
+Os três foram retunados para o espectro discreto da marca em vez dos padrões
+neon de fábrica. Dois ajustes que valem nota:
+
+- **`light-rays`** sorteava os raios com `Math.random()` dentro de um
+  `useEffect` — o que o lint do React Compiler rejeita e ainda arrisca
+  divergência entre servidor e cliente. Agora usa um PRNG com semente
+  (`seed`), então os raios são construídos no render, iguais dos dois lados.
+  Ganhou também `blend`: o `mix-blend-screen` original só clareia e sumia no
+  tema claro, então o hero usa `normal` no claro e `screen` no escuro.
+- **`animated-gradient-text`** pinta com `background-clip: text`. Aqui ele
+  envolve um `BlurReveal`, cujos caracteres são `inline-block` animados —
+  diferente do Λ, esses assentam em transform zero, então o recorte fecha
+  certo. Conferido no navegador, sem faixas por letra.
+
+`dia-text-reveal.tsx` também está instalado, ainda sem uso, e **reprova no
+lint** (escreve em refs durante o render).
+
 ## Botões
 
 Todos usam Playfair em caixa alta com `tracking-[0.16em]` — a regra está na base

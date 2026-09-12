@@ -34,11 +34,14 @@ const waveGradientFlipped = buildWaveGradient({
 /**
  * Rotating 180° pivots about the box centre, which drops the glyph's feet below
  * the baseline by `(fontBoundingBoxAscent − fontBoundingBoxDescent) − capHeight`.
- * Measured against Playfair Display via canvas `measureText`, that is 11% of the
- * font size. Line-height cancels out of the derivation, so the one constant
- * holds at every size.
+ * Measured against Playfair Display via canvas `measureText`, that is 12% of the
+ * font size at weight 600, the weight the header sets.
+ *
+ * Line-height cancels out of the derivation so this holds at every *size*, but
+ * cap height moves with *weight* on a variable font — it is 0.11em at 500. Re-
+ * measure if the wordmark's weight changes.
  */
-const BASELINE_FIX = "0.11em"
+const BASELINE_FIX = "0.12em"
 
 /**
  * Optical kern, not a metric correction: measured by rasterising both spellings

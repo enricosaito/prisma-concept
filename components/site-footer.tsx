@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { RiInstagramLine, RiMailLine } from "@remixicon/react"
 
-import { Wordmark } from "@/components/wordmark"
+import { FooterSignature } from "@/components/footer-signature"
 import { nav, site } from "@/lib/site"
 
 function SiteFooter() {
@@ -9,9 +9,7 @@ function SiteFooter() {
     <footer className="mt-24 border-t border-border/70">
       <div className="mx-auto flex max-w-5xl flex-col gap-8 px-5 py-12 sm:flex-row sm:items-start sm:justify-between sm:px-8">
         <div className="max-w-xs">
-          <div>
-            <Wordmark className="font-heading text-xl font-medium tracking-[0.26em]" />
-          </div>
+          <FooterSignature />
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
             {site.tagline}
           </p>

@@ -2,8 +2,10 @@ import Link from "next/link"
 import { RiArrowRightLine } from "@remixicon/react"
 
 import { BlurReveal } from "@/components/blur-reveal"
+import { Highlight } from "@/components/highlight"
 import { FeaturedPostCard, PostCard } from "@/components/post-card"
 import { SubscribeForm } from "@/components/subscribe-form"
+import { LightRays } from "@/components/ui/light-rays"
 import { getFeaturedPost, getRecentPosts } from "@/lib/posts"
 import { site } from "@/lib/site"
 
@@ -16,52 +18,63 @@ export default function Page() {
   return (
     <>
       {/* Hero */}
-      <section className="mx-auto max-w-5xl px-5 pt-16 pb-14 sm:px-8 sm:pt-24 sm:pb-20">
-        <BlurReveal
-          as="p"
-          speedReveal={2.4}
-          className="font-mono text-[0.7rem] tracking-[0.22em] text-muted-foreground uppercase"
-        >
-          Carta quinzenal
-        </BlurReveal>
-
-        {/* Three reveals inside one heading so the bronze italic survives —
-            BlurReveal only accepts a plain string as its children. */}
-        <h1 className="mt-6 max-w-3xl font-heading text-4xl leading-[1.08] font-medium tracking-tight text-balance sm:text-6xl">
-          <BlurReveal as="span" className="inline" delay={0.15}>
-            A mesma luz,
-          </BlurReveal>{" "}
+      <section className="relative overflow-hidden">
+        {/* Light dispersing through the page, behind the opening lines.
+            `screen` only lightens, so it would vanish on the pale theme —
+            normal blending there, screen in the dark. */}
+        <LightRays
+          aria-hidden
+          color="var(--hero-ray-color)"
+          blur={48}
+          speed={18}
+          length="80vh"
+          className="isolation-auto [--hero-ray-color:rgba(184,144,98,0.34)] [--light-rays-blend:normal] dark:[--hero-ray-color:rgba(201,168,108,0.30)] dark:[--light-rays-blend:screen]"
+        />
+        <div className="relative mx-auto max-w-5xl px-5 pt-16 pb-14 sm:px-8 sm:pt-24 sm:pb-20">
           <BlurReveal
-            as="span"
-            className="inline text-accent italic"
-            delay={0.45}
+            as="p"
+            speedReveal={2.4}
+            className="font-mono text-[0.7rem] tracking-[0.22em] text-muted-foreground uppercase"
           >
-            separada
-          </BlurReveal>{" "}
-          <BlurReveal as="span" className="inline" delay={0.7}>
-            em quatro cores.
+            Carta quinzenal
           </BlurReveal>
-        </h1>
 
-        <BlurReveal
-          as="p"
-          delay={1.1}
-          speedReveal={3}
-          className="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground"
-        >
-          {site.description}
-        </BlurReveal>
+          {/* Three reveals inside one heading so the bronze italic survives —
+            BlurReveal only accepts a plain string as its children. */}
+          <h1 className="mt-6 max-w-3xl font-heading text-4xl leading-[1.08] font-medium tracking-tight text-balance sm:text-6xl">
+            <BlurReveal as="span" className="inline" delay={0.15}>
+              A mesma luz,
+            </BlurReveal>{" "}
+            <Highlight>
+              <BlurReveal as="span" className="inline" delay={0.45}>
+                separada
+              </BlurReveal>
+            </Highlight>{" "}
+            <BlurReveal as="span" className="inline" delay={0.7}>
+              em quatro cores.
+            </BlurReveal>
+          </h1>
 
-        <SubscribeForm className="mt-9 max-w-md" />
+          <BlurReveal
+            as="p"
+            delay={1.1}
+            speedReveal={3}
+            className="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground"
+          >
+            {site.description}
+          </BlurReveal>
 
-        <ul className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-border/70 pt-6 font-mono text-[0.7rem] tracking-[0.18em] text-muted-foreground uppercase">
-          {topics.map((topic) => (
-            <li key={topic} className="flex items-center gap-2">
-              <span aria-hidden className="size-1 rounded-full bg-accent" />
-              {topic}
-            </li>
-          ))}
-        </ul>
+          <SubscribeForm className="mt-9 max-w-md" />
+
+          <ul className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-border/70 pt-6 font-mono text-[0.7rem] tracking-[0.18em] text-muted-foreground uppercase">
+            {topics.map((topic) => (
+              <li key={topic} className="flex items-center gap-2">
+                <span aria-hidden className="size-1 rounded-full bg-accent" />
+                {topic}
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       {/* Featured letter */}
