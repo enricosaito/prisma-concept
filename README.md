@@ -56,6 +56,12 @@ A varredura é **linear e vertical** (`radial: false`), não radial: um gradient
 radial se centraliza na caixa de cada elemento, e o Λ (estreito) brilharia fora
 de compasso com o PRISM (largo).
 
+Há ainda um **kern óptico** de `-0.06em` antes do Λ. Não é correção de métrica:
+rasterizando as duas grafias e varrendo as colunas de pixel, a tinta do Λ já cai
+a 0,005em de onde cairia um "A" de verdade. Mas o "A" fecha o contraforma com a
+barra e o Λ deixa aberta, então aquele branco se junta ao entreletra e o vão
+*parece* maior. O kern fecha essa impressão sem espremer o M.
+
 O empurrão de baseline existe porque girar 180° pivota no centro da caixa, o que
 joga os pés do glifo abaixo da linha de base em
 `(fontBoundingBoxAscent − fontBoundingBoxDescent) − capHeight`. Medido na

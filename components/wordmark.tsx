@@ -41,6 +41,16 @@ const waveGradientFlipped = buildWaveGradient({
 const BASELINE_FIX = "0.11em"
 
 /**
+ * Optical kern, not a metric correction: measured by rasterising both spellings
+ * and scanning pixel columns, the Λ's ink already sits within 0.005em of where
+ * a real "A" would. It still *reads* too far from the M, because an "A" closes
+ * its counter with the crossbar while the Λ leaves it open, so that white runs
+ * together with the letter-spacing into one gap. Pulling it back closes the
+ * perceived gap without crowding the M.
+ */
+const OPTICAL_KERN = "0.06em"
+
+/**
  * The crossbar-less "A": Playfair's own "V" turned 180°.
  *
  * Using the real glyph rather than a drawn shape keeps the face's
@@ -57,8 +67,11 @@ function Lambda({ wave }: { wave?: boolean }) {
   return (
     <span
       aria-hidden="true"
-      className={cn("inline-block", wave && "-ml-[2px]")}
+      className="inline-block"
       style={{
+        // The wave variant also backs out GradientWaveText's 2px inline padding
+        // on the clipped span, which would widen this gap further.
+        marginLeft: wave ? `calc(-2px - ${OPTICAL_KERN})` : `-${OPTICAL_KERN}`,
         rotate: "180deg",
         translate: `0 ${BASELINE_FIX}`,
         ...(wave
