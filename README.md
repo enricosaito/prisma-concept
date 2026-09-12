@@ -67,16 +67,18 @@ recortado; e as duas constantes (`0.12em` de baseline, `-0.15em` de kern
 
 ## Estrutura
 
-| Caminho                  | O que é                                              |
-| ------------------------ | ---------------------------------------------------- |
-| `app/page.tsx`           | Home — hero + grade da Biblioteca                    |
-| `app/biblioteca/page.tsx`| Biblioteca — arquivo completo                        |
-| `app/biblioteca/[slug]/` | Página de leitura (pré-renderizada por slug)         |
-| `app/assinar/page.tsx`   | Página de assinatura                                 |
-| `app/api/subscribe/`     | Route handler que recebe o e-mail                    |
-| `lib/posts.ts`           | **Os textos.** Fonte de verdade do conteúdo          |
-| `lib/site.ts`            | Nome, tagline, links sociais, itens do menu          |
-| `components/`            | Header, footer, cards, formulário, marca             |
+| Caminho                   | O que é                                           |
+| ------------------------- | ------------------------------------------------- |
+| `app/page.tsx`            | Home — hero + grade da Biblioteca                 |
+| `app/biblioteca/page.tsx` | Biblioteca — arquivo completo                     |
+| `app/biblioteca/[slug]/`  | Página de leitura (pré-renderizada por slug)      |
+| `app/assinar/page.tsx`    | Página de assinatura                              |
+| `app/api/subscribe/`      | Route handler que recebe o e-mail                 |
+| `lib/newsletter.tsx`      | Resend: cadastro na lista + e-mail de boas-vindas |
+| `emails/`                 | Templates de e-mail (react-email)                 |
+| `lib/posts.ts`            | **Os textos.** Fonte de verdade do conteúdo       |
+| `lib/site.ts`             | Nome, tagline, links sociais, itens do menu       |
+| `components/`             | Header, footer, cards, formulário, marca          |
 
 ## Publicando uma carta nova
 
@@ -114,27 +116,27 @@ O estilo do texto longo mora na classe `.prose-letter` em `app/globals.css`.
 
 Vindos do registry `@spell` (`components.json`), ficam soltos em `components/`:
 
-| Componente          | Onde aparece                                             |
-| ------------------- | -------------------------------------------------------- |
-| `GradientWaveText`  | Wordmark PRISMA no header — varredura de espectro         |
-| `BlurReveal`        | Hero da home (olho, título, descrição)                    |
-| `TiltCard`          | Cards de carta nas grades (home e "Continue lendo")       |
-| `FlowButton`        | — sem uso (o formulário passou a usar o rainbow button)   |
-| `LabelInput`        | — sem uso (virou input simples com placeholder)           |
-| `Spinner`           | Estado de envio do formulário                             |
-| `Signature`         | Assinatura no fim de cada carta (`components/sign-off`)   |
+| Componente         | Onde aparece                                            |
+| ------------------ | ------------------------------------------------------- |
+| `GradientWaveText` | Wordmark PRISMA no header — varredura de espectro       |
+| `BlurReveal`       | Hero da home (olho, título, descrição)                  |
+| `TiltCard`         | Cards de carta nas grades (home e "Continue lendo")     |
+| `FlowButton`       | — sem uso (o formulário passou a usar o rainbow button) |
+| `LabelInput`       | — sem uso (virou input simples com placeholder)         |
+| `Spinner`          | Estado de envio do formulário                           |
+| `Signature`        | Assinatura no fim de cada carta (`components/sign-off`) |
 
 `perspective-book.tsx` também foi instalado, mas ainda não é usado.
 
 ## Componentes Magic UI
 
-| Componente              | Onde aparece                                          |
-| ----------------------- | ----------------------------------------------------- |
-| `rainbow-button`        | "Assinar" do header e do menu mobile (`outline`)      |
-| `animated-gradient-text`| `components/highlight.tsx` — palavras em destaque      |
-| `animated-theme-toggler` | Troca de tema no header (`components/theme-toggle`)   |
-| `grid-pattern`          | Grade tracejada no fundo do hero                      |
-| `shine-border`          | Borda animada do campo de e-mail                      |
+| Componente               | Onde aparece                                        |
+| ------------------------ | --------------------------------------------------- |
+| `rainbow-button`         | "Assinar" do header e do menu mobile (`outline`)    |
+| `animated-gradient-text` | `components/highlight.tsx` — palavras em destaque   |
+| `animated-theme-toggler` | Troca de tema no header (`components/theme-toggle`) |
+| `grid-pattern`           | Grade tracejada no fundo do hero                    |
+| `shine-border`           | Borda animada do campo de e-mail                    |
 
 Os três foram retunados para o espectro discreto da marca em vez dos padrões
 neon de fábrica. Dois ajustes que valem nota:
@@ -148,10 +150,18 @@ neon de fábrica. Dois ajustes que valem nota:
   reload ou numa troca de tema do sistema. Controlado, ele só roda a view
   transition e devolve o valor novo. `components/theme-toggle.tsx` também adia a
   renderização até montar, porque `resolvedTheme` é `undefined` no servidor.
-- **`animated-gradient-text`** pinta com `background-clip: text`. Aqui ele
-  envolve um `BlurReveal`, cujos caracteres são `inline-block` animados —
-  diferente do Λ, esses assentam em transform zero, então o recorte fecha
-  certo. Conferido no navegador, sem faixas por letra.
+- **`animated-gradient-text`** pinta com `background-clip: text`, e isso já
+  custou a palavra em destaque no mobile. O texto é desenhado em
+  `transparent` e o gradiente aparece pelos buracos, então **qualquer coisa que
+  impeça o recorte de pintar deixa um vazio no lugar da palavra**. Eram dois
+  problemas somados:
+  - O `BlurReveal` que ele envolve deixava `filter: blur(0px)` em cada letra
+    depois da animação. Filtro diferente de `none` ainda cria camada própria, e
+    camada dentro de um pai recortado pinta fora do recorte. O componente agora
+    tira o filtro quando a revelação termina.
+  - Como piso, `.gradient-text` (em `app/globals.css`) define uma cor sólida e
+    só troca para `transparent` dentro de um `@supports`. Onde o recorte não
+    funcionar, a palavra sai em bronze em vez de sumir.
 
 `dia-text-reveal.tsx` também está instalado, ainda sem uso, e **reprova no
 lint** (escreve em refs durante o render).
@@ -227,12 +237,60 @@ Sem ele, `components/sign-off.tsx` mostra o nome em Playfair itálico como
 fallback. Coloque o arquivo em `public/` (ou aponte `fontSrc` para outro) e a
 animação de escrita liga sozinha.
 
-## ⚠️ O formulário de assinatura ainda não guarda ninguém
+## A lista (Resend)
 
-`app/api/subscribe/route.ts` valida o e-mail e responde com sucesso, mas **não
-persiste nada** — só escreve no log do servidor. Antes de divulgar o site,
-conecte um provedor (Resend Audiences, Buttondown, Loops, ConvertKit…) no `TODO`
-marcado nesse arquivo.
+Quem assina vai para uma lista no [Resend](https://resend.com) e recebe na hora
+um e-mail de boas-vindas. O caminho inteiro:
+
+```
+components/subscribe-form.tsx  →  app/api/subscribe/route.ts  →  lib/newsletter.tsx
+                                                                      ↓
+                                                              emails/welcome.tsx
+```
+
+- **`lib/newsletter.tsx`** é onde mora tudo que é Resend. O route handler só
+  valida o e-mail e traduz o resultado para português.
+- **`emails/welcome.tsx`** é o e-mail, em [react-email](https://react.email).
+  As cores vêm de `emails/theme.ts` — os mesmos tokens do site, achatados para
+  hex porque cliente de e-mail não entende `oklch` nem custom property.
+
+### Variáveis de ambiente
+
+Copie `.env.example` para `.env.local` e preencha:
+
+| Variável             | Para quê                                                         |
+| -------------------- | ---------------------------------------------------------------- |
+| `RESEND_API_KEY`     | chave em resend.com/api-keys (precisa de acesso a contacts)      |
+| `RESEND_AUDIENCE_ID` | a lista. O Resend renomeou Audiences para Segments —             |
+| `RESEND_SEGMENT_ID`  | use a que o seu painel mostrar; se as duas existirem, vence esta |
+| `RESEND_FROM`        | remetente, em domínio verificado. Opcional                       |
+
+Em produção, as mesmas chaves no projeto da Vercel (`vercel env add`).
+
+**Sem `RESEND_API_KEY` o formulário continua funcionando de ponta a ponta** — o
+e-mail só é escrito no log e nada é guardado (`"stored": false` na resposta).
+Dá para mexer no visual do formulário offline sem gastar envio.
+
+> Se você acabou de apagar ou mudar o `.env.local`, reinicie o `npm run dev`:
+> o servidor já rodando mantém as variáveis antigas em memória.
+
+### O que acontece quando alguém assina
+
+| Situação                         | Resultado                                   |
+| -------------------------------- | ------------------------------------------- |
+| e-mail novo                      | entra na lista + recebe as boas-vindas      |
+| já estava na lista               | nada acontece, não recebe um segundo e-mail |
+| tinha cancelado antes            | volta para a lista + recebe as boas-vindas  |
+| Resend fora do ar / chave errada | 502, e o erro sai no log com nome e status  |
+
+O leitor vê a mesma mensagem nos três primeiros casos — um formulário público
+não deve confirmar para um estranho se um endereço já está cadastrado.
+
+### Ainda não existe
+
+Enviar a carta em si. O que está pronto é a lista e o e-mail transacional; a
+edição quinzenal ainda sai só no site. O próximo passo é um Broadcast do Resend
+alimentado por `lib/posts.ts`.
 
 ## Personalizando
 
@@ -244,3 +302,9 @@ marcado nesse arquivo.
   (texto) + Geist Mono (rótulos), configuradas em `app/layout.tsx`.
 - **Tema:** claro/escuro seguem o sistema; o botão no header alterna (o atalho
   de tecla `d` do scaffold foi removido).
+- **Ícone:** o original de 1024px é `public/favicon.jpg`. O que o navegador usa
+  são os três arquivos em `app/`, gerados a partir dele — `favicon.ico`
+  (16/32/48/64px), `icon.jpg` (512px) e `apple-icon.jpg` (180px, tela inicial
+  do iOS). O Next monta as tags `<link>` sozinho a partir dos nomes; `favicon`
+  só aceita `.ico`, por isso o `.jpg` vira `icon`. Para trocar a arte, troque
+  o `public/favicon.jpg` e regere os três.
