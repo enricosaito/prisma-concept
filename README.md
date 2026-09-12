@@ -41,6 +41,15 @@ alto e "A" sem barra) e `Mermaid Swash Caps.ttf`. A Swash Caps foi testada e
 letras se sobrepõem em qualquer entreletra normal e só se separam perto de
 `0.5em` — e o "P" ainda invade a margem esquerda.
 
+### Por que o wordmark tem um empurrão de 0.083em
+
+Flex centraliza a **caixa de linha**, não a tinta. A Mermaid1001 reserva uma
+descida grande (13px a 36px) que caixa alta nunca usa, então a palavra subia:
+medidos 15,5px de folga acima dos glifos e 21,5px abaixo. O desequilíbrio é
+`(fontBoundingBoxDescent − fontBoundingBoxAscent) + (inkAscent − inkDescent)`,
+pela metade — a entrelinha se cancela, então uma constante em `em` vale nos dois
+tamanhos do header. Agora fica 18,49 / 18,51.
+
 ### O PRISM + Λ da Playfair ficou para trás
 
 Enquanto o wordmark era Playfair, o "A" sem barra era o próprio "V" da fonte
@@ -138,9 +147,12 @@ lint** (escreve em refs durante o render).
 
 ## Botões
 
-Todos usam Playfair em caixa alta com `tracking-[0.16em]` — a regra está na base
-dos três componentes (`ui/button`, `flow-button`, `ui/rainbow-button`), não nos
-pontos de uso.
+Todos usam **Jost** (`--font-ui`) em caixa alta com `tracking-[0.16em]` — a regra
+está na base dos três componentes (`ui/button`, `flow-button`,
+`ui/rainbow-button`), não nos pontos de uso. Os links do menu usam a mesma
+fonte. Jost é geométrica (linha Futura), o par clássico de um display de
+contraste alto: soa como outra voz em vez de disputar com o wordmark, o que
+acontecia quando nav e logo eram os dois serifados.
 
 O "Assinar" do header e do menu mobile é o **rainbow button do Magic UI**
 (`npx shadcn add https://magicui.design/r/rainbow-button.json`), na variante
@@ -196,6 +208,7 @@ marcado nesse arquivo.
 - **Textos do site, Instagram, e-mail:** `lib/site.ts`
 - **Cores:** tokens em `app/globals.css` (`:root` e `.dark`). A paleta atual é
   papel `#f6f7f8`, tinta `#101112` e bronze `#b89062`.
-- **Fontes:** `Mermaid1001` (wordmark) + Playfair Display (títulos) + Inter
+- **Fontes:** `Mermaid1001` (wordmark) + Jost (nav/botões) + Playfair Display
+  (títulos) + Inter
   (texto) + Geist Mono (rótulos), configuradas em `app/layout.tsx`.
 - **Tema:** claro/escuro seguem o sistema; `d` alterna manualmente.

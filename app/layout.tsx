@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Geist_Mono, Inter, Playfair_Display } from "next/font/google"
+import { Geist_Mono, Inter, Jost, Playfair_Display } from "next/font/google"
 import localFont from "next/font/local"
 
 import "./globals.css"
@@ -20,6 +20,15 @@ const fontDisplay = localFont({
   src: "../public/fonts/Mermaid1001.ttf",
   variable: "--font-display",
   display: "swap",
+})
+
+// UI face for nav and buttons. Geometric/Futura-like, the classic partner for a
+// high-contrast display serif — it reads as a different voice to the wordmark
+// rather than competing with it the way a second serif did.
+const fontUi = Jost({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-ui",
 })
 
 const fontSans = Inter({
@@ -68,6 +77,7 @@ export default function RootLayout({
         fontSans.variable,
         fontHeading.variable,
         fontDisplay.variable,
+        fontUi.variable,
         fontMono.variable
       )}
     >

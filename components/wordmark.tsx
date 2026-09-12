@@ -54,8 +54,23 @@ const spectrum = [
  * ------------------------------------------------------------------------- */
 
 /**
- * PRISMA, set in "against regular" — the display face carries its own
- * high-contrast A, so the letters are plain text with no per-glyph surgery.
+ * Optical centring nudge.
+ *
+ * Flexbox centres the *line box*, not the ink. Mermaid1001 reserves a big
+ * descent (13px at 36px) that all-caps never uses, so the word lands high —
+ * measured 15.5px of space above the glyphs and 21.5px below inside the bar.
+ *
+ * The imbalance works out to `(fontBoundingBoxDescent − fontBoundingBoxAscent)
+ * + (inkAscent − inkDescent)`, halved. Line-height cancels out of that, so one
+ * em constant holds at both header sizes. Measured via canvas `measureText`:
+ * (13 − 32 + 26 − 1) / 2 = 3px at 36px = 0.083em.
+ *
+ * Re-measure if the display face changes — it is a property of that font.
+ */
+const OPTICAL_CENTER = "translate-y-[0.083em]"
+
+/**
+ * PRISMA, set in the display face — plain text, no per-glyph surgery.
  */
 function Wordmark({
   className,
@@ -69,7 +84,9 @@ function Wordmark({
 }) {
   if (!wave) {
     return (
-      <span className={cn("font-display", className)}>{site.wordmark}</span>
+      <span className={cn("font-display", OPTICAL_CENTER, className)}>
+        {site.wordmark}
+      </span>
     )
   }
 
@@ -82,6 +99,7 @@ function Wordmark({
       bottomOffset={0}
       className={cn(
         "h-auto w-auto font-display [--gradient-wave-base:var(--foreground)] dark:[--gradient-wave-base:var(--foreground)]",
+        OPTICAL_CENTER,
         className
       )}
     >
