@@ -116,7 +116,7 @@ export default function Page() {
             Ensaios curtos, notas de processo e recortes do que andei lendo.
             Direto na sua caixa de entrada.
           </p>
-          <SubscribeForm surface="secondary" className="mt-8 max-w-md" />
+          <SubscribeForm className="mt-8 max-w-md" />
         </div>
       </section>
     </>

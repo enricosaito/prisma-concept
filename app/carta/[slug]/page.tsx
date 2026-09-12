@@ -84,7 +84,7 @@ export default async function Page({
         <p className="mt-2 text-sm text-muted-foreground">
           Assine e receba a próxima em duas semanas.
         </p>
-        <SubscribeForm surface="secondary" className="mt-6" />
+        <SubscribeForm className="mt-6" />
       </div>
 
       {more.length > 0 ? (

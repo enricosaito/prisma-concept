@@ -39,7 +39,7 @@ export default function Page() {
         <h2 className="font-heading text-xl font-medium tracking-tight sm:text-2xl">
           Receba a próxima antes de todo mundo.
         </h2>
-        <SubscribeForm surface="secondary" className="mt-6 max-w-md" />
+        <SubscribeForm className="mt-6 max-w-md" />
       </div>
     </div>
   )
