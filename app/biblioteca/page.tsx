@@ -25,7 +25,7 @@ export default function Page() {
         <p className="mt-5 text-base leading-relaxed text-muted-foreground">
           {posts.length}{" "}
           {posts.length === 1 ? "edição publicada" : "edições publicadas"}. Da
-          mais recente para a mais antiga.
+          mais antiga para a mais recente.
         </p>
       </header>
 

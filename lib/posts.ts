@@ -20,20 +20,18 @@ export type Post = {
   /** ISO date, used for sorting and for the <time> element. */
   date: string
   readingMinutes: number
-  featured?: boolean
   content: Block[]
 }
 
 export const posts: Post[] = [
   {
-    issue: 5,
+    issue: 3,
     slug: "o-que-um-prisma-faz-com-a-luz",
     title: "O que um prisma faz com a luz",
     dek: "Sobre separar o que parecia uma coisa só — e por que esta carta existe.",
     category: "Escrita",
     date: "2026-09-04",
     readingMinutes: 6,
-    featured: true,
     content: [
       {
         type: "p",
@@ -68,72 +66,6 @@ export const posts: Post[] = [
       {
         type: "p",
         text: "Se isso soa como algo que você gostaria de receber, assine. Se não, tudo bem — o arquivo fica aberto de qualquer jeito.",
-      },
-    ],
-  },
-  {
-    issue: 4,
-    slug: "ferramentas-que-pensam-por-voce",
-    title: "Ferramentas que pensam por você",
-    dek: "Toda ferramenta tem uma opinião embutida. A questão é se você percebeu qual é.",
-    category: "Tecnologia",
-    date: "2026-08-21",
-    readingMinutes: 8,
-    content: [
-      {
-        type: "p",
-        text: "Existe uma ilusão confortável de que ferramentas são neutras — que um editor de texto é apenas um editor de texto, que um software de design apenas desenha o que você mandou. Nenhuma ferramenta é neutra. Cada uma torna certas coisas triviais e outras insuportáveis, e é nessa diferença que ela decide o que você vai acabar fazendo.",
-      },
-      { type: "h2", text: "O caminho de menor resistência é uma opinião" },
-      {
-        type: "p",
-        text: "Quando um programa coloca um recurso a um clique de distância e esconde outro em três submenus, ele não está sendo prático. Está dizendo qual dos dois considera normal. Multiplique isso por milhares de decisões e você tem uma estética inteira produzida por padrões de interface.",
-      },
-      {
-        type: "quote",
-        text: "Nós moldamos nossas ferramentas, e depois nossas ferramentas nos moldam de volta.",
-        cite: "atribuído a John Culkin",
-      },
-      { type: "h2", text: "O exercício" },
-      {
-        type: "p",
-        text: "Pegue a ferramenta que você mais usa e liste três coisas que ela torna fáceis e três que ela torna difíceis. Depois pergunte quantas dessas dificuldades você passou a chamar de preferência pessoal.",
-      },
-      {
-        type: "p",
-        text: "Não é um argumento para trocar de ferramenta. É um argumento para saber de quem é a opinião que você está executando.",
-      },
-    ],
-  },
-  {
-    issue: 3,
-    slug: "o-espaco-em-branco-nao-e-sobra",
-    title: "O espaço em branco não é sobra",
-    dek: "Quase todo layout ruim que já vi tinha o mesmo problema: medo de deixar espaço.",
-    category: "Design",
-    date: "2026-08-07",
-    readingMinutes: 5,
-    content: [
-      {
-        type: "p",
-        text: "Espaço em branco é a única coisa num layout que todo mundo concorda em cortar primeiro e ninguém sabe explicar por quê. A intuição é que espaço vazio é espaço desperdiçado, e que preencher é aproveitar.",
-      },
-      {
-        type: "p",
-        text: "Mas o espaço é o que diz ao olho o que pertence a quê. Dois elementos próximos são lidos como uma coisa; afastados, como duas. Você não está escolhendo entre cheio e vazio — está escolhendo quantos assuntos a página tem.",
-      },
-      { type: "h2", text: "Agrupar antes de decorar" },
-      {
-        type: "list",
-        items: [
-          "Se dois blocos estão relacionados, aproxime-os mais do que qualquer outra coisa na página.",
-          "Se não estão, afaste-os até que a separação seja óbvia sem uma linha divisória.",
-          "Só depois disso considere bordas, cores de fundo e caixas.",
-        ],
-      },
-      {
-        type: "p",
-        text: "Boa parte das bordas que existem no mundo são pedidos de desculpa por espaçamento mal resolvido.",
       },
     ],
   },
@@ -195,26 +127,15 @@ export const posts: Post[] = [
   },
 ]
 
-const byDateDesc = (a: Post, b: Post) => b.date.localeCompare(a.date)
+/** Oldest first: the library reads #001 upward. */
+const byDateAsc = (a: Post, b: Post) => a.date.localeCompare(b.date)
 
 export function getAllPosts(): Post[] {
-  return [...posts].sort(byDateDesc)
+  return [...posts].sort(byDateAsc)
 }
 
 export function getPostBySlug(slug: string): Post | undefined {
   return posts.find((post) => post.slug === slug)
-}
-
-export function getFeaturedPost(): Post {
-  const all = getAllPosts()
-  return all.find((post) => post.featured) ?? all[0]
-}
-
-/** Posts after the featured one, newest first. */
-export function getRecentPosts(limit?: number): Post[] {
-  const featured = getFeaturedPost()
-  const rest = getAllPosts().filter((post) => post.slug !== featured.slug)
-  return typeof limit === "number" ? rest.slice(0, limit) : rest
 }
 
 export function formatDate(iso: string): string {

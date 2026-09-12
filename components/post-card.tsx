@@ -52,30 +52,6 @@ function PostMeta({
   )
 }
 
-/** The large lead item at the top of the homepage. */
-function FeaturedPostCard({ post }: { post: Post }) {
-  return (
-    <article className="group relative border-t border-border pt-8">
-      <PostMeta post={post} />
-      <h2 className="mt-4 font-heading text-3xl leading-[1.15] font-medium tracking-tight text-balance sm:text-[2.5rem]">
-        <Link href={`/biblioteca/${post.slug}`} className="outline-none">
-          <span className="absolute inset-0" />
-          <span className="bg-[linear-gradient(var(--accent),var(--accent))] bg-[length:0%_1px] bg-[position:0_100%] bg-no-repeat transition-[background-size] duration-500 group-hover:bg-[length:100%_1px]">
-            {post.title}
-          </span>
-        </Link>
-      </h2>
-      <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-        {post.dek}
-      </p>
-      <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-foreground">
-        Ler a carta
-        <RiArrowRightLine className="size-4 text-accent transition-transform duration-300 group-hover:translate-x-1" />
-      </span>
-    </article>
-  )
-}
-
 /**
  * Card used in grids. A gentle "gravitate" tilt — it leans toward the cursor,
  * which reads as the card being picked up rather than shied away from.
@@ -138,4 +114,4 @@ function PostRow({ post }: { post: Post }) {
   )
 }
 
-export { FeaturedPostCard, PostCard, PostRow, PostMeta }
+export { PostCard, PostRow, PostMeta }

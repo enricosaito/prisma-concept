@@ -69,7 +69,7 @@ recortado; e as duas constantes (`0.12em` de baseline, `-0.15em` de kern
 
 | Caminho                  | O que é                                              |
 | ------------------------ | ---------------------------------------------------- |
-| `app/page.tsx`           | Home — hero, última carta, prévia do arquivo, CTA    |
+| `app/page.tsx`           | Home — hero + grade da Biblioteca                    |
 | `app/biblioteca/page.tsx`| Biblioteca — arquivo completo                        |
 | `app/biblioteca/[slug]/` | Página de leitura (pré-renderizada por slug)         |
 | `app/assinar/page.tsx`   | Página de assinatura                                 |
@@ -82,18 +82,18 @@ recortado; e as duas constantes (`0.12em` de baseline, `-0.15em` de kern
 
 Adicione um objeto ao array `posts` em `lib/posts.ts`. A rota, o arquivo e a
 home se atualizam sozinhos — `generateStaticParams` cria a página a partir do
-`slug`.
+`slug`. As cartas são listadas **da mais antiga para a mais nova**, então a
+nova entra no fim com o próximo número.
 
 ```ts
 {
-  issue: 6,                     // vira #006; explícito, não derivado da ordem
+  issue: 4,                     // vira #004; explícito, não derivado da ordem
   slug: "titulo-em-kebab-case",
   title: "Título da carta",
   dek: "Uma linha que aparece nas listagens.",
   category: "Design",           // Tecnologia | Arte | Design | Escrita
-  date: "2026-09-18",           // ISO; ordena da mais nova para a mais velha
+  date: "2026-09-18",           // ISO; ordena da mais antiga para a mais nova
   readingMinutes: 6,
-  featured: true,               // opcional: fixa como "última carta" na home
   content: [
     { type: "p", text: "..." },
     { type: "h2", text: "..." },
@@ -119,8 +119,8 @@ Vindos do registry `@spell` (`components.json`), ficam soltos em `components/`:
 | `GradientWaveText`  | Wordmark PRISMA no header — varredura de espectro         |
 | `BlurReveal`        | Hero da home (olho, título, descrição)                    |
 | `TiltCard`          | Cards de carta nas grades (home e "Continue lendo")       |
-| `FlowButton`        | Botão "Assinar" do formulário                             |
-| `LabelInput`        | Campo de e-mail, com label flutuante                      |
+| `FlowButton`        | — sem uso (o formulário passou a usar o rainbow button)   |
+| `LabelInput`        | — sem uso (virou input simples com placeholder)           |
 | `Spinner`           | Estado de envio do formulário                             |
 | `Signature`         | Assinatura no fim de cada carta (`components/sign-off`)   |
 

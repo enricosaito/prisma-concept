@@ -3,16 +3,15 @@ import { RiArrowRightLine } from "@remixicon/react"
 
 import { BlurReveal } from "@/components/blur-reveal"
 import { Highlight } from "@/components/highlight"
-import { FeaturedPostCard, PostCard } from "@/components/post-card"
+import { PostCard } from "@/components/post-card"
 import { SubscribeForm } from "@/components/subscribe-form"
 import { GridPattern } from "@/components/ui/grid-pattern"
-import { getFeaturedPost, getRecentPosts } from "@/lib/posts"
+import { getAllPosts } from "@/lib/posts"
 import { site } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 export default function Page() {
-  const featured = getFeaturedPost()
-  const recent = getRecentPosts(3)
+  const letters = getAllPosts()
 
   return (
     <>
@@ -68,15 +67,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Featured letter */}
-      <section className="mx-auto max-w-5xl px-5 sm:px-8">
-        <h2 className="mb-6 font-mono text-[0.7rem] tracking-[0.22em] text-muted-foreground uppercase">
-          Última carta
-        </h2>
-        <FeaturedPostCard post={featured} />
-      </section>
-
-      {/* Archive preview */}
+      {/* Biblioteca */}
       <section className="mx-auto mt-20 max-w-5xl px-5 sm:px-8">
         <div className="mb-6 flex items-baseline justify-between gap-4">
           <h2 className="font-mono text-[0.7rem] tracking-[0.22em] text-muted-foreground uppercase">
@@ -91,7 +82,7 @@ export default function Page() {
           </Link>
         </div>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {recent.map((post) => (
+          {letters.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}
         </div>
