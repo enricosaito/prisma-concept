@@ -223,4 +223,5 @@ marcado nesse arquivo.
 - **Fontes:** `Mermaid1001` (wordmark) + Jost (nav/botões) + Playfair Display
   (títulos) + Inter
   (texto) + Geist Mono (rótulos), configuradas em `app/layout.tsx`.
-- **Tema:** claro/escuro seguem o sistema; `d` alterna manualmente.
+- **Tema:** claro/escuro seguem o sistema; o botão no header alterna (o atalho
+  de tecla `d` do scaffold foi removido).

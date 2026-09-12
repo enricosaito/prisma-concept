@@ -69,6 +69,8 @@ function SiteHeader() {
           className="hidden items-center gap-1 sm:flex"
           aria-label="Principal"
         >
+          <ThemeToggle className="mr-1" />
+
           {inlineLinks.map((item) => (
             <Link
               key={item.href}
@@ -87,8 +89,6 @@ function SiteHeader() {
               ) : null}
             </Link>
           ))}
-
-          <ThemeToggle className="ml-1" />
 
           <RainbowButton
             asChild

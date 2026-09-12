@@ -1,7 +1,8 @@
 function SiteFooter() {
   return (
-    <footer className="mt-24 border-t border-border/70">
-      <p className="mx-auto max-w-5xl px-5 py-8 text-center font-mono text-[0.65rem] tracking-[0.14em] text-muted-foreground sm:px-8">
+    // No rule across the top — the footer just fades out under the content.
+    <footer className="mt-24">
+      <p className="mx-auto max-w-5xl px-5 py-10 text-center font-display text-lg text-muted-foreground/45 sm:px-8">
         © {new Date().getFullYear()} The Prisma Concept
       </p>
     </footer>

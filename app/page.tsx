@@ -105,20 +105,6 @@ export default function Page() {
           ))}
         </div>
       </section>
-
-      {/* Closing CTA */}
-      <section className="mx-auto mt-20 max-w-5xl px-5 sm:px-8">
-        <div className="rounded-xl border border-border bg-secondary px-6 py-10 sm:px-12 sm:py-14">
-          <h2 className="max-w-lg font-heading text-2xl leading-snug font-medium tracking-tight text-balance sm:text-3xl">
-            Uma carta a cada quinze dias. Nada além disso.
-          </h2>
-          <p className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">
-            Ensaios curtos, notas de processo e recortes do que andei lendo.
-            Direto na sua caixa de entrada.
-          </p>
-          <SubscribeForm className="mt-8 max-w-md" />
-        </div>
-      </section>
     </>
   )
 }
