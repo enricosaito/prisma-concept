@@ -6,7 +6,8 @@ export const site = {
     "Prisma é uma carta quinzenal sobre tecnologia, arte, design e escrita — e sobre o que acontece quando essas quatro coisas se atravessam.",
   author: "Enrico Saito",
   url: "https://prismaconcept.com",
-  instagram: "https://instagram.com/prismaconcept",
+  instagram: "https://instagram.com/theprismaconcept",
+  instagramHandle: "@theprismaconcept",
   email: "ola@prismaconcept.com",
 } as const
 
