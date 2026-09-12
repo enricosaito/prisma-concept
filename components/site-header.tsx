@@ -5,7 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { RiCloseLine, RiInstagramLine, RiMenuLine } from "@remixicon/react"
 
-import { buttonVariants } from "@/components/ui/button"
+import { RainbowButton } from "@/components/ui/rainbow-button"
 import { Wordmark } from "@/components/wordmark"
 import { nav, site } from "@/lib/site"
 import { cn } from "@/lib/utils"
@@ -94,12 +94,9 @@ function SiteHeader() {
             <RiInstagramLine className="size-[18px]" />
           </a>
 
-          <Link
-            href={subscribeHref}
-            className={cn(buttonVariants(), "ml-2 h-9 rounded-full px-4")}
-          >
-            Assinar
-          </Link>
+          <RainbowButton asChild className="ml-2 h-9 rounded-full px-5 text-xs">
+            <Link href={subscribeHref}>Assinar</Link>
+          </RainbowButton>
         </nav>
 
         <div className="flex items-center gap-1 sm:hidden">
@@ -154,12 +151,12 @@ function SiteHeader() {
                 {item.label}
               </Link>
             ))}
-            <Link
-              href={subscribeHref}
-              className={cn(buttonVariants(), "mt-5 h-11 rounded-full text-sm")}
+            <RainbowButton
+              asChild
+              className="mt-5 h-11 w-full rounded-full text-xs"
             >
-              Assinar a carta
-            </Link>
+              <Link href={subscribeHref}>Assinar a carta</Link>
+            </RainbowButton>
           </nav>
         </div>
       ) : null}

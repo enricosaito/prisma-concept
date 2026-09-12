@@ -56,7 +56,7 @@ A varredura é **linear e vertical** (`radial: false`), não radial: um gradient
 radial se centraliza na caixa de cada elemento, e o Λ (estreito) brilharia fora
 de compasso com o PRISM (largo).
 
-Há ainda um **kern óptico** de `-0.09em` antes do Λ. Não é correção de métrica:
+Há ainda um **kern óptico** de `-0.12em` antes do Λ. Não é correção de métrica:
 rasterizando as duas grafias e varrendo as colunas de pixel, a tinta do Λ já cai
 a 0,005em de onde cairia um "A" de verdade. Mas o "A" fecha o contraforma com a
 barra e o Λ deixa aberta, então aquele branco se junta ao entreletra e o vão
@@ -122,6 +122,23 @@ Vindos do registry `@spell` (`components.json`), ficam soltos em `components/`:
 | `Signature`         | Assinatura no fim de cada carta (`components/sign-off`)   |
 
 `perspective-book.tsx` também foi instalado, mas ainda não é usado.
+
+## Botões
+
+Todos usam Playfair em caixa alta com `tracking-[0.16em]` — a regra está na base
+dos três componentes (`ui/button`, `flow-button`, `ui/rainbow-button`), não nos
+pontos de uso.
+
+O "Assinar" do header e do menu mobile é o **rainbow button do Magic UI**
+(`npx shadcn add https://magicui.design/r/rainbow-button.json`), com dois
+ajustes:
+
+- `--color-1..5` em `globals.css` passaram do arco-íris saturado de fábrica para
+  o mesmo espectro discreto do wordmark — um prisma dispersando luz, e não um
+  degradê neon em cima de uma paleta editorial;
+- as cores do corpo saíram de `#121213`/`#fff` fixos para `var(--primary)`, que
+  já vira sozinho com o tema; com isso o `dark:` do componente foi removido e o
+  botão fica creme no escuro, em vez de branco puro.
 
 ### Ajustes feitos neles
 
