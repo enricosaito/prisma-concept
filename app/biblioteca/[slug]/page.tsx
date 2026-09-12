@@ -56,7 +56,7 @@ export default async function Page({
         className="group inline-flex items-center gap-2 font-mono text-[0.7rem] tracking-[0.18em] text-muted-foreground uppercase transition-colors hover:text-foreground"
       >
         <RiArrowLeftLine className="size-3.5 text-accent transition-transform group-hover:-translate-x-0.5" />
-        Arquivo
+        Biblioteca
       </Link>
 
       <header className="mx-auto mt-10 max-w-2xl">

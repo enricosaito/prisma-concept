@@ -222,6 +222,27 @@
   );
 }
 
+/* Text painted by a moving gradient (AnimatedGradientText / Highlight).
+   `background-clip: text` is the effect, but it is also the failure mode: the
+   glyphs are drawn in `transparent` and the gradient shows through the holes,
+   so anything that stops the clip from painting leaves a blank gap where the
+   word should be. The solid colour below is the floor — where the clip can't
+   paint, the word still reads in the gradient's first stop instead of
+   vanishing, which is what mobile WebKit was doing. */
+@layer components {
+  .gradient-text {
+    color: var(--color-from);
+  }
+
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    .gradient-text {
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+}
+
 /* Spell UI support tokens ------------------------------------------------ */
 
 /* FlowButton's default `borderColor`; its dashes flow in the brand bronze. */

@@ -20,9 +20,9 @@ function SiteFooter() {
           <RiInstagramLine className="size-5" />
         </a>
 
-        {/* Drawn once when the footer scrolls into view. h-16 keeps it inside
-            the 320px a 360px screen leaves after the gutters — at this
-            signature's 4.58 aspect ratio, h-20 would be 366px and overflow. */}
+        {/* Drawn once when the footer scrolls into view. It takes the column's
+            width up to 23rem, so it shrinks with the gutters on a narrow phone
+            rather than running past them. */}
         <Signature
           text={site.signature}
           fontSrc="/fonts/LastoriaBoldRegular.otf"
@@ -30,7 +30,7 @@ function SiteFooter() {
           fontSize={40}
           duration={1.4}
           inView
-          className="h-16 w-auto text-muted-foreground/45 sm:h-20"
+          className="max-w-[23rem] text-muted-foreground/45"
           fallback={
             <p className="font-heading text-2xl text-muted-foreground/45 italic">
               {site.signature}

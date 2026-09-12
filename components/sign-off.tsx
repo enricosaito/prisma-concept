@@ -28,10 +28,10 @@ function SignOff({ className }: { className?: string }) {
           fontSize={52}
           duration={1.2}
           inView
-          // The signature is 4.58x as wide as it is tall, so h-28 (513px) needs
-          // the 576px a 640px screen leaves; below that it has to come down to
-          // h-16 or it spills out of the column.
-          className="h-16 w-auto sm:h-28"
+          // Full column width, capped at the 32rem that keeps it from
+          // outgrowing the 42rem reading measure. It scales down with the
+          // column on phones instead of being clipped by it.
+          className="max-w-[32rem]"
           fallback={
             <p className="font-heading text-3xl italic">{site.signature}</p>
           }
