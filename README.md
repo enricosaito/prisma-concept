@@ -30,17 +30,24 @@ para publicar fora desse fluxo.
 
 ## A marca
 
-O wordmark é **PRISMA** em `against regular` (`public/fonts/`, carregada com
-`next/font/local` como `--font-display`). É texto puro: essa fonte já traz um
-"A" sem barra, com um swash fino no lugar dela, então não há cirurgia de glifo
-nenhuma — e a varredura do gradiente atravessa todas as letras de uma vez.
+O wordmark é **PRISMA** em `Mermaid1001` (`public/fonts/`, carregada com
+`next/font/local` como `--font-display`), sem entreletra — a palavra fecha em
+bloco. É texto puro, sem cirurgia de glifo, e a varredura do gradiente
+atravessa todas as letras de uma vez.
+
+Na pasta também estão `against regular.otf` (a fonte anterior, de contraste
+alto e "A" sem barra) e `Mermaid Swash Caps.ttf`. A Swash Caps foi testada e
+**não serve para o header**: os swashes passam da largura de avanço, então as
+letras se sobrepõem em qualquer entreletra normal e só se separam perto de
+`0.5em` — e o "P" ainda invade a margem esquerda.
 
 ### O PRISM + Λ da Playfair ficou para trás
 
 Enquanto o wordmark era Playfair, o "A" sem barra era o próprio "V" da fonte
-girado 180°. Testado lado a lado, esse truque **piora** na `against regular`:
-as constantes de baseline e kern foram medidas na Playfair e não transferem, e
-o Λ sai menor e desalinhado em relação às outras capitais.
+girado 180°. Esse truque não transfere: medido na `Mermaid1001`, o "V" é 14%
+mais estreito e 3% mais baixo que o "A", e a correção de baseline inverteria de
+sinal (`-0.165em` contra `0.12em` da Playfair). O Λ sairia menor e desalinhado
+em relação às outras capitais.
 
 Toda a lógica (e o porquê de cada constante) está comentada no topo de
 `components/wordmark.tsx`, para não precisar ser redescoberta se a fonte mudar
@@ -189,6 +196,6 @@ marcado nesse arquivo.
 - **Textos do site, Instagram, e-mail:** `lib/site.ts`
 - **Cores:** tokens em `app/globals.css` (`:root` e `.dark`). A paleta atual é
   papel `#f6f7f8`, tinta `#101112` e bronze `#b89062`.
-- **Fontes:** `against regular` (wordmark) + Playfair Display (títulos) + Inter
+- **Fontes:** `Mermaid1001` (wordmark) + Playfair Display (títulos) + Inter
   (texto) + Geist Mono (rótulos), configuradas em `app/layout.tsx`.
 - **Tema:** claro/escuro seguem o sistema; `d` alterna manualmente.
