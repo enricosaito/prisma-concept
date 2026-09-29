@@ -69,9 +69,9 @@ recortado; e as duas constantes (`0.12em` de baseline, `-0.15em` de kern
 
 | Caminho                   | O que é                                           |
 | ------------------------- | ------------------------------------------------- |
-| `app/page.tsx`            | Home — hero + grade da Biblioteca                 |
-| `app/biblioteca/page.tsx` | Biblioteca — arquivo completo                     |
-| `app/biblioteca/[slug]/`  | Página de leitura (pré-renderizada por slug)      |
+| `app/page.tsx`            | Home — hero + grade das Cartas                    |
+| `app/cartas/page.tsx`     | Cartas — arquivo completo                         |
+| `app/cartas/[slug]/`      | Página de leitura (pré-renderizada por slug)      |
 | `app/assinar/page.tsx`    | Página de assinatura                              |
 | `app/api/subscribe/`      | Route handler que recebe o e-mail                 |
 | `lib/newsletter.tsx`      | Resend: cadastro na lista + e-mail de boas-vindas |
@@ -105,10 +105,11 @@ nova entra no fim com o próximo número.
 }
 ```
 
-> A seção se chamava **Carta** e vivia em `/carta`. Virou **Biblioteca** em
-> `/biblioteca`; `next.config.ts` redireciona `/carta` e `/carta/:slug` com 308,
-> então qualquer link já compartilhado continua funcionando. As edições em si
-> continuam sendo "cartas" — a Biblioteca é onde elas ficam.
+> O arquivo já mudou de nome duas vezes: era **Carta** em `/carta`, virou
+> **Biblioteca** em `/biblioteca` e agora é **Cartas** em `/cartas`.
+> `next.config.ts` redireciona os quatro caminhos antigos com 308 — e aponta os
+> dois primeiros direto para `/cartas`, sem encadear um redirect no outro —
+> então qualquer link já compartilhado continua funcionando com um salto só.
 
 O estilo do texto longo mora na classe `.prose-letter` em `app/globals.css`.
 

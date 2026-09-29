@@ -73,8 +73,8 @@ function WelcomeEmail({ url = site.url }: { url?: string }) {
             </Text>
 
             <Section style={{ marginTop: 24, marginBottom: 8 }}>
-              <Link href={`${url}/biblioteca`} style={button}>
-                Ler a biblioteca
+              <Link href={`${url}/cartas`} style={button}>
+                Ler as cartas
               </Link>
             </Section>
 

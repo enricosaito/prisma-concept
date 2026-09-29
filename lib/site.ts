@@ -1,9 +1,9 @@
 export const site = {
   name: "PRISMA",
   wordmark: "PRISMA",
-  tagline: "Novas perspectivas",
+  tagline: "Carta Semanal",
   description:
-    "PRISMA CONCEPT é uma carta quinzenal sobre cultura, filosofia, tecnologia e arte — e sobre o que acontece quando essas quatro coisas se atravessam.",
+    "PRISMA é uma carta semanal onde nos aprofundamos sobre cultura, filosofia, tecnologia e arte — e o que acontece quando essas quatro coisas se atravessam.",
   signature: "Prisma Concept",
   // The canonical host, with the `www.` — the apex 308s here, and this feeds
   // `metadataBase`, the OG tags and the link in the welcome email. The bare
@@ -17,8 +17,15 @@ export const site = {
   email: "carta@prismaconcept.com.br",
 } as const
 
-export const nav = [
-  { href: "/", label: "Início" },
-  { href: "/biblioteca", label: "Biblioteca" },
-  { href: "/assinar", label: "Assinar" },
-] as const
+/** Plain text links in the bar. */
+export const nav = [{ href: "/", label: "Início" }] as const
+
+/**
+ * The one emphasised action, rendered as the rainbow button in the header and
+ * at the foot of the mobile sheet.
+ *
+ * Note this leaves /assinar with no link anywhere on the site — it still
+ * resolves, and the subscribe forms on /cartas and on each letter still work,
+ * but the page itself is now reachable only by typing the URL.
+ */
+export const navCta = { href: "/cartas", label: "Ler cartas" } as const

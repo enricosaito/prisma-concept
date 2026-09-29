@@ -5,6 +5,7 @@ import { RiArrowLeftLine } from "@remixicon/react"
 
 import { PostCard, PostMeta } from "@/components/post-card"
 import { PostContent } from "@/components/post-content"
+import { PostCover } from "@/components/post-cover"
 import { SignOff } from "@/components/sign-off"
 import { SubscribeForm } from "@/components/subscribe-form"
 import { getAllPosts, getPostBySlug, posts } from "@/lib/posts"
@@ -23,6 +24,11 @@ export async function generateMetadata({
 
   if (!post) return {}
 
+  // Relative, so it resolves against the metadataBase set in app/layout.tsx.
+  const images = post.cover
+    ? [{ url: post.cover.src, alt: post.cover.alt }]
+    : undefined
+
   return {
     title: post.title,
     description: post.dek,
@@ -31,7 +37,9 @@ export async function generateMetadata({
       title: post.title,
       description: post.dek,
       publishedTime: post.date,
+      images,
     },
+    twitter: { images },
   }
 }
 
@@ -52,11 +60,11 @@ export default async function Page({
   return (
     <article className="mx-auto max-w-5xl px-5 pt-12 sm:px-8 sm:pt-16">
       <Link
-        href="/biblioteca"
+        href="/cartas"
         className="group inline-flex items-center gap-2 font-mono text-[0.7rem] tracking-[0.18em] text-muted-foreground uppercase transition-colors hover:text-foreground"
       >
         <RiArrowLeftLine className="size-3.5 text-accent transition-transform group-hover:-translate-x-0.5" />
-        Biblioteca
+        Cartas
       </Link>
 
       <header className="mx-auto mt-10 max-w-2xl">
@@ -68,6 +76,18 @@ export default async function Page({
           {post.dek}
         </p>
       </header>
+
+      {post.cover ? (
+        // Kept to the reading column rather than run full-bleed, so the letter
+        // reads as one measure from the title down. It is the widest image on
+        // the page and sits near the top, hence eager.
+        <PostCover
+          cover={post.cover}
+          sizes="(min-width: 768px) 672px, 100vw"
+          className="mx-auto mt-10 max-w-2xl rounded-xl border border-border"
+          eager
+        />
+      ) : null}
 
       <hr className="mx-auto mt-10 max-w-2xl border-border" />
 

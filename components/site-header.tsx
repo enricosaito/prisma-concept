@@ -8,11 +8,8 @@ import { RiCloseLine, RiMenuLine } from "@remixicon/react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { RainbowButton } from "@/components/ui/rainbow-button"
 import { Wordmark } from "@/components/wordmark"
-import { nav } from "@/lib/site"
+import { nav, navCta } from "@/lib/site"
 import { cn } from "@/lib/utils"
-
-const subscribeHref = "/assinar"
-const inlineLinks = nav.filter((item) => item.href !== subscribeHref)
 
 function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname.startsWith(href)
@@ -22,7 +19,6 @@ function SiteHeader() {
   const pathname = usePathname()
   const [open, setOpen] = React.useState(false)
   const [openedAt, setOpenedAt] = React.useState(pathname)
-  const [waveKey, setWaveKey] = React.useState(0)
 
   // Dismiss the mobile sheet whenever the route changes — including via the
   // browser's back/forward buttons. Adjusting state during render (rather than
@@ -55,16 +51,11 @@ function SiteHeader() {
       <div className="flex h-14 w-full items-center justify-between gap-4 px-5 sm:h-16 sm:px-8">
         <Link
           href="/"
-          onMouseEnter={() => setWaveKey((n) => n + 1)}
           className="rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
         >
-          {/* Remounting on hover replays the one-shot sweep; `repeat` would
-              leave a requestAnimationFrame loop running on every page. */}
-          <Wordmark
-            wave
-            waveKey={waveKey}
-            className="text-3xl tracking-normal sm:text-4xl"
-          />
+          {/* The spectrum sweep plays once on mount and is not replayed on
+              hover — the wordmark is a link home, not a toy. */}
+          <Wordmark wave className="text-3xl tracking-normal sm:text-4xl" />
         </Link>
 
         <nav
@@ -73,7 +64,7 @@ function SiteHeader() {
         >
           <ThemeToggle className="mr-1" />
 
-          {inlineLinks.map((item) => (
+          {nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -97,7 +88,7 @@ function SiteHeader() {
             variant="outline"
             className="ml-2 h-9 rounded-[10px] px-5 text-xs"
           >
-            <Link href={subscribeHref}>Assinar</Link>
+            <Link href={navCta.href}>{navCta.label}</Link>
           </RainbowButton>
         </nav>
 
@@ -128,7 +119,7 @@ function SiteHeader() {
           className="border-t border-border/40 bg-background/40 px-5 pb-5 sm:hidden"
         >
           <nav className="flex flex-col" aria-label="Principal (mobile)">
-            {inlineLinks.map((item) => (
+            {nav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -150,7 +141,7 @@ function SiteHeader() {
               variant="outline"
               className="mt-5 h-11 w-full rounded-[10px] text-xs"
             >
-              <Link href={subscribeHref}>Assinar a carta</Link>
+              <Link href={navCta.href}>{navCta.label}</Link>
             </RainbowButton>
           </nav>
         </div>

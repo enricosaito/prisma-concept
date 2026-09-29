@@ -63,12 +63,9 @@ const OPTICAL_CENTER = "translate-y-[0.083em]"
 function Wordmark({
   className,
   wave = false,
-  /** Change this to replay the one-shot sweep. */
-  waveKey,
 }: {
   className?: string
   wave?: boolean
-  waveKey?: number
 }) {
   if (!wave) {
     return (
@@ -80,7 +77,6 @@ function Wordmark({
 
   return (
     <GradientWaveText
-      key={waveKey}
       align="left"
       customColors={[...SPECTRUM]}
       radial={false}
