@@ -25,6 +25,15 @@ export type Cover = {
   alt: string
   /** object-position, e.g. "top" or "50% 30%". Defaults to centre. */
   position?: string
+  /**
+   * CSS aspect-ratio for the box, e.g. "655 / 1080". Defaults to 3 / 2.
+   *
+   * Give it the file's own dimensions when the image must not be cropped at
+   * all — a bordered card or anything with text near an edge. Give it a
+   * rounder ratio when you would rather the crop absorb differences between
+   * one letter's art and the next.
+   */
+  ratio?: string
 }
 
 export type Post = {
@@ -41,8 +50,13 @@ export type Post = {
   /** ISO date, used for sorting and for the <time> element. */
   date: string
   readingMinutes: number
-  /** Optional: letters without one fall back to the text-only layout. */
+  /** Runs at the head of the letter itself. Without one it goes text-only. */
   cover?: Cover
+  /**
+   * Shown where the letter is listed instead of `cover`, for art that suits a
+   * narrow upright slot better than a wide one. Falls back to `cover`.
+   */
+  thumb?: Cover
   content: Block[]
 }
 
@@ -59,6 +73,14 @@ export const posts: Post[] = [
     cover: {
       src: "/covers/tudo-que-precisava-ser-dito-ja-foi-dito.jpg",
       alt: "Pintura modernista: uma mulher de maiô aponta para o alto enquanto um zepelim, um veleiro e um farol dividem a cena com cardumes, maquinário industrial e o corte de um submarino.",
+    },
+    thumb: {
+      src: "/covers/thefool-og.png",
+      // The file's own 507x849, so the card's printed border and the words
+      // along its foot survive intact — any other ratio shaves them. Re-measure
+      // this if the image is replaced.
+      ratio: "507 / 849",
+      alt: "A carta O Louco, do tarô, em preto e branco gasto: uma figura caminha para a beira de um penhasco com um cachorro aos pés, sob um sol e nuvens. Ao pé da carta, as palavras THE FOOL.",
     },
     content: [
       {
@@ -126,16 +148,25 @@ export function formatDate(iso: string): string {
   }).format(new Date(iso))
 }
 
-/** Compact form for tight spots like card grids: "21 ago 2026". */
+/**
+ * Compact form for listings: "21 ago, 2026", which the UI sets in caps.
+ *
+ * Assembled from parts rather than taking pt-BR's own short format, which
+ * renders "21 de ago. de 2026" — two "de"s and an abbreviating point, all of
+ * them noise at this size. The comma does the separating instead.
+ */
 export function formatDateShort(iso: string): string {
-  return new Intl.DateTimeFormat("pt-BR", {
+  const parts = new Intl.DateTimeFormat("pt-BR", {
     day: "2-digit",
     month: "short",
     year: "numeric",
     timeZone: "UTC",
-  })
-    .format(new Date(iso))
-    .replace(/\./g, "")
+  }).formatToParts(new Date(iso))
+
+  const part = (type: Intl.DateTimeFormatPartTypes) =>
+    parts.find((p) => p.type === type)?.value ?? ""
+
+  return `${part("day")} ${part("month").replace(".", "")}, ${part("year")}`
 }
 
 /** Issue number as it is shown: plain, unpadded — 1 -> "1". */

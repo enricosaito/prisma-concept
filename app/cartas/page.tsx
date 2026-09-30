@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 
-import { PostRow } from "@/components/post-card"
+import { PostListItem } from "@/components/post-card"
 import { SubscribeForm } from "@/components/subscribe-form"
 import { getAllPosts } from "@/lib/posts"
 
@@ -31,7 +31,11 @@ export default function Page() {
 
       <div className="mt-14 flex flex-col">
         {posts.map((post) => (
-          <PostRow key={post.slug} post={post} />
+          <PostListItem
+            key={post.slug}
+            post={post}
+            className="border-t border-border/70 py-8"
+          />
         ))}
       </div>
 

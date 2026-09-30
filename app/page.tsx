@@ -1,9 +1,4 @@
-import Link from "next/link"
-import { RiArrowRightLine } from "@remixicon/react"
-
-import { BlurReveal } from "@/components/blur-reveal"
-import { Highlight } from "@/components/highlight"
-import { PostCard } from "@/components/post-card"
+import { PostListItem } from "@/components/post-card"
 import { GridPattern } from "@/components/ui/grid-pattern"
 import { getAllPosts } from "@/lib/posts"
 import { site } from "@/lib/site"
@@ -28,55 +23,20 @@ export default function Page() {
             "sm:[mask-image:radial-gradient(680px_circle_at_22%_30%,black,transparent)]"
           )}
         />
-        <div className="relative mx-auto max-w-5xl px-5 pt-16 pb-14 sm:px-8 sm:pt-24 sm:pb-20">
-          {/* Separate reveals inside one heading: BlurReveal only accepts a
-              plain string, so the highlighted phrase needs its own. */}
-          <h1 className="max-w-4xl font-heading text-4xl leading-[1.08] font-medium tracking-tight sm:text-[3.25rem] lg:text-6xl">
-            <BlurReveal as="span" className="inline" delay={0.15}>
-              Ideias sob novas
-            </BlurReveal>{" "}
-            <Highlight>
-              <BlurReveal as="span" className="inline" delay={0.45}>
-                perspectivas
-              </BlurReveal>
-            </Highlight>
-            {/* Hard break where the manifesto asks for one; the second line
-                still wraps on its own at narrow widths. */}
-            <br />
-            <BlurReveal as="span" className="inline" delay={0.75}>
-              para quem pensa além do óbvio.
-            </BlurReveal>
-          </h1>
-
-          <BlurReveal
-            as="p"
-            delay={1.1}
-            speedReveal={3}
-            className="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground"
-          >
-            {site.description}
-          </BlurReveal>
-        </div>
-      </section>
-
-      {/* Cartas */}
-      <section className="mx-auto mt-20 max-w-5xl px-5 sm:px-8">
-        <div className="mb-6 flex items-baseline justify-between gap-4">
-          <h2 className="font-mono text-[0.7rem] tracking-[0.22em] text-muted-foreground uppercase">
+        <div className="relative mx-auto max-w-5xl px-5 pt-14 pb-16 sm:px-8 sm:pt-20 sm:pb-24">
+          {/* No "Ver todas" alongside: the header's own button already goes to
+              /cartas, and two links to it a few pixels apart read as a mistake. */}
+          <h1 className="mb-7 font-mono text-[0.7rem] tracking-[0.22em] text-muted-foreground uppercase">
             Cartas
-          </h2>
-          <Link
-            href="/cartas"
-            className="group inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Ver todas
-            <RiArrowRightLine className="size-3.5 text-accent transition-transform group-hover:translate-x-0.5" />
-          </Link>
-        </div>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {letters.map((post) => (
-            <PostCard key={post.slug} post={post} />
-          ))}
+          </h1>
+          {/* A list rather than a card grid: the upright covers read as a shelf
+              of letters, which a three-up grid of thumbnails does not. The
+              letters now open the page, so they are set at `lead` size. */}
+          <div className="flex flex-col gap-12">
+            {letters.map((post) => (
+              <PostListItem key={post.slug} post={post} variant="lead" />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -93,18 +53,10 @@ export default function Page() {
             estímulos — nosso objetivo é fazer o oposto.
           </p>
           <div className="space-y-5 text-lg leading-relaxed text-pretty text-muted-foreground">
+            <p>{site.description}</p>
             <p>
-              Nós te damos um espaço para pensar profundamente sobre o mundo,
-              para você se tornar um pensador mais afiado e mais criativo. Viver
-              melhor, ter uma visão mais ampla e mais clara. Tomar melhores
-              decisões, ter melhores relacionamentos e construir algo para si
-              mesmo.
-            </p>
-            <p>
-              Um prisma não inventa cor nenhuma. As cores já estavam ali, dentro
-              da mesma luz — ele só muda o ângulo até que você consiga ver. É o
-              que esta carta tenta fazer a cada quinze dias: pegar um assunto só
-              e virá-lo devagar, até aparecer o que sempre esteve junto.
+              Te apresentamos um espaço para questionar profundamente o mundo,
+              se tornar um pensador mais afiado e despertar sua curiosidade.
             </p>
           </div>
         </div>

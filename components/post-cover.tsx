@@ -34,10 +34,11 @@ function PostCover({
 }) {
   return (
     <div
-      className={cn(
-        "relative aspect-[3/2] overflow-hidden bg-secondary",
-        className
-      )}
+      // The ratio travels with the image rather than being fixed here, so a
+      // portrait card and a landscape painting can both be covers. bg-secondary
+      // is the ground under anything with an alpha channel.
+      style={{ aspectRatio: cover.ratio ?? "3 / 2" }}
+      className={cn("relative overflow-hidden bg-secondary", className)}
     >
       <Image
         src={cover.src}
