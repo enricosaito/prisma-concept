@@ -1,6 +1,4 @@
-import { GradientWaveText } from "@/components/gradient-wave-text"
 import { site } from "@/lib/site"
-import { SPECTRUM } from "@/lib/spectrum"
 import { cn } from "@/lib/utils"
 
 /* ---------------------------------------------------------------------------
@@ -59,36 +57,17 @@ const OPTICAL_CENTER = "translate-y-[0.083em]"
 
 /**
  * PRISMA, set in the display face — plain text, no per-glyph surgery.
+ *
+ * It used to sweep the spectrum through the letters on mount, via
+ * GradientWaveText. That is gone: the wordmark is a link home, and the bar it
+ * sits in now moves on its own as the reader scrolls. `gradient-wave-text.tsx`
+ * stays in the tree unused, like `light-rays.tsx`.
  */
-function Wordmark({
-  className,
-  wave = false,
-}: {
-  className?: string
-  wave?: boolean
-}) {
-  if (!wave) {
-    return (
-      <span className={cn("font-display", OPTICAL_CENTER, className)}>
-        {site.wordmark}
-      </span>
-    )
-  }
-
+function Wordmark({ className }: { className?: string }) {
   return (
-    <GradientWaveText
-      align="left"
-      customColors={[...SPECTRUM]}
-      radial={false}
-      bottomOffset={0}
-      className={cn(
-        "h-auto w-auto font-display [--gradient-wave-base:var(--foreground)] dark:[--gradient-wave-base:var(--foreground)]",
-        OPTICAL_CENTER,
-        className
-      )}
-    >
+    <span className={cn("font-display", OPTICAL_CENTER, className)}>
       {site.wordmark}
-    </GradientWaveText>
+    </span>
   )
 }
 

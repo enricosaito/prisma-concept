@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
-import Link from "next/link"
+
 import { notFound } from "next/navigation"
-import { RiArrowLeftLine } from "@remixicon/react"
 
 import { PostCard, PostMeta } from "@/components/post-card"
 import { PostContent } from "@/components/post-content"
@@ -58,23 +57,20 @@ export default async function Page({
     .slice(0, 2)
 
   return (
-    <article className="mx-auto max-w-5xl px-5 pt-12 sm:px-8 sm:pt-16">
-      <Link
-        href="/cartas"
-        className="group inline-flex items-center gap-2 font-mono text-[0.7rem] tracking-[0.18em] text-muted-foreground uppercase transition-colors hover:text-foreground"
-      >
-        <RiArrowLeftLine className="size-3.5 text-accent transition-transform group-hover:-translate-x-0.5" />
-        Cartas
-      </Link>
-
-      <header className="mx-auto mt-10 max-w-2xl">
-        <PostMeta post={post} />
-        <h1 className="mt-5 font-heading text-3xl leading-[1.12] font-medium tracking-tight text-balance sm:text-[2.75rem]">
+    // Nothing above the title: no breadcrumb, no back link. The reading column
+    // is 45rem (720px), close to the 728px the reference Substack post uses —
+    // wider than the max-w-2xl the rest of the site reads at.
+    <article className="mx-auto max-w-5xl px-5 pt-8 sm:px-8 sm:pt-12">
+      <header className="mx-auto max-w-[45rem]">
+        <h1 className="font-heading text-[2rem] leading-[1.1] font-medium tracking-tight text-balance sm:text-[2.5rem]">
           {post.title}
         </h1>
-        <p className="mt-5 text-lg leading-relaxed text-pretty text-muted-foreground">
+        <p className="mt-4 text-lg leading-[1.45] text-pretty text-muted-foreground">
           {post.dek}
         </p>
+        {/* Below the title rather than above it, the way a byline sits: the
+            title is what the reader should land on first. */}
+        <PostMeta post={post} className="mt-6" />
       </header>
 
       {post.cover ? (
@@ -83,21 +79,21 @@ export default async function Page({
         // the page and sits near the top, hence eager.
         <PostCover
           cover={post.cover}
-          sizes="(min-width: 768px) 672px, 100vw"
-          className="mx-auto mt-10 max-w-2xl rounded-xl border border-border"
+          sizes="(min-width: 768px) 720px, 100vw"
+          className="mx-auto mt-9 max-w-[45rem] rounded-xl border border-border"
           eager
         />
       ) : null}
 
-      <hr className="mx-auto mt-10 max-w-2xl border-border" />
-
-      <div className="mx-auto mt-10 max-w-2xl">
+      {/* No rule between the header and the body — the reference leans on
+          whitespace, and with a cover above it a rule is a second divider. */}
+      <div className="mx-auto mt-10 max-w-[45rem]">
         <PostContent blocks={post.content} />
       </div>
 
-      <SignOff className="mx-auto mt-12 max-w-2xl" />
+      <SignOff className="mx-auto mt-14 max-w-[45rem]" />
 
-      <div className="mx-auto mt-16 max-w-2xl rounded-xl border border-border bg-secondary px-6 py-9 sm:px-8">
+      <div className="mx-auto mt-16 max-w-[45rem] rounded-xl border border-border bg-secondary px-6 py-9 sm:px-8">
         <h2 className="font-heading text-xl font-medium tracking-tight">
           Gostou desta carta?
         </h2>

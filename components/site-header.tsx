@@ -15,10 +15,65 @@ function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname.startsWith(href)
 }
 
+/** Distance scrolled before the bar is allowed to retreat at all. */
+const HIDE_AFTER = 96
+/** Movement below this is trackpad jitter or rubber-banding, not intent. */
+const DEADZONE = 6
+
+/**
+ * The bar gets out of the way going down and comes back the moment the reader
+ * scrolls up.
+ *
+ * Direction is all this computes; the movement itself is a CSS transition on
+ * the header, so reversing mid-slide retargets from wherever the bar currently
+ * sits instead of restarting from the top.
+ */
+function useHiddenOnScrollDown() {
+  const [hidden, setHidden] = React.useState(false)
+
+  React.useEffect(() => {
+    let lastY = window.scrollY
+    let frame = 0
+
+    const read = () => {
+      frame = 0
+      const y = window.scrollY
+      const delta = y - lastY
+
+      // Leave lastY alone below the deadzone so slow scrolls still accumulate
+      // toward a decision rather than being discarded a pixel at a time.
+      if (Math.abs(delta) < DEADZONE) return
+      lastY = y
+
+      // Near the top the bar always shows: that is where the page starts, and
+      // iOS rubber-banding can report a negative offset here.
+      setHidden(y > HIDE_AFTER && delta > 0)
+    }
+
+    const onScroll = () => {
+      if (frame) return
+      frame = requestAnimationFrame(read)
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => {
+      window.removeEventListener("scroll", onScroll)
+      if (frame) cancelAnimationFrame(frame)
+    }
+  }, [])
+
+  return hidden
+}
+
 function SiteHeader() {
   const pathname = usePathname()
   const [open, setOpen] = React.useState(false)
   const [openedAt, setOpenedAt] = React.useState(pathname)
+  const scrolledAway = useHiddenOnScrollDown()
+
+  // The mobile sheet lives inside the header, so hiding the bar would take the
+  // open menu with it.
+  const hidden = scrolledAway && !open
 
   // Dismiss the mobile sheet whenever the route changes — including via the
   // browser's back/forward buttons. Adjusting state during render (rather than
@@ -42,7 +97,22 @@ function SiteHeader() {
         // both ends so it reads as a hairline, not a stripe.
         "after:absolute after:inset-x-0 after:-bottom-px after:h-px after:opacity-60",
         "after:[background-image:var(--spectrum)]",
-        "after:[mask-image:linear-gradient(90deg,transparent,black_18%,black_82%,transparent)]"
+        "after:[mask-image:linear-gradient(90deg,transparent,black_18%,black_82%,transparent)]",
+        // translate-y by its own height, so the bar clears itself at both h-14
+        // and sm:h-16 without either being hardcoded here.
+        "transition-transform duration-200 ease-snappy",
+        hidden
+          ? [
+              "-translate-y-full",
+              // Tabbing into a bar parked off-screen would focus something the
+              // reader cannot see, so focus brings it back.
+              "focus-within:translate-y-0",
+              // Sliding the nav on every direction change is exactly what
+              // reduced motion is asking us not to do: leave it in place.
+              "motion-reduce:translate-y-0",
+            ]
+          : "translate-y-0",
+        "motion-reduce:transition-none"
       )}
     >
       {/* Full-bleed on purpose: the bar spans the viewport and pins the
@@ -53,9 +123,7 @@ function SiteHeader() {
           href="/"
           className="rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
         >
-          {/* The spectrum sweep plays once on mount and is not replayed on
-              hover — the wordmark is a link home, not a toy. */}
-          <Wordmark wave className="text-3xl tracking-normal sm:text-4xl" />
+          <Wordmark className="text-3xl tracking-normal sm:text-4xl" />
         </Link>
 
         <nav
