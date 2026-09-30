@@ -75,12 +75,12 @@ export const posts: Post[] = [
       alt: "Pintura modernista: uma mulher de maiô aponta para o alto enquanto um zepelim, um veleiro e um farol dividem a cena com cardumes, maquinário industrial e o corte de um submarino.",
     },
     thumb: {
-      src: "/covers/thefool-og.png",
-      // The file's own 507x849, so the card's printed border and the words
+      src: "/covers/thefool-fullsize.jpg",
+      // The file's own 635x1065, so the card's printed border and the words
       // along its foot survive intact — any other ratio shaves them. Re-measure
       // this if the image is replaced.
-      ratio: "507 / 849",
-      alt: "A carta O Louco, do tarô, em preto e branco gasto: uma figura caminha para a beira de um penhasco com um cachorro aos pés, sob um sol e nuvens. Ao pé da carta, as palavras THE FOOL.",
+      ratio: "635 / 1065",
+      alt: "A carta O Louco, do tarô, em preto e branco gasto: uma figura de capa caminha para a beira de um penhasco com um cachorro saltando aos seus pés, sob um céu carregado. Ao pé da carta, as palavras THE FOOL.",
     },
     content: [
       {
