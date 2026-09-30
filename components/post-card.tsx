@@ -47,7 +47,7 @@ function PostMeta({
         // separates from the standfirst by face and case as well as by size.
         // Tracking goes up as the size comes down — caps this small close up
         // and stop being scannable without it.
-        "flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[0.65rem] tracking-[0.16em] text-muted-foreground uppercase",
+        "flex flex-wrap items-center gap-x-3 gap-y-1 font-label text-[0.65rem] font-medium tracking-[0.16em] text-muted-foreground uppercase",
         className
       )}
     >
@@ -99,7 +99,9 @@ function ReadCta({ post, className }: { post: Post; className?: string }) {
  * to read it as an index, and colouring it made it compete with the title.
  */
 function IssuePrefix({ post }: { post: Post }) {
-  return <span className="font-mono">{formatIssue(post.issue)}:</span>
+  return (
+    <span className="font-label font-medium">{formatIssue(post.issue)}:</span>
+  )
 }
 
 /**
@@ -128,7 +130,7 @@ function PostCard({ post }: { post: Post }) {
         <div className="flex flex-1 flex-col p-6">
           {/* The card prints the reading time in its own footer row. */}
           <PostMeta post={post} compact showReadingTime={false} />
-          <h3 className="mt-3 font-heading text-xl leading-snug font-medium tracking-tight text-pretty">
+          <h3 className="mt-3 font-heading text-xl leading-snug font-medium text-pretty">
             <Link href={`/cartas/${post.slug}`} className="outline-none">
               <span className="absolute inset-0" />
               <span className="bg-[linear-gradient(var(--accent),var(--accent))] box-decoration-clone bg-[length:0%_1px] bg-[position:0_100%] bg-no-repeat transition-[background-size] duration-500 group-hover:bg-[length:100%_1px]">
@@ -147,7 +149,7 @@ function PostCard({ post }: { post: Post }) {
                 className="size-3.5 transition-transform duration-300 group-hover:translate-x-1"
               />
             </span>
-            <span className="font-mono text-[0.7rem] tracking-[0.14em] text-muted-foreground uppercase">
+            <span className="font-label text-[0.7rem] font-medium tracking-[0.14em] text-muted-foreground uppercase">
               {post.readingMinutes} min
             </span>
           </div>
@@ -227,16 +229,17 @@ function PostListItem({
             20px line and loose for a 38px one, where the gap between lines
             starts to read as a gap between thoughts.
 
-            38px is not arbitrary. In this 576px column the current title takes
-            two lines up to 39px and three at 40, so the size sits one step
-            below the cliff rather than on it. A longer title will still run to
-            three lines — that is the measure doing its job, not a fault.
+            36px is measured, not picked. In this 576px column the title holds
+            two lines up to 36px and breaks to three at 38 — it used to hold 38,
+            and lost that when the negative tracking came off the headings, since
+            removing tracking widens a line. A longer title will still run to
+            three lines; that is the measure doing its job, not a fault.
           */}
           <h3
             className={cn(
-              "font-heading font-medium tracking-tight text-pretty",
+              "font-heading font-medium text-pretty",
               lead
-                ? "text-2xl leading-[1.15] sm:text-[2.375rem]"
+                ? "text-2xl leading-[1.15] sm:text-[2.25rem]"
                 : "text-xl leading-[1.2] sm:text-[1.875rem]"
             )}
           >

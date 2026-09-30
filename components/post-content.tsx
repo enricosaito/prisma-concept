@@ -13,7 +13,7 @@ function PostContent({ blocks }: { blocks: Block[] }) {
               <blockquote key={index}>
                 {block.text}
                 {block.cite ? (
-                  <cite className="mt-2 block font-mono text-xs tracking-wide text-muted-foreground not-italic">
+                  <cite className="mt-2 block font-label text-xs font-medium tracking-wide text-muted-foreground not-italic">
                     — {block.cite}
                   </cite>
                 ) : null}

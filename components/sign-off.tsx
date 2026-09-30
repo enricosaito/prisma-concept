@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils"
 function SignOff({ className }: { className?: string }) {
   return (
     <div className={cn("border-t border-border/70 pt-8", className)}>
-      <p className="font-mono text-[0.7rem] tracking-[0.18em] text-muted-foreground uppercase">
+      <p className="font-label text-[0.7rem] font-medium tracking-[0.18em] text-muted-foreground uppercase">
         Até a próxima
       </p>
       <div className="mt-2 text-foreground">

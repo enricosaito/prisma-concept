@@ -60,12 +60,15 @@ export default async function Page({
     // Nothing above the title: no breadcrumb, no back link. The reading column
     // is 45rem (720px), close to the 728px the reference Substack post uses —
     // wider than the max-w-2xl the rest of the site reads at.
-    <article className="mx-auto max-w-5xl px-5 pt-8 sm:px-8 sm:pt-12">
+    <article className="mx-auto max-w-5xl px-5 pt-12 sm:px-8 sm:pt-20">
       <header className="mx-auto max-w-[45rem]">
-        <h1 className="font-heading text-[2rem] leading-[1.1] font-medium tracking-tight text-balance sm:text-[2.5rem]">
+        <h1 className="font-heading text-[2rem] leading-[1.1] font-medium text-balance sm:text-[2.5rem]">
           {post.title}
         </h1>
-        <p className="mt-4 text-lg leading-[1.45] text-pretty text-muted-foreground">
+        {/* Larger than the 19px body below it. Both are Literata now, so a
+            standfirst set smaller than the text it introduces reads as a
+            mistake rather than as a second rank. */}
+        <p className="mt-4 text-lg leading-[1.45] text-pretty text-muted-foreground sm:text-[1.3125rem]">
           {post.dek}
         </p>
         {/* Below the title rather than above it, the way a byline sits: the
@@ -80,21 +83,21 @@ export default async function Page({
         <PostCover
           cover={post.cover}
           sizes="(min-width: 768px) 720px, 100vw"
-          className="mx-auto mt-9 max-w-[45rem] rounded-xl border border-border"
+          className="mx-auto mt-8 max-w-[45rem] rounded-xl border border-border sm:mt-10"
           eager
         />
       ) : null}
 
       {/* No rule between the header and the body — the reference leans on
           whitespace, and with a cover above it a rule is a second divider. */}
-      <div className="mx-auto mt-10 max-w-[45rem]">
+      <div className="mx-auto mt-8 max-w-[45rem] sm:mt-10">
         <PostContent blocks={post.content} />
       </div>
 
-      <SignOff className="mx-auto mt-14 max-w-[45rem]" />
+      <SignOff className="mx-auto mt-12 max-w-[45rem] sm:mt-16" />
 
-      <div className="mx-auto mt-16 max-w-[45rem] rounded-xl border border-border bg-secondary px-6 py-9 sm:px-8">
-        <h2 className="font-heading text-xl font-medium tracking-tight">
+      <div className="mx-auto mt-14 max-w-[45rem] rounded-xl border border-border bg-secondary px-6 py-8 sm:mt-20 sm:px-8 sm:py-10">
+        <h2 className="font-heading text-xl font-medium">
           Gostou desta carta?
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
@@ -104,8 +107,8 @@ export default async function Page({
       </div>
 
       {more.length > 0 ? (
-        <section className="mx-auto mt-20 max-w-5xl">
-          <h2 className="mb-6 font-mono text-[0.7rem] tracking-[0.22em] text-muted-foreground uppercase">
+        <section className="mx-auto mt-16 max-w-5xl sm:mt-24">
+          <h2 className="mb-6 font-label text-[0.7rem] font-medium tracking-[0.22em] text-muted-foreground uppercase">
             Continue lendo
           </h2>
           <div className="grid gap-5 sm:grid-cols-2">
