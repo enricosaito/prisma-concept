@@ -76,10 +76,12 @@ export const posts: Post[] = [
     },
     thumb: {
       src: "/covers/thefool-fullsize.jpg",
-      // The file's own 635x1065, so the card's printed border and the words
-      // along its foot survive intact — any other ratio shaves them. Re-measure
-      // this if the image is replaced.
-      ratio: "635 / 1065",
+      // 3:5 is the house standard for a letter's cover, and this file is cut to
+      // it exactly (639x1065), so nothing is shaved off the card's printed
+      // border or the words along its foot. Keep new covers at 3:5 — 1080x1800
+      // is the master size — and this stays a constant rather than a per-letter
+      // measurement.
+      ratio: "3 / 5",
       alt: "A carta O Louco, do tarô, em preto e branco gasto: uma figura de capa caminha para a beira de um penhasco com um cachorro saltando aos seus pés, sob um céu carregado. Ao pé da carta, as palavras THE FOOL.",
     },
     content: [

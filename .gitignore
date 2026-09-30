@@ -36,3 +36,9 @@ pnpm-debug.log*
 *.tsbuildinfo
 next-env.d.ts
 .vercel
+
+# photo-viewer thumbnail caches, and source art kept beside the exports.
+# Both were sitting under public/, which Next serves to the world — keeping
+# them out of the repo keeps them off the deploy.
+photothumb.db
+/public/covers/Originals/
