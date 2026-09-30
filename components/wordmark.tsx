@@ -2,8 +2,14 @@ import { site } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 /* ---------------------------------------------------------------------------
- * The Playfair PRISM + Λ approach — currently parked.
+ * The Playfair PRISM + Λ approach — parked, and now moot.
  * ---------------------------------------------------------------------------
+ *
+ * The wordmark is set in "against regular", which ships its own crossbar-less
+ * "A" — a Λ form with a fine swash where the bar would be. That is the letter
+ * all of the below was trying to construct, so none of it is needed while this
+ * face is in use. Kept because the constants were measured, not guessed, and
+ * the background-clip constraint at the end is easy to rediscover the hard way.
  *
  * While the wordmark was set in Playfair Display, the crossbar-less "A" was
  * built by rotating Playfair's own "V" 180°. That kept the face's
@@ -40,20 +46,21 @@ import { cn } from "@/lib/utils"
  * ------------------------------------------------------------------------- */
 
 /**
- * Optical centring nudge.
+ * Optical centring: none needed for this face.
  *
- * Flexbox centres the *line box*, not the ink. Mermaid1001 reserves a big
- * descent (13px at 36px) that all-caps never uses, so the word lands high —
- * measured 15.5px of space above the glyphs and 21.5px below inside the bar.
+ * Flexbox centres the *line box*, not the ink, so a face that reserves more
+ * room on one side of the baseline than its capitals use will sit off centre.
+ * Measured with canvas `measureText` at 200px, as blank space above the caps
+ * versus below them, per em:
  *
- * The imbalance works out to `(fontBoundingBoxDescent − fontBoundingBoxAscent)
- * + (inkAscent − inkDescent)`, halved. Line-height cancels out of that, so one
- * em constant holds at both header sizes. Measured via canvas `measureText`:
- * (13 − 32 + 26 − 1) / 2 = 3px at 36px = 0.083em.
+ *     Mermaid1001      above 0.195   below 0.375   -> 0.090em too high
+ *     against regular  above 0.260   below 0.265   -> 0.003em, nothing to fix
  *
- * Re-measure if the display face changes — it is a property of that font.
+ * Mermaid needed a `translate-y-[0.083em]` nudge and carried one. "against"
+ * seats itself, and keeping that nudge would have pushed it about 3px low at
+ * 36px. Re-measure if the display face changes again — the imbalance is a
+ * property of the font, not of the layout.
  */
-const OPTICAL_CENTER = "translate-y-[0.083em]"
 
 /**
  * PRISMA, set in the display face — plain text, no per-glyph surgery.
@@ -64,11 +71,7 @@ const OPTICAL_CENTER = "translate-y-[0.083em]"
  * stays in the tree unused, like `light-rays.tsx`.
  */
 function Wordmark({ className }: { className?: string }) {
-  return (
-    <span className={cn("font-display", OPTICAL_CENTER, className)}>
-      {site.wordmark}
-    </span>
-  )
+  return <span className={cn("font-display", className)}>{site.wordmark}</span>
 }
 
 export { Wordmark }

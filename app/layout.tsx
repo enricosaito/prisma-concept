@@ -14,10 +14,12 @@ const fontHeading = Playfair_Display({
   variable: "--font-heading",
 })
 
-// Display face for the wordmark. "against regular.otf" is still in public/fonts
-// if this needs to go back; see the note in components/wordmark.tsx.
+// Display face for the wordmark. Mermaid1001.ttf is still in public/fonts if
+// this needs to go back; it sits 0.09em high in a flex row and wants the
+// optical nudge documented in components/wordmark.tsx, which "against" does
+// not.
 const fontDisplay = localFont({
-  src: "../public/fonts/Mermaid1001.ttf",
+  src: "../public/fonts/against regular.otf",
   variable: "--font-display",
   display: "swap",
 })
