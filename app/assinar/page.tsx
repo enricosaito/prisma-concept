@@ -30,7 +30,7 @@ export default function Page() {
   return (
     <div className="mx-auto max-w-5xl px-5 pt-16 sm:px-8 sm:pt-24">
       <div className="mx-auto max-w-2xl text-center">
-        <h1 className="font-heading text-4xl leading-tight font-medium tracking-tight text-balance sm:text-5xl">
+        <h1 className="font-heading text-4xl leading-tight font-medium text-balance sm:text-5xl">
           Assine a <Highlight>Prisma</Highlight>
         </h1>
         <p className="mt-5 text-lg leading-relaxed text-pretty text-muted-foreground">
@@ -43,7 +43,7 @@ export default function Page() {
       <dl className="mx-auto mt-20 grid max-w-3xl gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-3">
         {promises.map((item) => (
           <div key={item.title} className="bg-background p-6">
-            <dt className="font-heading text-base font-medium tracking-tight text-balance">
+            <dt className="font-heading text-base font-medium text-balance">
               {item.title}
             </dt>
             <dd className="mt-2.5 text-sm leading-relaxed text-muted-foreground">

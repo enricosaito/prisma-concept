@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Geist_Mono, Inter, Jost, Playfair_Display } from "next/font/google"
+import { Archivo, Fraunces, Literata } from "next/font/google"
 import localFont from "next/font/local"
 
 import "./globals.css"
@@ -9,8 +9,20 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { site } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
-const fontHeading = Playfair_Display({
+// Titles. Chosen against Literata rather than on its own: both are warm and
+// humanist, where Playfair was a cold high-contrast Didone that only agreed
+// with the body while the body was a neutral sans. Its hairlines were also the
+// wrong bet for a dark-first site — thin strokes on a dark ground get eaten by
+// halation, so the face was quietly at its weakest exactly where this site
+// spends most of its time.
+//
+// `opsz` is requested so the browser can size-match automatically — Fraunces is
+// drawn differently at 14px and at 60px. `WONK` is the quirk axis: it swaps in
+// the flared, slightly off-kilter alternates. That is the personality dial, and
+// it is the reason to pick this face over a safer one.
+const fontHeading = Fraunces({
   subsets: ["latin"],
+  axes: ["opsz", "WONK"],
   variable: "--font-heading",
 })
 
@@ -24,23 +36,31 @@ const fontDisplay = localFont({
   display: "swap",
 })
 
-// UI face for nav and buttons. Geometric/Futura-like, the classic partner for a
-// high-contrast display serif — it reads as a different voice to the wordmark
-// rather than competing with it the way a second serif did.
-const fontUi = Jost({
+// Body copy. Literata was drawn for reading on screen, which is the whole job
+// here — the letters run 17-19px for minutes at a time.
+//
+// Variable, so no weight list: the axis covers the 400 the prose uses and the
+// 500 on the "Ler" call to action. The italic is loaded as a real cut rather
+// than left to the browser, because `.prose-letter blockquote` is italic and a
+// synthesised slant is a sheared roman, not an italic.
+const fontSans = Literata({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-ui",
-})
-
-const fontSans = Inter({
-  subsets: ["latin"],
+  style: ["normal", "italic"],
   variable: "--font-sans",
 })
 
-const fontMono = Geist_Mono({
+// Chrome: navigation, buttons, dates, section eyebrows. Its job is to be
+// legibly NOT the other two, so the eye files it as interface rather than
+// content — a mechanical grotesque against two warm serifs.
+//
+// Archivo over IBM Plex for two reasons. Everything distinctive about Plex
+// lives in its lowercase, and this layer is all small caps, so almost none of
+// it ever showed. And Archivo comes from Omnibus-Type, an Argentine foundry
+// that drew it for Latin American setting — the tildes and cedillas this site
+// needs were designed by people who use them.
+const fontLabel = Archivo({
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-label",
 })
 
 export const metadata: Metadata = {
@@ -79,8 +99,7 @@ export default function RootLayout({
         fontSans.variable,
         fontHeading.variable,
         fontDisplay.variable,
-        fontUi.variable,
-        fontMono.variable
+        fontLabel.variable
       )}
     >
       <body className="min-h-svh">

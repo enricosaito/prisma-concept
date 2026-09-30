@@ -6,7 +6,7 @@ import { site } from "@/lib/site"
 function SiteFooter() {
   return (
     // No rule across the top — the footer just fades out under the content.
-    <footer className="mt-24">
+    <footer className="mt-16 sm:mt-24">
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-4 px-5 py-10 sm:px-8">
         <a
           href={site.instagram}
@@ -38,7 +38,7 @@ function SiteFooter() {
           }
         />
 
-        <p className="text-center font-ui text-sm tracking-[0.16em] text-muted-foreground/45 uppercase">
+        <p className="text-center font-label text-sm font-medium tracking-[0.16em] text-muted-foreground/45 uppercase">
           © {new Date().getFullYear()} The Prisma Concept.
         </p>
       </div>

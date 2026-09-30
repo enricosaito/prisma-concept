@@ -138,7 +138,7 @@ function SiteHeader() {
               href={item.href}
               aria-current={isActive(pathname, item.href) ? "page" : undefined}
               className={cn(
-                "relative rounded-sm px-3 py-2 font-ui text-xs tracking-[0.18em] uppercase transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+                "relative rounded-sm px-3 py-2 font-label text-xs font-medium tracking-[0.18em] uppercase transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
                 isActive(pathname, item.href)
                   ? "text-foreground"
                   : "text-muted-foreground hover:text-foreground"
@@ -195,7 +195,7 @@ function SiteHeader() {
                   isActive(pathname, item.href) ? "page" : undefined
                 }
                 className={cn(
-                  "border-b border-border/60 py-3.5 font-ui text-sm tracking-[0.18em] uppercase transition-colors",
+                  "border-b border-border/60 py-3.5 font-label text-sm font-medium tracking-[0.18em] uppercase transition-colors",
                   isActive(pathname, item.href)
                     ? "text-accent"
                     : "text-foreground"
