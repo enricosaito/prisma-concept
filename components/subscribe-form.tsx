@@ -110,15 +110,14 @@ function SubscribeForm({ className }: { className?: string }) {
         </RainbowButton>
       </form>
 
+      {/* Nothing sits under the field at rest — the blocks that use this form
+          already say what subscribing gets you, so a helper line here only
+          repeated them. The slot still belongs to the error. */}
       {status === "error" ? (
         <p role="alert" className="mt-2.5 text-sm text-destructive">
           {message}
         </p>
-      ) : (
-        <p className="mt-2.5 text-xs text-muted-foreground">
-          Torne-se um leitor
-        </p>
-      )}
+      ) : null}
     </div>
   )
 }

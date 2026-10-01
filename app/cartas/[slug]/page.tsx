@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 
 import { notFound } from "next/navigation"
+import { RiInstagramLine } from "@remixicon/react"
 
 import { PostCard, PostMeta } from "@/components/post-card"
 import { PostContent } from "@/components/post-content"
@@ -8,6 +9,7 @@ import { PostCover } from "@/components/post-cover"
 import { SignOff } from "@/components/sign-off"
 import { SubscribeForm } from "@/components/subscribe-form"
 import { getAllPosts, getPostBySlug, posts } from "@/lib/posts"
+import { site } from "@/lib/site"
 
 export function generateStaticParams() {
   return posts.map((post) => ({ slug: post.slug }))
@@ -96,14 +98,29 @@ export default async function Page({
 
       <SignOff className="mx-auto mt-12 max-w-[45rem] sm:mt-16" />
 
-      <div className="mx-auto mt-14 max-w-[45rem] rounded-xl border border-border bg-secondary px-6 py-8 sm:mt-20 sm:px-8 sm:py-10">
+      {/* No panel around this one. Boxing it made it read as an advertisement
+          dropped into the page; unboxed it reads as the letter still talking. */}
+      <div className="mx-auto mt-14 max-w-[45rem] sm:mt-20">
         <h2 className="font-heading text-xl font-medium">
           Gostou desta carta?
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Assine e receba a próxima em duas semanas.
+          Inscreva-se gratuitamente e receba as próximas cartas no seu e-mail
+          toda semana.
         </p>
         <SubscribeForm className="mt-6" />
+        <a
+          href={site.instagram}
+          target="_blank"
+          rel="noreferrer"
+          // The icon alone is the link, so it carries the handle as its
+          // accessible name rather than a bare "Instagram". p-2 keeps the tap
+          // target at 32px with a 16px glyph inside it.
+          aria-label={`${site.instagramHandle} no Instagram`}
+          className="mt-5 -ml-2 inline-flex rounded-sm p-2 text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+        >
+          <RiInstagramLine className="size-4" />
+        </a>
       </div>
 
       {more.length > 0 ? (
