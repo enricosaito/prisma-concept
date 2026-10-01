@@ -87,12 +87,12 @@ export const posts: Post[] = [
     content: [
       {
         type: "p",
-        text: "Li essa frase pela primeira vez em Roube como um artista: 10 coisas que ninguém te conta sobre criatividade, do Austin Kleon. Ela não é dele. Kleon pega emprestado de André Gide, que escreveu algo muito parecido em 1891 — o que, para uma frase sobre originalidade, é provavelmente a coisa mais honesta que ela poderia fazer.",
+        text: "Seja bem-vindo, leitor! Gostaria de começar agradecendo pelo voto de confiança. Esta é a primeira carta que publico, e muito inspirada pela leitura de um livro que irei comentar sobre brevemente.",
       },
       {
         type: "quote",
         text: "Tudo que precisava ser dito já foi dito. Mas, como ninguém estava ouvindo, é preciso dizer tudo de novo.",
-        cite: "André Gide, citado por Austin Kleon em Roube como um artista",
+        cite: "André Gide",
       },
       { type: "h2", text: "Nada vem do nada" },
       {
@@ -113,18 +113,18 @@ export const posts: Post[] = [
         type: "p",
         text: "Repare no que costuma acontecer quando chamam alguma coisa de original: nove em cada dez vezes, quem diz isso apenas não conhece a referência. Não viu a fonte, não sabe de onde aquilo saiu, não reconhece a linhagem. Originalidade, na prática, é muitas vezes o nome que damos a uma influência que não identificamos.",
       },
-      { type: "h2", text: "Por que isso é uma boa notícia" },
+      { type: "h2", text: "O que acontece a partir de agora" },
       {
         type: "p",
-        text: "Se tudo que precisava ser dito já foi dito, mas ninguém estava ouvindo, então tudo precisa ser dito de novo. Algumas pessoas acham essa ideia deprimente. A mim ela enche de esperança.",
+        text: "Se tudo que precisava ser dito já foi dito, mas ninguém estava ouvindo, então tudo precisa ser dito novamente. Algumas pessoas acham essa ideia deprimente. A mim ela enche de esperança.",
       },
       {
         type: "p",
-        text: "Porque ela devolve o trabalho ao tamanho certo. Livres do peso de tentar ser totalmente originais, podemos parar de tentar criar algo do nada e passar a abraçar as influências, em vez de fugir delas. O que sobra não é menos: é a sua versão, dita com a sua voz, para quem ainda não estava ouvindo.",
+        text: "Porque ela devolve o trabalho ao tamanho certo. Livres do peso de tentar ser totalmente originais, podemos parar de tentar criar algo do nada e passar a abraçar as influências, em vez de fugir delas.",
       },
       {
         type: "p",
-        text: "Ninguém está esperando uma cor nova. Está esperando o seu ângulo.",
+        text: "A melhor hora pra começar é agora.",
       },
     ],
   },
