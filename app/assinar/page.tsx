@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import { RiInstagramLine } from "@remixicon/react"
 
 import { Highlight } from "@/components/highlight"
 import { SubscribeForm } from "@/components/subscribe-form"
@@ -52,21 +51,6 @@ export default function Page() {
           </div>
         ))}
       </dl>
-
-      <div className="mx-auto mt-16 max-w-2xl border-t border-border pt-8 text-center">
-        <p className="text-sm text-muted-foreground">
-          Prefere acompanhar por imagem?
-        </p>
-        <a
-          href={site.instagram}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-foreground underline decoration-accent underline-offset-4 transition-colors hover:text-accent"
-        >
-          <RiInstagramLine className="size-4" />
-          Siga no Instagram
-        </a>
-      </div>
     </div>
   )
 }
