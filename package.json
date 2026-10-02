@@ -13,7 +13,8 @@
     "deploy": "vercel deploy --prod",
     "deploy:preview": "vercel deploy",
     "env:pull": "vercel env pull .env.local",
-    "logs": "vercel logs"
+    "logs": "vercel logs",
+    "cartas:check": "node --experimental-strip-types --no-warnings scripts/check-letters.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

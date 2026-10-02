@@ -11,12 +11,52 @@ compartilhamento se montam a partir daqui.
    Só minúsculas, números e hifens. Sem acento, sem espaço, sem maiúscula.
 2. **Preencha a frontmatter** (o bloco entre as duas linhas `---`) e cole o
    texto abaixo dela.
-3. **Troque `status: draft` por `status: published`** quando a carta estiver
-   pronta, e faça o commit. A carta entra no ar no deploy seguinte.
+3. **Rode `npm run cartas:check`**, corrija o que ele apontar, troque
+   `status: draft` por `status: published` e faça o commit. A carta entra no ar
+   no deploy seguinte.
 
-Enquanto o status for `draft`, a carta aparece em `npm run dev` e **não existe**
-para o site publicado: não é gerada, não entra na contagem do arquivo, não entra
-no sitemap, e a URL dá 404.
+Enquanto o status for `draft`, a carta **não existe** para o site publicado: não
+é gerada, não entra na contagem do arquivo, não entra no sitemap, e a URL dá
+404.
+
+## Conferindo antes de publicar
+
+```bash
+npm run cartas:check
+```
+
+Lê todas as cartas e lista **todos** os problemas de uma vez — não para no
+primeiro. Além de validar a frontmatter, ele checa o que só dá para saber
+olhando o disco e o texto:
+
+- imagens de `cover`/`thumb` que não existem em `public/`
+- links internos quebrados, e link de uma carta publicada para um rascunho
+  (que daria 404 em produção)
+- `#` onde devia ser `##`
+- assinatura de citação que **não vai virar `<cite>`** — hífen no lugar do
+  travessão, ou colada no mesmo parágrafo da citação
+- carta publicada com data no futuro
+
+Erros derrubam o comando; avisos não, porque alguns podem estar certos de
+propósito. No fim ele imprime o que está no ar e o que é rascunho.
+
+## Vendo o rascunho antes de publicar
+
+**No computador:** `npm run dev` mostra rascunhos como se estivessem publicados.
+
+**No celular, ou para mandar para alguém:** faça push da branch e abra o preview
+deployment da Vercel. Rascunhos aparecem lá, com a tipografia e o layout de
+produção. Esses URLs ficam atrás do login da Vercel — quem não estiver logado na
+conta é redirecionado —, então o rascunho não é público e nenhum buscador chega
+nele. **Produção nunca mostra rascunho**, em nenhuma hipótese.
+
+## O que a `date` faz e o que ela não faz
+
+Ela ordena o arquivo e aparece sob o título. **Ela não agenda.** Uma carta com
+`status: published` e data no mês que vem vai ao ar no próximo deploy do mesmo
+jeito — e ainda aparece como a mais recente na home. Para agendar de verdade,
+deixe em `draft` e troque no dia. O `cartas:check` avisa quando vê uma data no
+futuro, porque quase sempre é um ano digitado errado.
 
 ## A frontmatter
 

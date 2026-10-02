@@ -1,11 +1,11 @@
-import { splitFrontmatter } from "@/lib/letters/frontmatter"
+import { splitFrontmatter } from "./frontmatter.ts"
 import type {
   Category,
   Cover,
   Letter,
   LetterMeta,
   LetterStatus,
-} from "@/lib/letters/types"
+} from "./types.ts"
 
 /**
  * Turns a raw letter file into a validated `Letter`, or throws.
