@@ -15,13 +15,21 @@ of a letter on your own initiative. Readers are told this publication is
 written by a human, and that has to stay true sentence by sentence — not
 roughly, not mostly.
 
-**Protected.** In `lib/posts.ts`, the `title`, the `dek` and everything
-inside `content`: paragraphs, headings, list items, quote text and the
-`cite` line that attributes it.
+**Protected.** In `content/cartas/*.md`: the `title` and the `dek` in the
+frontmatter, and **everything below the closing `---`** — every paragraph,
+heading, list item, quote and attribution line. The whole body, not a field
+within it.
 
-**Not protected.** Everything around the writing — `slug`, `date`, `issue`,
-`readingMinutes`, `category`, and the `cover` / `thumb` fields including
+**Not protected.** Everything around the writing — the filename (which is
+the slug), `date`, `issue`, `status`, `readingMinutes`, `category`,
+`seoTitle`, `seoDescription`, and the `cover` / `thumb` fields including
 their `alt` text. Those are metadata and markup, and normal work.
+
+**Nothing in the pipeline may rewrite prose either.** The Markdown goes to
+the page as the author typed it: no typographic transform, no smart quotes,
+no reflow, and `content/` stays in `.prettierignore`. The one transform that
+touches a letter's tree, `lib/letters/rehype-quote-cite.ts`, only retags an
+element — if you change it, keep that true.
 
 **When you spot a problem in protected text** — a typo, a broken date, a
 misattributed quote, a sentence that contradicts another — say so and leave

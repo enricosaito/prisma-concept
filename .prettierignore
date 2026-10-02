@@ -5,3 +5,7 @@ node_modules/
 coverage/
 pnpm-lock.yaml
 .pnpm-store/
+# As cartas. O printer de Markdown do Prettier reflui parágrafos, normaliza
+# marcadores de ênfase e escapa caracteres — ou seja, reescreveria o texto do
+# autor em qualquer "format on save". Ver a regra em AGENTS.md.
+content/

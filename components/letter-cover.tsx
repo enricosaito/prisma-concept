@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-import type { Cover } from "@/lib/posts"
+import type { Cover } from "@/lib/letters/types"
 import { cn } from "@/lib/utils"
 
 /**
@@ -20,7 +20,7 @@ import { cn } from "@/lib/utils"
  * that stand alone add `rounded-xl border border-border`; callers that bleed to
  * a rounded parent's edge let that parent's `overflow-hidden` do the clipping.
  */
-function PostCover({
+function LetterCover({
   cover,
   sizes,
   className,
@@ -57,4 +57,4 @@ function PostCover({
   )
 }
 
-export { PostCover }
+export { LetterCover }

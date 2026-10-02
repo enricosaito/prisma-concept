@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Assinar",
   description:
     "Assine a Prisma e receba, a cada quinze dias, uma carta sobre tecnologia, arte, design e escrita.",
+  alternates: { canonical: "/assinar" },
 }
 
 const promises = [

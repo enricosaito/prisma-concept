@@ -76,34 +76,40 @@ recortado; e as duas constantes (`0.12em` de baseline, `-0.15em` de kern
 | `app/api/subscribe/`      | Route handler que recebe o e-mail                 |
 | `lib/newsletter.tsx`      | Resend: cadastro na lista + e-mail de boas-vindas |
 | `emails/`                 | Templates de e-mail (react-email)                 |
-| `lib/posts.ts`            | **Os textos.** Fonte de verdade do conteúdo       |
+| `content/cartas/*.md`     | **Os textos.** Uma carta = um arquivo             |
+| `lib/letters/`            | Modelo, validação e a camada de acesso            |
 | `lib/site.ts`             | Nome, tagline, links sociais, itens do menu       |
 | `components/`             | Header, footer, cards, formulário, marca          |
 
 ## Publicando uma carta nova
 
-Adicione um objeto ao array `posts` em `lib/posts.ts`. A rota, o arquivo e a
-home se atualizam sozinhos — `generateStaticParams` cria a página a partir do
-`slug`. As cartas são listadas **da mais antiga para a mais nova**, então a
-nova entra no fim com o próximo número.
+Copie `content/cartas/modelo.md`, renomeie para o slug da carta, escreva, e
+troque `status: draft` por `status: published`. A rota, a home, o arquivo, o
+sitemap e as tags de compartilhamento se montam sozinhos a partir do arquivo —
+o nome dele é a URL.
 
-```ts
-{
-  issue: 4,                     // vira #004; explícito, não derivado da ordem
-  slug: "titulo-em-kebab-case",
-  title: "Título da carta",
-  dek: "Uma linha que aparece nas listagens.",
-  category: "Design",           // Tecnologia | Arte | Design | Escrita
-  date: "2026-09-18",           // ISO; ordena da mais antiga para a mais nova
-  readingMinutes: 6,
-  content: [
-    { type: "p", text: "..." },
-    { type: "h2", text: "..." },
-    { type: "quote", text: "...", cite: "opcional" },
-    { type: "list", items: ["...", "..."] },
-  ],
-}
+```markdown
+---
+issue: 2
+status: draft
+date: "2026-10-08"
+category: Design
+readingMinutes: 6
+title: "Título da carta"
+dek: "Uma linha que aparece nas listagens."
+---
+
+O texto em Markdown, aqui embaixo.
 ```
+
+**O guia completo está em [`content/cartas/README.md`](content/cartas/README.md)**
+— todos os campos, o que é opcional, a convenção de citação e os tamanhos de
+imagem. A arquitetura por trás disso está em
+[`docs/content-architecture.md`](docs/content-architecture.md).
+
+Enquanto o status for `draft`, a carta aparece em `npm run dev` e não existe
+para o site publicado. A home mostra a mais recente primeiro; `/cartas` mantém a
+ordem cronológica, da mais antiga para a mais nova.
 
 > O arquivo já mudou de nome duas vezes: era **Carta** em `/carta`, virou
 > **Biblioteca** em `/biblioteca` e agora é **Cartas** em `/cartas`.
@@ -180,7 +186,7 @@ e-mail (`ShineBorder`), o wordmark e os destaques em itálico. A régua do heade
 e o sublinhado do link ativo usam a rampa inteira (`var(--spectrum)`),
 mascarada nas pontas.
 
-As categorias continuam no dado (`lib/posts.ts`), só não aparecem mais na
+As categorias continuam no dado (frontmatter das cartas), só não aparecem mais na
 interface — o lugar delas foi para o número da edição.
 
 `--accent` continua sólido (bronze) onde uma cor única é obrigatória: anéis de
@@ -291,7 +297,7 @@ não deve confirmar para um estranho se um endereço já está cadastrado.
 
 Enviar a carta em si. O que está pronto é a lista e o e-mail transacional; a
 edição quinzenal ainda sai só no site. O próximo passo é um Broadcast do Resend
-alimentado por `lib/posts.ts`.
+alimentado pelo Markdown das cartas.
 
 ## Personalizando
 

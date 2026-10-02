@@ -245,6 +245,28 @@
   .prose-letter ul {
     @apply list-disc space-y-2 pl-5 marker:text-accent;
   }
+  .prose-letter ol {
+    @apply list-decimal space-y-2 pl-5 marker:text-accent;
+  }
+  /* Bold and italic only became writable when the letters moved to Markdown —
+     the old block model had no inline formatting at all, so neither element had
+     a rule here.
+
+     `font-medium`, not the browser's 700: the body runs at text-foreground/85,
+     and Literata's bold against that reads as a different, heavier typeface
+     rather than as emphasis. Lifting the colour to full strength and the weight
+     one step does the same job with less shouting. */
+  .prose-letter strong {
+    @apply font-medium text-foreground;
+  }
+  .prose-letter em {
+    @apply italic;
+  }
+  /* For `![alt](src "a legenda")`. Same label face as the quote attributions,
+     so the two kinds of small print under an element match. */
+  .prose-letter figcaption {
+    @apply mt-2 font-label text-xs text-muted-foreground;
+  }
 }
 
 /* The dispersed spectrum, as one ramp. Decorative accents draw from this

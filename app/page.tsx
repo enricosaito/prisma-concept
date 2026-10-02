@@ -1,14 +1,31 @@
-import { PostListItem } from "@/components/post-card"
+import type { Metadata } from "next"
+
+import { LetterListItem } from "@/components/letter-card"
 import { GridPattern } from "@/components/ui/grid-pattern"
-import { getAllPosts } from "@/lib/posts"
+import { getPublishedLetters } from "@/lib/letters/source"
+import { jsonLdHtml, websiteJsonLd } from "@/lib/seo"
 import { site } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
+// Title and description come from the root layout; this exists for the
+// canonical, which the home page needs more than any other route — it is the
+// one with query strings and a trailing-slash variant pointing at it.
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+}
+
 export default function Page() {
-  const letters = getAllPosts()
+  // Newest first here, oldest first on /cartas. A reader arriving at the home
+  // page wants what just came out; the archive is a shelf you read in order.
+  const letters = getPublishedLetters("newest")
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(websiteJsonLd()) }}
+      />
+
       {/* Hero */}
       <section className="relative overflow-hidden">
         {/* Dashed grid, barely there — masked to a soft radial so it fades out
@@ -33,8 +50,12 @@ export default function Page() {
               of letters, which a three-up grid of thumbnails does not. The
               letters now open the page, so they are set at `lead` size. */}
           <div className="flex flex-col gap-10 sm:gap-14">
-            {letters.map((post) => (
-              <PostListItem key={post.slug} post={post} variant="lead" />
+            {letters.map((letter) => (
+              <LetterListItem
+                key={letter.slug}
+                letter={letter}
+                variant="lead"
+              />
             ))}
           </div>
         </div>

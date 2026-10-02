@@ -2,15 +2,28 @@ import type { Metadata } from "next"
 
 import { notFound } from "next/navigation"
 
-import { PostCard, PostMeta } from "@/components/post-card"
-import { PostContent } from "@/components/post-content"
-import { PostCover } from "@/components/post-cover"
+import { LetterBody } from "@/components/letter-body"
+import { LetterCard, LetterMetaLine } from "@/components/letter-card"
+import { LetterCover } from "@/components/letter-cover"
 import { SubscribeForm } from "@/components/subscribe-form"
-import { getAllPosts, getPostBySlug, posts } from "@/lib/posts"
+import {
+  getLetterBySlug,
+  getLetterMetadata,
+  getLetterSlugs,
+  getPublishedLetters,
+} from "@/lib/letters/source"
+import { jsonLdHtml, letterJsonLd } from "@/lib/seo"
 
 export function generateStaticParams() {
-  return posts.map((post) => ({ slug: post.slug }))
+  return getLetterSlugs().map((slug) => ({ slug }))
 }
+
+/**
+ * Only the slugs above exist. Drafts are not among them, so a draft URL is a
+ * hard 404 in production rather than a request-time render that happens to
+ * call notFound().
+ */
+export const dynamicParams = false
 
 export async function generateMetadata({
   params,
@@ -18,26 +31,36 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const post = getPostBySlug(slug)
+  const letter = getLetterMetadata(slug)
 
-  if (!post) return {}
+  if (!letter) return {}
 
   // Relative, so it resolves against the metadataBase set in app/layout.tsx.
-  const images = post.cover
-    ? [{ url: post.cover.src, alt: post.cover.alt }]
+  const images = letter.cover
+    ? [{ url: letter.cover.src, alt: letter.cover.alt }]
     : undefined
 
+  // seoTitle/seoDescription override only when a title is awkward in a search
+  // result. Derived from the content model either way — never a second copy of
+  // the words kept in sync by hand.
+  const title = letter.seoTitle ?? letter.title
+  const description = letter.seoDescription ?? letter.dek
+  const url = `/cartas/${letter.slug}`
+
   return {
-    title: post.title,
-    description: post.dek,
+    title,
+    description,
+    alternates: { canonical: url },
     openGraph: {
       type: "article",
-      title: post.title,
-      description: post.dek,
-      publishedTime: post.date,
+      url,
+      title,
+      description,
+      publishedTime: letter.date,
+      modifiedTime: letter.updated ?? letter.date,
       images,
     },
-    twitter: { images },
+    twitter: { title, description, images },
   }
 }
 
@@ -47,83 +70,92 @@ export default async function Page({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const post = getPostBySlug(slug)
+  const letter = getLetterBySlug(slug)
 
-  if (!post) notFound()
+  if (!letter) notFound()
 
-  const more = getAllPosts()
-    .filter((item) => item.slug !== post.slug)
+  const more = getPublishedLetters("newest")
+    .filter((item) => item.slug !== letter.slug)
     .slice(0, 2)
 
   return (
-    // Nothing above the title: no breadcrumb, no back link. The reading column
-    // is 45rem (720px), close to the 728px the reference Substack post uses —
-    // wider than the max-w-2xl the rest of the site reads at.
-    <article className="mx-auto max-w-5xl px-5 pt-12 sm:px-8 sm:pt-20">
-      <header className="mx-auto max-w-[45rem]">
-        <h1 className="font-heading text-[2rem] leading-[1.1] font-medium text-balance sm:text-[2.5rem]">
-          {post.title}
-        </h1>
-        {/* Larger than the 19px body below it. Both are Literata now, so a
+    <>
+      {/* Derived from the same fields as the meta tags above it, so the two
+          cannot disagree about what this letter is. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(letterJsonLd(letter)) }}
+      />
+
+      {/* Nothing above the title: no breadcrumb, no back link. The reading
+          column is 45rem (720px), close to the 728px the reference Substack
+          post uses — wider than the max-w-2xl the rest of the site reads at. */}
+      <article className="mx-auto max-w-5xl px-5 pt-12 sm:px-8 sm:pt-20">
+        <header className="mx-auto max-w-[45rem]">
+          <h1 className="font-heading text-[2rem] leading-[1.1] font-medium text-balance sm:text-[2.5rem]">
+            {letter.title}
+          </h1>
+          {/* Larger than the 19px body below it. Both are Literata now, so a
             standfirst set smaller than the text it introduces reads as a
             mistake rather than as a second rank. */}
-        <p className="mt-4 text-lg leading-[1.45] text-pretty text-muted-foreground sm:text-[1.3125rem]">
-          {post.dek}
-        </p>
-        {/* Below the title rather than above it, the way a byline sits: the
+          <p className="mt-4 text-lg leading-[1.45] text-pretty text-muted-foreground sm:text-[1.3125rem]">
+            {letter.dek}
+          </p>
+          {/* Below the title rather than above it, the way a byline sits: the
             title is what the reader should land on first. */}
-        <PostMeta post={post} className="mt-6" />
-      </header>
+          <LetterMetaLine letter={letter} className="mt-6" />
+        </header>
 
-      {post.cover ? (
-        // Kept to the reading column rather than run full-bleed, so the letter
-        // reads as one measure from the title down. It is the widest image on
-        // the page and sits near the top, hence eager.
-        <PostCover
-          cover={post.cover}
-          sizes="(min-width: 768px) 720px, 100vw"
-          className="mx-auto mt-8 max-w-[45rem] rounded-xl border border-border sm:mt-10"
-          eager
-        />
-      ) : null}
+        {letter.cover ? (
+          // Kept to the reading column rather than run full-bleed, so the letter
+          // reads as one measure from the title down. It is the widest image on
+          // the page and sits near the top, hence eager.
+          <LetterCover
+            cover={letter.cover}
+            sizes="(min-width: 768px) 720px, 100vw"
+            className="mx-auto mt-8 max-w-[45rem] rounded-xl border border-border sm:mt-10"
+            eager
+          />
+        ) : null}
 
-      {/* No rule between the header and the body — the reference leans on
+        {/* No rule between the header and the body — the reference leans on
           whitespace, and with a cover above it a rule is a second divider. */}
-      <div className="mx-auto mt-8 max-w-[45rem] sm:mt-10">
-        <PostContent blocks={post.content} />
-      </div>
+        <div className="mx-auto mt-8 max-w-[45rem] sm:mt-10">
+          <LetterBody markdown={letter.body} />
+        </div>
 
-      {/* The letter ends here. This rule used to be the top border of the
+        {/* The letter ends here. This rule used to be the top border of the
           sign-off block; the signature moved to the footer but the line still
           earns its place, because without it the subscribe block reads as one
           more section of the letter rather than as what comes after it. */}
-      <hr className="mx-auto mt-12 max-w-[45rem] border-border/70 sm:mt-16" />
+        <hr className="mx-auto mt-12 max-w-[45rem] border-border/70 sm:mt-16" />
 
-      {/* No panel around this one. Boxing it made it read as an advertisement
+        {/* No panel around this one. Boxing it made it read as an advertisement
           dropped into the page; unboxed it reads as the letter still talking. */}
-      <div className="mx-auto mt-10 max-w-[45rem] sm:mt-12">
-        <h2 className="font-heading text-xl font-medium">
-          Gostou desta carta?
-        </h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Inscreva-se gratuitamente e receba as próximas no seu e-mail toda
-          semana.
-        </p>
-        <SubscribeForm className="mt-6" />
-      </div>
-
-      {more.length > 0 ? (
-        <section className="mx-auto mt-16 max-w-5xl sm:mt-24">
-          <h2 className="mb-6 font-label text-[0.7rem] font-medium tracking-[0.22em] text-muted-foreground uppercase">
-            Continue lendo
+        <div className="mx-auto mt-10 max-w-[45rem] sm:mt-12">
+          <h2 className="font-heading text-xl font-medium">
+            Gostou desta carta?
           </h2>
-          <div className="grid gap-5 sm:grid-cols-2">
-            {more.map((item) => (
-              <PostCard key={item.slug} post={item} />
-            ))}
-          </div>
-        </section>
-      ) : null}
-    </article>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Inscreva-se gratuitamente e receba as próximas no seu e-mail toda
+            semana.
+          </p>
+          <SubscribeForm className="mt-6" />
+        </div>
+
+        {more.length > 0 ? (
+          <section className="mx-auto mt-16 max-w-5xl sm:mt-24">
+            <h2 className="mb-6 font-label text-[0.7rem] font-medium tracking-[0.22em] text-muted-foreground uppercase">
+              Continue lendo
+            </h2>
+            <div className="grid gap-5 sm:grid-cols-2">
+              {more.map((item) => (
+                <LetterCard key={item.slug} letter={item} />
+              ))}
+            </div>
+          </section>
+        ) : null}
+      </article>
+    </>
   )
 }
