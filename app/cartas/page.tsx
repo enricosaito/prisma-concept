@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Cartas",
   description:
     "O arquivo completo da Prisma — todas as cartas sobre tecnologia, arte, design e escrita.",
+  alternates: { canonical: "/cartas" },
 }
 
 export default function Page() {

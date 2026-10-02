@@ -1,8 +1,18 @@
+import type { Metadata } from "next"
+
 import { LetterListItem } from "@/components/letter-card"
 import { GridPattern } from "@/components/ui/grid-pattern"
 import { getPublishedLetters } from "@/lib/letters/source"
+import { jsonLdHtml, websiteJsonLd } from "@/lib/seo"
 import { site } from "@/lib/site"
 import { cn } from "@/lib/utils"
+
+// Title and description come from the root layout; this exists for the
+// canonical, which the home page needs more than any other route — it is the
+// one with query strings and a trailing-slash variant pointing at it.
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+}
 
 export default function Page() {
   // Newest first here, oldest first on /cartas. A reader arriving at the home
@@ -11,6 +21,11 @@ export default function Page() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(websiteJsonLd()) }}
+      />
+
       {/* Hero */}
       <section className="relative overflow-hidden">
         {/* Dashed grid, barely there — masked to a soft radial so it fades out
