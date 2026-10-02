@@ -107,9 +107,15 @@ O texto em Markdown, aqui embaixo.
 imagem. A arquitetura por trás disso está em
 [`docs/content-architecture.md`](docs/content-architecture.md).
 
-Enquanto o status for `draft`, a carta aparece em `npm run dev` e não existe
-para o site publicado. A home mostra a mais recente primeiro; `/cartas` mantém a
-ordem cronológica, da mais antiga para a mais nova.
+Antes de publicar, `npm run cartas:check` confere todas as cartas de uma vez —
+frontmatter, imagens que não existem, links quebrados, `#` no lugar de `##`, e
+assinatura de citação que não vai virar `<cite>`. No fim ele lista o que está no
+ar e o que é rascunho.
+
+Enquanto o status for `draft`, a carta não existe para o site publicado. Ela
+aparece em `npm run dev` e nos preview deployments da Vercel, que ficam atrás do
+login da conta — é assim que se revisa um rascunho no celular. A home mostra a
+mais recente primeiro; `/cartas` mantém a ordem cronológica.
 
 > O arquivo já mudou de nome duas vezes: era **Carta** em `/carta`, virou
 > **Biblioteca** em `/biblioteca` e agora é **Cartas** em `/cartas`.

@@ -4,8 +4,8 @@ import fs from "node:fs"
 import path from "node:path"
 import { cache } from "react"
 
-import { parseLetter } from "@/lib/letters/parse"
-import type { Letter, LetterMeta } from "@/lib/letters/types"
+import { parseLetter } from "./parse.ts"
+import type { Letter, LetterMeta } from "./types.ts"
 
 /**
  * The content access layer, and the only module in the repo that touches the
@@ -21,13 +21,27 @@ import type { Letter, LetterMeta } from "@/lib/letters/types"
 const CONTENT_DIR = path.join(process.cwd(), "content", "cartas")
 
 /**
- * Drafts are visible while writing and nowhere else.
+ * Drafts are visible where the author works, and nowhere a reader can reach.
  *
- * `next build` runs with NODE_ENV=production everywhere — locally, on a Vercel
- * preview, and in production — so a draft never makes it into a deployed
- * artifact at all. It is not hidden at request time; it is never built.
+ * Two places qualify. `next dev`, obviously. And Vercel preview deployments,
+ * where `VERCEL_ENV` is "preview" — every branch build, on a URL that is not
+ * the custom domain.
+ *
+ * The preview case is safe because of a project setting, not a hope: this
+ * project has Vercel Authentication on for `all_except_custom_domains`, so an
+ * unauthenticated request to a preview URL is redirected to the Vercel login
+ * (verified: 302, against 200 on www.prismaconcept.com.br). A crawler cannot
+ * authenticate, so a draft on a preview is unreachable and unindexable. **If
+ * that protection is ever turned off, this line has to go with it.**
+ *
+ * Production is neither of those, so a draft is never built into the site a
+ * reader sees. It is not hidden at request time; it does not exist.
  */
-const SHOW_DRAFTS = process.env.NODE_ENV === "development"
+const SHOW_DRAFTS =
+  process.env.NODE_ENV === "development" || process.env.VERCEL_ENV === "preview"
+
+/** Files already complained about in this process. See the warning below. */
+const warned = new Set<string>()
 
 /**
  * Every letter on disk, drafts included, oldest first.
@@ -58,8 +72,39 @@ const readAll = cache((): Letter[] => {
     .map((name) => {
       const file = `content/cartas/${name}`
       const source = fs.readFileSync(path.join(CONTENT_DIR, name), "utf8")
-      return parseLetter(source, name.replace(/\.md$/, ""), file)
+      const slug = name.replace(/\.md$/, "")
+
+      try {
+        return parseLetter(source, slug, file)
+      } catch (error) {
+        // A letter that will be published must parse, full stop — a broken one
+        // fails the build, which is the whole point of validating at all.
+        //
+        // A draft is different. It is half-written by definition, it is not
+        // part of the site being deployed, and it must not be able to stop you
+        // shipping a change that has nothing to do with it. So in a build that
+        // hides drafts, an unparseable one is dropped with a warning instead.
+        //
+        // `looksPublished` reads the raw frontmatter rather than the parsed
+        // letter, because the parse is what just failed. It errs towards
+        // publishing: anything it cannot read as an explicit draft is treated
+        // as published, and still throws.
+        if (SHOW_DRAFTS || looksPublished(source)) throw error
+
+        // `next build` collects pages in several worker processes, and each one
+        // reads the directory, so without this the same warning prints six
+        // times and buries the rest of the output.
+        if (!warned.has(file)) {
+          warned.add(file)
+          console.warn(
+            `[cartas] ${file} foi ignorado: ${(error as Error).message}\n` +
+              `         É um rascunho, então o build segue. Rode \`npm run cartas:check\`.`
+          )
+        }
+        return undefined
+      }
     })
+    .filter((letter): letter is Letter => letter !== undefined)
     .sort((a, b) => a.date.localeCompare(b.date) || a.issue - b.issue)
 
   // Two letters claiming the same URL, or the same number, is a mistake worth
@@ -69,6 +114,18 @@ const readAll = cache((): Letter[] => {
 
   return letters
 })
+
+/**
+ * Does this file claim to be published, judging only by its raw text?
+ *
+ * Used on the error path, where the real parse has already failed, so it cannot
+ * rely on anything structured. It fails towards strictness: no readable
+ * `status: draft` line means "treat it as published", and a published letter
+ * that does not parse always stops the build.
+ */
+function looksPublished(source: string): boolean {
+  return !/^\s*status\s*:\s*["']?draft["']?\s*$/m.test(source)
+}
 
 function assertUnique(
   letters: Letter[],

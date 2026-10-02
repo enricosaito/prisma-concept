@@ -11,6 +11,10 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    // lib/letters imports its siblings with explicit .ts extensions so that
+    // scripts/check-letters.ts can be run straight by node (--experimental-strip-types)
+    // without a build step or a second copy of the parsing rules.
+    "allowImportingTsExtensions": true,
     "jsx": "react-jsx",
     "incremental": true,
     "plugins": [

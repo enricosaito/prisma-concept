@@ -60,20 +60,62 @@ um `.md` não invalida o módulo compilado que guardaria essa variável, e o
 Uma linha, no topo de `source.ts`:
 
 ```ts
-const SHOW_DRAFTS = process.env.NODE_ENV === "development"
+const SHOW_DRAFTS =
+  process.env.NODE_ENV === "development" || process.env.VERCEL_ENV === "preview"
 ```
 
 `readAll()` é a única função que enxerga rascunhos e **não é exportada**. Todas
-as outras filtram. Como `next build` roda com `NODE_ENV=production` em todo
-lugar — local, preview da Vercel e produção —, um rascunho nunca chega a ser
-gerado. Com `dynamicParams = false` na rota da carta, a URL de um rascunho é um
-404 duro, sem invocar função nenhuma.
+as outras filtram. Com `dynamicParams = false` na rota da carta, a URL de um
+rascunho é um 404 duro em produção, sem invocar função nenhuma.
 
-Uma ressalva honesta: o **arquivo** `.md` do rascunho continua indo junto no
-bundle do deploy (ele aparece no file trace da Vercel, como qualquer arquivo que
-o código lê). Ele não é servido por nenhuma rota e não há caminho de HTTP que
-chegue nele — mas se um rascunho contiver algo que não pode sair da sua máquina,
-o lugar dele não é este repositório.
+### Por que preview é seguro
+
+Não por configuração do código, e sim por uma do projeto: `ssoProtection` está
+ligado com `deploymentType: "all_except_custom_domains"`. Verificado com um
+pedido de verdade — um preview responde **302** para o login da Vercel, e
+`www.prismaconcept.com.br` responde **200**. Um buscador não faz login, então
+rascunho em preview não é alcançável nem indexável.
+
+> **Se essa proteção for desligada, a linha acima tem que sair junto.** É a
+> única coisa que separa um rascunho de um URL público.
+
+### Rascunho não derruba o build
+
+Uma carta que vai ser publicada precisa parsear, ponto: ela quebra o build, que
+é o motivo de validar. Um rascunho é outra coisa — está pela metade por
+definição e não faz parte do site que está sendo publicado, então não pode
+impedir você de subir uma correção sem relação nenhuma com ele.
+
+Então, num build que esconde rascunhos, um arquivo que não parseia vira aviso e
+é descartado. `looksPublished()` lê o texto cru da frontmatter (o parse é
+justamente o que falhou) e erra para o lado seguro: o que ele não conseguir ler
+como `status: draft` explícito é tratado como publicado e continua derrubando o
+build.
+
+### A ressalva honesta
+
+O **arquivo** `.md` do rascunho continua indo junto no bundle do deploy (aparece
+no file trace da Vercel, como qualquer arquivo que o código lê). Nenhuma rota o
+serve e não há caminho de HTTP que chegue nele — mas se um rascunho contiver
+algo que não pode sair da sua máquina, o lugar dele não é este repositório.
+
+## O validador
+
+`scripts/check-letters.ts`, via `npm run cartas:check`.
+
+Ele **importa `lib/letters/parse.ts` de verdade**, então não existe uma segunda
+cópia das regras que possa divergir do site. O que ele acrescenta são as
+checagens que o parser não pode fazer: olhar o disco (as imagens existem?), olhar
+o conjunto (slug e issue duplicados, link para um rascunho) e olhar o Markdown
+pelo que ele vai virar (uma assinatura de citação com hífen não vira `<cite>` e
+não dá erro nenhum — só sai errado na página).
+
+Roda direto no node com `--experimental-strip-types`, sem build e sem
+dependência nova. É por isso que os imports dentro de `lib/letters/` são
+relativos e com extensão `.ts` explícita, e por que o `tsconfig.json` tem
+`allowImportingTsExtensions`. O Turbopack e o `tsc` aceitam os dois.
+
+Erros saem com código ≠ 0; avisos não, porque alguns são escolhas legítimas.
 
 ## Trocar por um CMS
 
@@ -85,14 +127,53 @@ assinaturas, e trocar o formato do corpo em `letter-body.tsx`. Nada em `app/` ou
 grep -rn "node:fs" lib app components   # deve devolver só lib/letters/source.ts
 ```
 
-Quando chegar a hora, o candidato mais provável é o **Keystatic**: um admin
-git-backed que edita exatamente estes arquivos `.md`. Sem banco, sem migração de
-conteúdo, sem tirar a prosa do seu controle — você ganha uma interface com
-upload de imagem e perde nada. Sanity e Payload resolvem um problema que esta
-publicação não tem: o Payload exige Postgres ou Mongo (um deploy com estado,
-auth e migrações para uma pessoa editar uma carta por semana), e o Sanity move a
-prosa para o dataset de um fornecedor, o que custa o histórico em git e a
-propriedade de que o texto protegido é um arquivo seu.
+### O modelo mapeia?
+
+`LetterMeta` tem doze campos escalares e dois objetos de imagem. Tanto o Sanity
+quanto o Payload modelam isso sem esforço — o modelo não é o problema. **O corpo
+é.**
+
+| | Sanity | Payload | Keystatic |
+|---|---|---|---|
+| Onde a prosa fica | dataset do fornecedor | Postgres ou Mongo | **nestes mesmos arquivos `.md`** |
+| Formato do corpo | Portable Text (JSON) | Lexical/Slate (JSON) | Markdown |
+| Migração necessária | `.md` → Portable Text | `.md` → Lexical | **nenhuma** |
+| Infra nova | conta + dataset + webhook | banco + auth + migrações | nenhuma |
+| Histórico da prosa em git | perdido | perdido | mantido |
+| Preview de rascunho | nativo (bom) | nativo | o que já temos |
+
+O que mudaria no código, em qualquer um dos três: os cinco corpos de função em
+`source.ts` e o formato do corpo em `letter-body.tsx`. Nada em `app/` ou
+`components/`. As URLs continuam estáveis porque o slug é dado, não gerado.
+
+### Recomendação
+
+**Nenhum CMS agora, e o próximo passo concreto é o Keystatic** — quando o atrito
+aparecer, não antes.
+
+O raciocínio é que Sanity e Payload cobram um preço específico que esta
+publicação não pode pagar barato: a prosa sai do disco. Isso quebra duas coisas
+que não são detalhe aqui — o histórico em git de cada frase, e a propriedade,
+escrita no `AGENTS.md`, de que o texto protegido **é um arquivo seu**. O Payload
+ainda exige Postgres ou Mongo, ou seja, um deploy com estado, auth e migrações
+para uma pessoa editar uma carta por semana. O Sanity é mais leve, mas troca
+Markdown por Portable Text e adiciona uma segunda linguagem de schema.
+
+O Keystatic não cobra nada disso: é uma interface de administração git-backed
+que edita exatamente estes `.md`, com upload de imagem. Migração zero, porque não
+há o que migrar.
+
+E o mais importante: **o atrito que justificaria um CMS não existe hoje.**
+Converter prosa em código, que era o problema real, acabou. Escrever é colar num
+`.md` e rodar um comando. Um CMS resolveria "editar do celular sem clonar o
+repositório" — e essa dor só é real quando você escrever com frequência longe do
+computador. Até lá, seria infraestrutura comprada adiantado.
+
+Para confirmar que a fronteira continua de pé antes de qualquer troca:
+
+```bash
+grep -rn "node:fs" lib app components   # deve devolver só lib/letters/source.ts
+```
 
 ## Decisões que não são óbvias
 
