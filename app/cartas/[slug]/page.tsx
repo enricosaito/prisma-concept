@@ -2,15 +2,27 @@ import type { Metadata } from "next"
 
 import { notFound } from "next/navigation"
 
-import { PostCard, PostMeta } from "@/components/post-card"
-import { PostContent } from "@/components/post-content"
-import { PostCover } from "@/components/post-cover"
+import { LetterBody } from "@/components/letter-body"
+import { LetterCard, LetterMetaLine } from "@/components/letter-card"
+import { LetterCover } from "@/components/letter-cover"
 import { SubscribeForm } from "@/components/subscribe-form"
-import { getAllPosts, getPostBySlug, posts } from "@/lib/posts"
+import {
+  getLetterBySlug,
+  getLetterMetadata,
+  getLetterSlugs,
+  getPublishedLetters,
+} from "@/lib/letters/source"
 
 export function generateStaticParams() {
-  return posts.map((post) => ({ slug: post.slug }))
+  return getLetterSlugs().map((slug) => ({ slug }))
 }
+
+/**
+ * Only the slugs above exist. Drafts are not among them, so a draft URL is a
+ * hard 404 in production rather than a request-time render that happens to
+ * call notFound().
+ */
+export const dynamicParams = false
 
 export async function generateMetadata({
   params,
@@ -18,26 +30,36 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const post = getPostBySlug(slug)
+  const letter = getLetterMetadata(slug)
 
-  if (!post) return {}
+  if (!letter) return {}
 
   // Relative, so it resolves against the metadataBase set in app/layout.tsx.
-  const images = post.cover
-    ? [{ url: post.cover.src, alt: post.cover.alt }]
+  const images = letter.cover
+    ? [{ url: letter.cover.src, alt: letter.cover.alt }]
     : undefined
 
+  // seoTitle/seoDescription override only when a title is awkward in a search
+  // result. Derived from the content model either way — never a second copy of
+  // the words kept in sync by hand.
+  const title = letter.seoTitle ?? letter.title
+  const description = letter.seoDescription ?? letter.dek
+  const url = `/cartas/${letter.slug}`
+
   return {
-    title: post.title,
-    description: post.dek,
+    title,
+    description,
+    alternates: { canonical: url },
     openGraph: {
       type: "article",
-      title: post.title,
-      description: post.dek,
-      publishedTime: post.date,
+      url,
+      title,
+      description,
+      publishedTime: letter.date,
+      modifiedTime: letter.updated ?? letter.date,
       images,
     },
-    twitter: { images },
+    twitter: { title, description, images },
   }
 }
 
@@ -47,12 +69,12 @@ export default async function Page({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const post = getPostBySlug(slug)
+  const letter = getLetterBySlug(slug)
 
-  if (!post) notFound()
+  if (!letter) notFound()
 
-  const more = getAllPosts()
-    .filter((item) => item.slug !== post.slug)
+  const more = getPublishedLetters("newest")
+    .filter((item) => item.slug !== letter.slug)
     .slice(0, 2)
 
   return (
@@ -62,25 +84,25 @@ export default async function Page({
     <article className="mx-auto max-w-5xl px-5 pt-12 sm:px-8 sm:pt-20">
       <header className="mx-auto max-w-[45rem]">
         <h1 className="font-heading text-[2rem] leading-[1.1] font-medium text-balance sm:text-[2.5rem]">
-          {post.title}
+          {letter.title}
         </h1>
         {/* Larger than the 19px body below it. Both are Literata now, so a
             standfirst set smaller than the text it introduces reads as a
             mistake rather than as a second rank. */}
         <p className="mt-4 text-lg leading-[1.45] text-pretty text-muted-foreground sm:text-[1.3125rem]">
-          {post.dek}
+          {letter.dek}
         </p>
         {/* Below the title rather than above it, the way a byline sits: the
             title is what the reader should land on first. */}
-        <PostMeta post={post} className="mt-6" />
+        <LetterMetaLine letter={letter} className="mt-6" />
       </header>
 
-      {post.cover ? (
+      {letter.cover ? (
         // Kept to the reading column rather than run full-bleed, so the letter
         // reads as one measure from the title down. It is the widest image on
         // the page and sits near the top, hence eager.
-        <PostCover
-          cover={post.cover}
+        <LetterCover
+          cover={letter.cover}
           sizes="(min-width: 768px) 720px, 100vw"
           className="mx-auto mt-8 max-w-[45rem] rounded-xl border border-border sm:mt-10"
           eager
@@ -90,7 +112,7 @@ export default async function Page({
       {/* No rule between the header and the body — the reference leans on
           whitespace, and with a cover above it a rule is a second divider. */}
       <div className="mx-auto mt-8 max-w-[45rem] sm:mt-10">
-        <PostContent blocks={post.content} />
+        <LetterBody markdown={letter.body} />
       </div>
 
       {/* The letter ends here. This rule used to be the top border of the
@@ -119,7 +141,7 @@ export default async function Page({
           </h2>
           <div className="grid gap-5 sm:grid-cols-2">
             {more.map((item) => (
-              <PostCard key={item.slug} post={item} />
+              <LetterCard key={item.slug} letter={item} />
             ))}
           </div>
         </section>

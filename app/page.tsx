@@ -1,11 +1,13 @@
-import { PostListItem } from "@/components/post-card"
+import { LetterListItem } from "@/components/letter-card"
 import { GridPattern } from "@/components/ui/grid-pattern"
-import { getAllPosts } from "@/lib/posts"
+import { getPublishedLetters } from "@/lib/letters/source"
 import { site } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 export default function Page() {
-  const letters = getAllPosts()
+  // Newest first here, oldest first on /cartas. A reader arriving at the home
+  // page wants what just came out; the archive is a shelf you read in order.
+  const letters = getPublishedLetters("newest")
 
   return (
     <>
@@ -33,8 +35,12 @@ export default function Page() {
               of letters, which a three-up grid of thumbnails does not. The
               letters now open the page, so they are set at `lead` size. */}
           <div className="flex flex-col gap-10 sm:gap-14">
-            {letters.map((post) => (
-              <PostListItem key={post.slug} post={post} variant="lead" />
+            {letters.map((letter) => (
+              <LetterListItem
+                key={letter.slug}
+                letter={letter}
+                variant="lead"
+              />
             ))}
           </div>
         </div>

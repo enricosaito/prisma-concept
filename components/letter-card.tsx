@@ -1,14 +1,10 @@
 import Link from "next/link"
 import { RiArrowRightLine } from "@remixicon/react"
 
-import { PostCover } from "@/components/post-cover"
+import { LetterCover } from "@/components/letter-cover"
 import { TiltCard } from "@/components/tilt-card"
-import {
-  formatDate,
-  formatDateShort,
-  formatIssue,
-  type Post,
-} from "@/lib/posts"
+import { formatDate, formatDateShort, formatIssue } from "@/lib/letters/format"
+import type { LetterMeta } from "@/lib/letters/types"
 import { issueColor } from "@/lib/spectrum"
 import { cn } from "@/lib/utils"
 
@@ -21,14 +17,14 @@ import { cn } from "@/lib/utils"
  * time sitting in the "Ler" call to action — so it is not repeated a line
  * apart.
  */
-function PostMeta({
-  post,
+function LetterMetaLine({
+  letter,
   compact = false,
   showIssue = true,
   showReadingTime = true,
   className,
 }: {
-  post: Post
+  letter: LetterMeta
   compact?: boolean
   showIssue?: boolean
   showReadingTime?: boolean
@@ -53,19 +49,19 @@ function PostMeta({
     >
       {showIssue ? (
         <>
-          <span style={{ color: issueColor(post.issue) }}>
-            {formatIssue(post.issue)}
+          <span style={{ color: issueColor(letter.issue) }}>
+            {formatIssue(letter.issue)}
           </span>
           {divider}
         </>
       ) : null}
-      <time dateTime={post.date}>
-        {compact ? formatDateShort(post.date) : formatDate(post.date)}
+      <time dateTime={letter.date}>
+        {compact ? formatDateShort(letter.date) : formatDate(letter.date)}
       </time>
       {showReadingTime ? (
         <>
           {divider}
-          <span>{post.readingMinutes} min de leitura</span>
+          <span>{letter.readingMinutes} min de leitura</span>
         </>
       ) : null}
     </div>
@@ -76,7 +72,7 @@ function PostMeta({
  * "Ler →" at the foot of a listed letter. On its own: the reading time reads
  * as metadata and belongs on the date line, not inside the call to action.
  */
-function ReadCta({ post, className }: { post: Post; className?: string }) {
+function ReadCta({ letter, className }: { letter: LetterMeta; className?: string }) {
   return (
     <span
       className={cn(
@@ -86,7 +82,7 @@ function ReadCta({ post, className }: { post: Post; className?: string }) {
     >
       Ler
       <RiArrowRightLine
-        style={{ color: issueColor(post.issue) }}
+        style={{ color: issueColor(letter.issue) }}
         className="size-3.5 transition-transform duration-300 group-hover:translate-x-1"
       />
     </span>
@@ -98,9 +94,9 @@ function ReadCta({ post, className }: { post: Post; className?: string }) {
  * than taking the issue's band of the spectrum — the monospace face is enough
  * to read it as an index, and colouring it made it compete with the title.
  */
-function IssuePrefix({ post }: { post: Post }) {
+function IssuePrefix({ letter }: { letter: LetterMeta }) {
   return (
-    <span className="font-label font-medium">{formatIssue(post.issue)}:</span>
+    <span className="font-label font-medium">{formatIssue(letter.issue)}:</span>
   )
 }
 
@@ -108,7 +104,7 @@ function IssuePrefix({ post }: { post: Post }) {
  * Card used in grids. A gentle "gravitate" tilt — it leans toward the cursor,
  * which reads as the card being picked up rather than shied away from.
  */
-function PostCard({ post }: { post: Post }) {
+function LetterCard({ letter }: { letter: LetterMeta }) {
   return (
     <TiltCard
       tiltLimit={6}
@@ -117,40 +113,40 @@ function PostCard({ post }: { post: Post }) {
       className="h-full rounded-xl border border-border bg-card"
     >
       <article className="group relative flex h-full flex-col">
-        {post.cover ? (
+        {letter.cover ? (
           // Flush to the card's edges — TiltCard already clips with
           // overflow-hidden, so the card's own rounded-xl is the only curve.
           // The grid is max-w-5xl: three up the card settles near 328px, two up
           // it is half the viewport, one up the viewport less the page gutters.
-          <PostCover
-            cover={post.cover}
+          <LetterCover
+            cover={letter.cover}
             sizes="(min-width: 1024px) 328px, (min-width: 640px) 50vw, 100vw"
           />
         ) : null}
         <div className="flex flex-1 flex-col p-6">
           {/* The card prints the reading time in its own footer row. */}
-          <PostMeta post={post} compact showReadingTime={false} />
+          <LetterMetaLine letter={letter} compact showReadingTime={false} />
           <h3 className="mt-3 font-heading text-xl leading-snug font-medium text-pretty">
-            <Link href={`/cartas/${post.slug}`} className="outline-none">
+            <Link href={`/cartas/${letter.slug}`} className="outline-none">
               <span className="absolute inset-0" />
               <span className="bg-[linear-gradient(var(--accent),var(--accent))] box-decoration-clone bg-[length:0%_1px] bg-[position:0_100%] bg-no-repeat transition-[background-size] duration-500 group-hover:bg-[length:100%_1px]">
-                {post.title}
+                {letter.title}
               </span>
             </Link>
           </h3>
           <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
-            {post.dek}
+            {letter.dek}
           </p>
           <div className="mt-auto flex items-baseline justify-between gap-3 pt-6">
             <span className="flex items-center gap-2 text-sm font-medium text-foreground">
               Ler
               <RiArrowRightLine
-                style={{ color: issueColor(post.issue) }}
+                style={{ color: issueColor(letter.issue) }}
                 className="size-3.5 transition-transform duration-300 group-hover:translate-x-1"
               />
             </span>
             <span className="font-label text-[0.7rem] font-medium tracking-[0.14em] text-muted-foreground uppercase">
-              {post.readingMinutes} min
+              {letter.readingMinutes} min
             </span>
           </div>
         </div>
@@ -162,7 +158,7 @@ function PostCard({ post }: { post: Post }) {
 /**
  * Upright cover beside the text, for every list of letters — home and archive.
  *
- * This replaced a separate dense `PostRow` for the archive. Once both lists
+ * This replaced a separate dense row component for the archive. Once both lists
  * carried the same upright cover the two differed only by a rule and how much
  * of the date they showed, which is a `className` and a flag, not a component.
  *
@@ -175,12 +171,12 @@ function PostCard({ post }: { post: Post }) {
  * Wrapping lets the event reach it on the way up and still lands the click
  * anywhere on the row.
  */
-function PostListItem({
-  post,
+function LetterListItem({
+  letter,
   className,
   variant = "archive",
 }: {
-  post: Post
+  letter: LetterMeta
   className?: string
   /**
    * "lead" — the letters open the home page with nothing above them, so they
@@ -190,16 +186,16 @@ function PostListItem({
    */
   variant?: "lead" | "archive"
 }) {
-  const art = post.thumb ?? post.cover
+  const art = letter.thumb ?? letter.cover
   const lead = variant === "lead"
 
   return (
     <article className={className}>
       <Link
-        href={`/cartas/${post.slug}`}
+        href={`/cartas/${letter.slug}`}
         // Without this the link's name is the image description, then the
         // title, then the standfirst, then the date, read end to end.
-        aria-label={post.title}
+        aria-label={letter.title}
         className="group flex items-start gap-5 rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:gap-8"
       >
         {art ? (
@@ -213,7 +209,7 @@ function PostListItem({
             effect="gravitate"
             className="w-32 shrink-0 rounded-xl border border-border sm:w-48"
           >
-            <PostCover cover={art} sizes="(min-width: 640px) 192px, 128px" />
+            <LetterCover cover={art} sizes="(min-width: 640px) 192px, 128px" />
           </TiltCard>
         ) : null}
         {/* Capped rather than left to fill the row: at full width the title ran
@@ -244,7 +240,7 @@ function PostListItem({
             )}
           >
             <span className="bg-[linear-gradient(var(--accent),var(--accent))] box-decoration-clone bg-[length:0%_1px] bg-[position:0_100%] bg-no-repeat transition-[background-size] duration-500 group-hover:bg-[length:100%_1px]">
-              {post.title}
+              {letter.title}
             </span>
           </h3>
           <p
@@ -253,21 +249,21 @@ function PostListItem({
               lead ? "text-base sm:text-lg" : "text-sm"
             )}
           >
-            <IssuePrefix post={post} /> {post.dek}
+            <IssuePrefix letter={letter} /> {letter.dek}
           </p>
-          <PostMeta
-            post={post}
+          <LetterMetaLine
+            letter={letter}
             compact={lead}
             showIssue={false}
             className="mt-3"
           />
           {/* Set off from the date rather than tucked under it, which drops it
               into the lower half of the cover beside it. */}
-          <ReadCta post={post} className="mt-7" />
+          <ReadCta letter={letter} className="mt-7" />
         </div>
       </Link>
     </article>
   )
 }
 
-export { PostCard, PostListItem, PostMeta }
+export { LetterCard, LetterListItem, LetterMetaLine }
