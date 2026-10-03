@@ -107,7 +107,7 @@ dek: "Uma linha que aparece nas listagens."
 O texto em Markdown, aqui embaixo.
 ```
 
-**O guia completo está em [`content/cartas/README.md`](content/cartas/README.md)**
+**O guia completo está em [`docs/escrever-cartas.md`](docs/escrever-cartas.md)**
 — todos os campos, o que é opcional, a convenção de citação e os tamanhos de
 imagem. A arquitetura por trás disso está em
 [`docs/content-architecture.md`](docs/content-architecture.md).

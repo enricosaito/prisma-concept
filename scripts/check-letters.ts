@@ -58,7 +58,7 @@ function blockquotesOf(body: string): string[][] {
 
 const filenames = fs
   .readdirSync(CONTENT_DIR)
-  .filter((name) => name.endsWith(".md") && name !== "README.md")
+  .filter((name) => name.endsWith(".md"))
   .sort()
 
 const letters: Letter[] = []

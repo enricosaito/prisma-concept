@@ -3,7 +3,7 @@
 Como uma carta sai de um arquivo e chega na tela — e o que trocar no dia em que
 isso deixar de ser um arquivo.
 
-Para **escrever** uma carta, o guia é `content/cartas/README.md`. Este documento
+Para **escrever** uma carta, o guia é [`docs/escrever-cartas.md`](escrever-cartas.md). Este documento
 é sobre o código.
 
 ## O caminho

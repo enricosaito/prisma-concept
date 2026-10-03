@@ -1,15 +1,22 @@
-"use client"
+import { notFound } from "next/navigation"
 
-import { makePage } from "@keystatic/next/ui/app"
-
-import config from "@/keystatic.config"
+import { Editor } from "./editor"
 
 /**
- * A interface do editor, em /keystatic.
+ * O editor só existe em desenvolvimento.
  *
- * `"use client"` não é opcional: a config carrega as definições dos campos, que
- * são funções, e um componente de servidor não consegue passá-las adiante. Sem
- * isto a página monta e renderiza um documento vazio, sem erro nenhum no
- * console — leva um tempo até se perceber o que houve.
+ * Com `storage: local`, o Keystatic lê e grava o disco do servidor que o roda.
+ * Isso só faz sentido quando esse disco é o seu repositório. Num deploy da
+ * Vercel o disco é somente-leitura e é refeito a cada publicação, então o
+ * editor não conseguiria ler nem gravar nada — e ficaria de pé, aberto, no
+ * domínio público, que é como esta rota foi parar na internet.
+ *
+ * A checagem é por `development`, e não por "não é a Vercel", de propósito: ela
+ * falha fechada. Qualquer ambiente que não seja o seu `npm run dev` não tem
+ * editor. Se um dia o Keystatic passar para o modo GitHub — em que ele commita
+ * de verdade e faz sentido publicado —, esta guarda sai junto com a troca.
  */
-export default makePage(config)
+export default function Page() {
+  if (process.env.NODE_ENV !== "development") notFound()
+  return <Editor />
+}
