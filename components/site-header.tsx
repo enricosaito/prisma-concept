@@ -93,11 +93,10 @@ function SiteHeader() {
         // is unsupported, otherwise the text would sit on bare content.
         "bg-background/90 supports-[backdrop-filter]:bg-background/68",
         "backdrop-blur-xl backdrop-saturate-150",
-        // The dispersed spectrum along the bottom edge, masked to fade out at
-        // both ends so it reads as a hairline, not a stripe.
-        "after:absolute after:inset-x-0 after:-bottom-px after:h-px after:opacity-60",
-        "after:[background-image:var(--spectrum)]",
-        "after:[mask-image:linear-gradient(90deg,transparent,black_18%,black_82%,transparent)]",
+        // A borda de baixo é só a hairline do `border-b` acima. Aqui havia um
+        // fio do espectro atravessando a barra inteira; saiu. O espectro
+        // continua onde ele diz alguma coisa — o número da edição, a seta
+        // "Ler", o sublinhado do link ativo —, e não como moldura.
         // translate-y by its own height, so the bar clears itself at both h-14
         // and sm:h-16 without either being hardcoded here.
         "transition-transform duration-200 ease-snappy",
