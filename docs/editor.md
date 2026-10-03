@@ -28,29 +28,45 @@ Enquanto **Situação** for *Rascunho*, a carta não existe para o site publicad
 não é gerada, não entra na contagem do arquivo, não entra no sitemap, e a URL
 dá 404. Trocar para *Publicada* e commitar é o que a põe no ar.
 
-> O editor guarda as alterações não salvas no navegador. Se você abrir uma
-> carta e os campos vierem estranhos depois de alguma mudança de schema, limpe
-> os dados do site em localhost — é rascunho velho, não o arquivo.
+### Duas coisas que vão te morder, e a saída de cada uma
+
+**Campos vazios ou valores estranhos ao abrir uma carta.** O editor guarda as
+alterações não salvas no navegador (IndexedDB) e as restaura por cima do
+arquivo. Depois de uma mudança de schema, esse rascunho velho não bate mais.
+Limpe os dados do site em localhost e recarregue. O arquivo está certo.
+
+**Erro 500 ao abrir a carta, com "Jest worker encountered child process
+exceptions".** O servidor de desenvolvimento travou — acontece quando ele fica
+rodando através de várias mudanças de rota ou de schema. Não é o editor nem o
+arquivo:
+
+```bash
+# pare o servidor, e então
+rm -rf .next && npm run dev
+```
 
 ---
 
-## A frontmatter tem todos os campos, sempre
+## O editor é dono do formato da frontmatter
 
-Esta é a única coisa que o editor mudou nos arquivos, e vale saber por quê.
+Ao salvar, o Keystatic reescreve a frontmatter no formato dele: reordena as
+chaves, tira as aspas das que não precisam, quebra textos longos em blocos YAML
+dobrados (`>-`), e omite os campos opcionais vazios. O arquivo fica com outra
+cara.
 
-Antes, um campo opcional não usado era simplesmente omitido. O Keystatic valida
-o arquivo inteiro contra o schema: uma chave que ele não conhece impede a carta
-de abrir, e uma chave ausente onde ele espera um valor impede o save. Então
-agora todos os campos existem sempre:
+**O que ele não muda é o conteúdo.** Medido num salvamento real, comparando o
+que `lib/letters/parse.ts` lê dos dois arquivos: de doze campos, **só mudou o
+que eu editei**. Título, resumo, as duas descrições de imagem e a proporção do
+thumb leem idênticos apesar da reformatação. O corpo da carta sai igual, com uma
+única diferença — um espaço no fim das linhas `>` vazias dentro de citações,
+inerte em Markdown e invisível na página.
 
-| Campo | Vazio é |
-| --- | --- |
-| `seoTitle`, `seoDescription`, `cover.position`, `cover.ratio`, `thumb.position` | `""` |
-| `updated` | `null` — o campo de data não aceita texto vazio |
+Isso foi verificado contra o site: as quatro páginas saem com HTML idêntico ao
+de antes, depois de o arquivo ter passado pelo editor.
 
-Para o site isso não muda nada: `lib/letters/parse.ts` trata vazio e nulo como
-ausente, exatamente como tratava a chave omitida. O modelo em memória é o mesmo,
-e as quatro páginas saem com HTML idêntico ao de antes.
+`lib/letters/parse.ts` trata campo vazio e nulo como ausente, então os dois
+formatos — o escrito à mão e o escrito pelo editor — produzem o mesmo modelo em
+memória. Você pode continuar escrevendo à mão; o primeiro save normaliza.
 
 ---
 
