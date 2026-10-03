@@ -44,14 +44,20 @@ colunas, mas a carta abre e edita normalmente, e o primeiro Save resolve.
 Não achei a causa; é cosmético.
 
 **Erro 500 ao abrir a carta, com "Jest worker encountered child process
-exceptions".** O servidor de desenvolvimento travou — acontece quando ele fica
-rodando através de várias mudanças de rota ou de schema. Não é o editor nem o
-arquivo:
+exceptions".** Corrigido — e a correção não era reiniciar o servidor, como eu
+cheguei a achar na primeira vez que isso apareceu.
 
-```bash
-# pare o servidor, e então
-rm -rf .next && npm run dev
-```
+A causa está no log do `next dev`, algumas linhas acima do 500: *"Failed to
+generate static paths for /keystatic/[[...params]]"*. O Next tentava analisar as
+rotas do editor para gerar caminhos estáticos e, para isso, carregava o módulo
+da página num processo filho. Esse módulo puxa a interface inteira do Keystatic;
+o filho morria, e tudo que chegasse na rota virava 500.
+
+`export const dynamic = "force-dynamic"` na página e na rota de API resolve: não
+há nada a gerar estaticamente ali, e o Next para de tentar.
+
+Se voltar a acontecer, procure essa linha no log antes de qualquer outra coisa —
+ela diz qual rota o Next não conseguiu analisar.
 
 ---
 
