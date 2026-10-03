@@ -68,7 +68,10 @@ const readAll = cache((): Letter[] => {
   }
 
   const letters = filenames
-    .filter((name) => name.endsWith(".md") && name !== "README.md")
+    // Tudo aqui dentro é carta: o guia do autor mora em docs/, justamente para
+    // que esta pasta não precise de exceções — e para que o editor, que lista
+    // o diretório inteiro, não mostre um arquivo de documentação como carta.
+    .filter((name) => name.endsWith(".md"))
     .map((name) => {
       const file = `content/cartas/${name}`
       const source = fs.readFileSync(path.join(CONTENT_DIR, name), "utf8")

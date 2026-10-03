@@ -6,9 +6,6 @@ category: Escrita
 readingMinutes: 1
 title: "Carta de exemplo"
 dek: "Um rascunho que existe só para provar que rascunho não vaza. Pode apagar quando quiser."
-updated: null
-seoTitle: ""
-seoDescription: ""
 ---
 
 Esta carta é um rascunho, e é a prova viva de que rascunho não chega ao leitor:

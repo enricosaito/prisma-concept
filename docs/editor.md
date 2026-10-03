@@ -13,6 +13,9 @@ do `AGENTS.md` se apoia.
 npm run dev     # depois abra http://localhost:3000/keystatic
 ```
 
+**Só em desenvolvimento.** `/keystatic` dá 404 em produção, e o porquê — junto
+com o que seria preciso para funcionar publicado — está no fim deste documento.
+
 ---
 
 ## Escrever
@@ -34,6 +37,11 @@ dá 404. Trocar para *Publicada* e commitar é o que a põe no ar.
 alterações não salvas no navegador (IndexedDB) e as restaura por cima do
 arquivo. Depois de uma mudança de schema, esse rascunho velho não bate mais.
 Limpe os dados do site em localhost e recarregue. O arquivo está certo.
+
+**Uma carta aparece na lista sem título nem data.** Acontece com arquivos
+escritos à mão que o editor ainda não salvou — a lista fica em branco nessas
+colunas, mas a carta abre e edita normalmente, e o primeiro Save resolve.
+Não achei a causa; é cosmético.
 
 **Erro 500 ao abrir a carta, com "Jest worker encountered child process
 exceptions".** O servidor de desenvolvimento travou — acontece quando ele fica
@@ -98,18 +106,42 @@ faria os dois brigarem.
 
 ---
 
+## O editor só existe em desenvolvimento
+
+`/keystatic` responde 404 em produção, de propósito. Não é uma limitação
+contornável com configuração: com `storage: local`, o Keystatic lê e grava **o
+disco do servidor que o roda**. Isso só faz sentido quando esse disco é o seu
+repositório.
+
+Num deploy da Vercel o disco é somente-leitura e refeito a cada publicação —
+o editor não leria (é por isso que `prismaconcept.com.br/keystatic` mostrava
+zero cartas) e, se pudesse gravar, o que você escrevesse sumiria no deploy
+seguinte. E a rota ficava de pé, aberta, no domínio público.
+
+A guarda está em `app/(editor)/keystatic/[[...params]]/page.tsx` e na rota de
+API ao lado. Ela testa `NODE_ENV === "development"`, e não "não é a Vercel",
+para falhar fechada: qualquer ambiente que não seja o seu `npm run dev` não tem
+editor.
+
 ## Editar de qualquer lugar, depois
 
-Hoje o editor é local: roda com `npm run dev`, na sua máquina. Para escrever de
-qualquer navegador sem clonar o repositório, o Keystatic tem o modo GitHub — ele
-commita por você, e aí publicar é apertar Save e esperar o deploy.
+Para escrever de qualquer navegador sem clonar o repositório, o Keystatic tem o
+**modo GitHub**: em vez do disco, ele lê e grava o repositório pela API do
+GitHub e **commita por você**. Aí ele faz sentido publicado, e publicar vira
+apertar Save e esperar o deploy.
 
-A troca é em `keystatic.config.ts`:
+O que muda:
 
-```ts
-storage: { kind: "github", repo: "enricosaito/prisma-concept" }
-```
+1. Em `keystatic.config.ts`:
+   ```ts
+   storage: { kind: "github", repo: "enricosaito/prisma-concept" }
+   ```
+2. Um GitHub App, criado por você em github.com/settings/apps, com permissão de
+   leitura e escrita em Contents.
+3. Três variáveis de ambiente na Vercel: `KEYSTATIC_GITHUB_CLIENT_ID`,
+   `KEYSTATIC_GITHUB_CLIENT_SECRET` e `KEYSTATIC_SECRET`.
+4. A guarda acima sai — o editor passa a existir em produção, protegido pelo
+   login do GitHub e pela sua permissão no repositório.
 
-Mais um GitHub App (criado por você em github.com/settings/apps) e três
-variáveis de ambiente. Vale fazer quando a vontade de escrever longe do
-computador aparecer — não antes.
+Vale fazer quando a vontade de escrever longe do computador aparecer. Enquanto
+escrever for sentar na mesa, o modo local é menos peça para manter.
