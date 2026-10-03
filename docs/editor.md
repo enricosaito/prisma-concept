@@ -43,6 +43,16 @@ escritos à mão que o editor ainda não salvou — a lista fica em branco nessa
 colunas, mas a carta abre e edita normalmente, e o primeiro Save resolve.
 Não achei a causa; é cosmético.
 
+**"NotFoundError: Not found" apontando para `page.tsx`, na linha do
+`<Editor />`.** Não é a guarda de desenvolvimento dessa linha. O Keystatic tem
+um `notFound()` próprio, que ele lança quando a entrada aberta não existe —
+tipicamente uma carta apagada cuja URL ficou na barra de endereços. Ele captura
+o erro no próprio error boundary, por isso aparece como "Recoverable".
+
+O Next atribui o erro ao componente React mais próximo que sabe nomear, que é a
+página do editor. Volte para a lista de cartas; o que você estava editando foi
+salvo.
+
 **Erro 500 ao abrir a carta, com "Jest worker encountered child process
 exceptions".** Corrigido — e a correção não era reiniciar o servidor, como eu
 cheguei a achar na primeira vez que isso apareceu.

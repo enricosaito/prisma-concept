@@ -27,6 +27,20 @@ import { Editor } from "./editor"
  */
 export const dynamic = "force-dynamic"
 
+/**
+ * ⚠️ Um `NotFoundError` apontando para a linha do `<Editor />` abaixo quase
+ * nunca vem desta guarda.
+ *
+ * O `@keystatic/core` tem um `notFound()` próprio, que lança uma classe
+ * `NotFoundError` própria — é o que ele faz quando a entrada aberta não existe,
+ * tipicamente uma carta apagada cuja URL ainda está na barra de endereços. O
+ * Keystatic captura isso no error boundary dele, então o erro é recuperável.
+ *
+ * O Next não tem como saber disso e atribui o erro ao componente React mais
+ * próximo que ele consegue nomear, que é esta página. O stack aponta para cá e
+ * a causa está lá dentro. Antes de mexer na linha de baixo, confira se a
+ * entrada que o editor tentou abrir ainda existe em `content/cartas/`.
+ */
 export default function Page() {
   if (process.env.NODE_ENV !== "development") notFound()
   return <Editor />
