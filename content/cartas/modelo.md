@@ -4,35 +4,31 @@ status: draft
 date: "2026-01-01"
 category: Escrita
 readingMinutes: 1
-title: "Modelo de carta"
-dek: "Copie este arquivo, troque o nome, escreva. Enquanto status for draft, ele não existe para o site publicado."
+title: "Carta de exemplo"
+dek: "Um rascunho que existe só para provar que rascunho não vaza. Pode apagar quando quiser."
+updated: null
+seoTitle: ""
+seoDescription: ""
 ---
 
-Este arquivo é o ponto de partida de uma carta nova — e, de quebra, a prova de
-que rascunho não vaza: ele aparece em `npm run dev` e some de `npm run build`.
+Esta carta é um rascunho, e é a prova viva de que rascunho não chega ao leitor:
+ela aparece no editor e no servidor de desenvolvimento, e some do site
+publicado — não é gerada, não entra na contagem do arquivo, não entra no
+sitemap, e o endereço dela dá 404.
 
-Copie, renomeie para o slug da carta (minúsculas, hifens, sem acento — o nome do
-arquivo vira a URL), ajuste a frontmatter e escreva abaixo da linha `---`.
-
-O `issue: 99` aqui em cima é só um número que não atrapalha: duas cartas não
-podem ter o mesmo, e um modelo não deve brigar com a carta que você está
-escrevendo. Troque pelo número de verdade na sua cópia.
-
-O guia completo está em `content/cartas/README.md`. O resumo:
+Serve também para você ver, sem risco, o que o editor sabe desenhar.
 
 ## Um título de seção
 
-Parágrafos são parágrafos — uma linha em branco separa um do outro, e não
-importa se o texto está todo numa linha só ou quebrado em várias.
+Parágrafos são parágrafos. Dá para usar **negrito**, _itálico_ e
+[links](https://www.prismaconcept.com.br).
 
-Dá para usar **negrito**, _itálico_ e [links](https://www.prismaconcept.com.br).
+- listas
+- com itens
 
-- listas com hífen
-- uma por linha
-
-> Uma citação começa com ">".
+> Uma citação, com a fonte logo abaixo.
 >
 > — Quem disse
 
-A última linha da citação, se começar com travessão, vira a assinatura da
-citação. O resto do texto nunca é alterado por nada no caminho.
+Para escrever de verdade, abra o editor e clique em **New Carta**. Não precisa
+copiar este arquivo.

@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { Archivo, Fraunces, Literata } from "next/font/google"
 import localFont from "next/font/local"
 
-import "./globals.css"
+import "../globals.css"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -31,7 +31,7 @@ const fontHeading = Fraunces({
 // optical nudge documented in components/wordmark.tsx, which "against" does
 // not.
 const fontDisplay = localFont({
-  src: "../public/fonts/against regular.otf",
+  src: "../../public/fonts/against regular.otf",
   variable: "--font-display",
   display: "swap",
 })

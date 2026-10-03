@@ -83,10 +83,15 @@ recortado; e as duas constantes (`0.12em` de baseline, `-0.15em` de kern
 
 ## Publicando uma carta nova
 
-Copie `content/cartas/modelo.md`, renomeie para o slug da carta, escreva, e
-troque `status: draft` por `status: published`. A rota, a home, o arquivo, o
-sitemap e as tags de compartilhamento se montam sozinhos a partir do arquivo —
-o nome dele é a URL.
+**Pelo navegador:** `npm run dev`, abra http://localhost:3000/keystatic e
+clique em **New Carta** — formulário para os metadados, editor de texto para a
+prosa, gravando nos mesmos arquivos. O guia está em
+[`docs/editor.md`](docs/editor.md).
+
+**À mão:** crie um `content/cartas/<slug>.md`, escreva, e troque
+`status: draft` por `status: published`. A rota, a home, o arquivo, o sitemap e
+as tags de compartilhamento se montam sozinhos a partir do arquivo — o nome
+dele é a URL.
 
 ```markdown
 ---
