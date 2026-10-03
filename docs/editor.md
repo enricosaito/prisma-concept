@@ -43,15 +43,31 @@ escritos à mão que o editor ainda não salvou — a lista fica em branco nessa
 colunas, mas a carta abre e edita normalmente, e o primeiro Save resolve.
 Não achei a causa; é cosmético.
 
-**Erro 500 ao abrir a carta, com "Jest worker encountered child process
-exceptions".** O servidor de desenvolvimento travou — acontece quando ele fica
-rodando através de várias mudanças de rota ou de schema. Não é o editor nem o
-arquivo:
+**"NotFoundError: Not found" apontando para `page.tsx`, na linha do
+`<Editor />`.** Não é a guarda de desenvolvimento dessa linha. O Keystatic tem
+um `notFound()` próprio, que ele lança quando a entrada aberta não existe —
+tipicamente uma carta apagada cuja URL ficou na barra de endereços. Ele captura
+o erro no próprio error boundary, por isso aparece como "Recoverable".
 
-```bash
-# pare o servidor, e então
-rm -rf .next && npm run dev
-```
+O Next atribui o erro ao componente React mais próximo que sabe nomear, que é a
+página do editor. Volte para a lista de cartas; o que você estava editando foi
+salvo.
+
+**Erro 500 ao abrir a carta, com "Jest worker encountered child process
+exceptions".** Corrigido — e a correção não era reiniciar o servidor, como eu
+cheguei a achar na primeira vez que isso apareceu.
+
+A causa está no log do `next dev`, algumas linhas acima do 500: *"Failed to
+generate static paths for /keystatic/[[...params]]"*. O Next tentava analisar as
+rotas do editor para gerar caminhos estáticos e, para isso, carregava o módulo
+da página num processo filho. Esse módulo puxa a interface inteira do Keystatic;
+o filho morria, e tudo que chegasse na rota virava 500.
+
+`export const dynamic = "force-dynamic"` na página e na rota de API resolve: não
+há nada a gerar estaticamente ali, e o Next para de tentar.
+
+Se voltar a acontecer, procure essa linha no log antes de qualquer outra coisa —
+ela diz qual rota o Next não conseguiu analisar.
 
 ---
 

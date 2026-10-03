@@ -10,6 +10,9 @@ import config from "@/keystatic.config"
  * que toca o disco. Num deploy ela não teria o que ler, mas também não tem por
  * que existir, então responde 404 como qualquer endereço que não existe.
  */
+/** Pelo mesmo motivo da página: nada a gerar estaticamente aqui. */
+export const dynamic = "force-dynamic"
+
 const handlers = makeRouteHandler({ config })
 
 const disabled = () => new Response("Not Found", { status: 404 })
