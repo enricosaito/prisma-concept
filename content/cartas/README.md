@@ -1,5 +1,10 @@
 # Como publicar uma carta
 
+> Agora também dá para escrever pelo navegador: `npm run dev` e
+> http://localhost:3000/keystatic. O guia do editor está em
+> [`docs/editor.md`](../../docs/editor.md). O que está abaixo continua valendo —
+> os arquivos são os mesmos, e editar à mão segue funcionando.
+
 Uma carta é **um arquivo** nesta pasta. Nada mais precisa ser editado — nem
 rota, nem lista, nem código. A home, o arquivo, o sitemap e as tags de
 compartilhamento se montam a partir daqui.

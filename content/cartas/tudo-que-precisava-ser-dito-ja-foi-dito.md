@@ -6,13 +6,19 @@ category: Arte
 readingMinutes: 5
 title: "Tudo que precisava ser dito já foi dito, mas ninguém estava ouvindo"
 dek: "Nada é completamente original — e por que essa deveria ser a melhor notícia do seu dia."
+updated: null
+seoTitle: ""
+seoDescription: ""
 cover:
   src: /covers/tudo-que-precisava-ser-dito-ja-foi-dito.jpg
   alt: "Pintura modernista: uma mulher de maiô aponta para o alto enquanto um zepelim, um veleiro e um farol dividem a cena com cardumes, maquinário industrial e o corte de um submarino."
+  position: ""
+  ratio: ""
 thumb:
   src: /covers/thefool-fullsize.jpg
-  ratio: "3 / 5"
   alt: "A carta O Louco, do tarô, em preto e branco gasto: uma figura de capa caminha para a beira de um penhasco com um cachorro saltando aos seus pés, sob um céu carregado. Ao pé da carta, as palavras THE FOOL."
+  position: ""
+  ratio: "3 / 5"
 ---
 
 Seja bem-vindo, leitor! Gostaria de começar agradecendo pelo voto de confiança. Esta é a primeira carta que publico, e muito inspirada pela leitura de um livro que irei comentar sobre brevemente.

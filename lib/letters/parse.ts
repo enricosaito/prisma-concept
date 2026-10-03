@@ -62,11 +62,17 @@ function optionalString(
   key: string
 ): string | undefined {
   const value = data[key]
+  // Ausente e vazio significam a mesma coisa: não tem.
+  //
+  // Vazio passou a aparecer porque o editor escreve a frontmatter inteira —
+  // ele valida o arquivo contra o schema e não aceita uma chave que não
+  // conhece, então os campos opcionais existem sempre, vazios quando não
+  // usados. Para o resto do site nada muda: os dois viram `undefined`.
   if (value === undefined || value === null) return undefined
-  if (typeof value !== "string" || value.trim() === "") {
-    fail(file, `"${key}", se presente, precisa ser um texto não vazio.`)
+  if (typeof value !== "string") {
+    fail(file, `"${key}", se presente, precisa ser um texto.`)
   }
-  return value
+  return value.trim() === "" ? undefined : value
 }
 
 function requirePositiveInt(
@@ -94,7 +100,8 @@ function requireDate(
   key: string,
   required: boolean
 ): string | undefined {
-  if (value === undefined || value === null) {
+  // Vazio é o mesmo que ausente — ver optionalString.
+  if (value === undefined || value === null || value === "") {
     if (required) fail(file, `"${key}" é obrigatório, no formato AAAA-MM-DD.`)
     return undefined
   }
@@ -171,8 +178,9 @@ function optionalCover(
     )
   }
 
-  const position = cover.position
-  const ratio = cover.ratio
+  // Vazio e nulo valem por ausente, como nos campos de topo.
+  const position = cover.position ?? undefined
+  const ratio = cover.ratio ?? undefined
   if (position !== undefined && typeof position !== "string") {
     fail(file, `"${key}.position" precisa ser um texto, como "top" ou "50% 30%".`)
   }
