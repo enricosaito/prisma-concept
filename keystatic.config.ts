@@ -69,12 +69,24 @@ const coverField = (label: string, description: string) =>
 
 export default config({
   /**
-   * `local` grava direto no disco enquanto você roda `npm run dev`.
+   * O editor fala com o repositório pela API do GitHub, não com o disco.
    *
-   * Trocar para GitHub depois é mudar estas três linhas: aí o editor publicado
-   * commita sozinho e você escreve de qualquer navegador. Ver docs/editor.md.
+   * É o que faz o Save virar um commit: você escreve de qualquer navegador, o
+   * Keystatic commita no seu lugar, e a Vercel publica. A etapa de
+   * `git commit` à mão deixa de existir.
+   *
+   * Vale igual em desenvolvimento e em produção, de propósito. O modo local
+   * seria mais rápido no `npm run dev`, mas aí o Save faria coisas diferentes
+   * conforme onde você abriu o editor, e a etapa manual que queríamos eliminar
+   * voltaria pela porta dos fundos.
+   *
+   * Editar os arquivos à mão continua funcionando — e continua sendo o caminho
+   * quando você estiver sem rede.
    */
-  storage: { kind: "local" },
+  storage: {
+    kind: "github",
+    repo: { owner: "enricosaito", name: "prisma-concept" },
+  },
 
   ui: {
     brand: { name: "PRISMA" },
