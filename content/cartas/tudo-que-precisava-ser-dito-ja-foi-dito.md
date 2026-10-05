@@ -22,7 +22,19 @@ thumb:
     sob um céu carregado. Ao pé da carta, as palavras THE FOOL.
   ratio: 3 / 5
 ---
-Seja bem-vindo, leitor! Gostaria de começar agradecendo pelo voto de confiança. Esta é a primeira carta que publico, e muito inspirada pela leitura de um livro que irei comentar sobre brevemente.
+Seja bem-vindo, leitor!\
+\
+Antes de tudo, gostaria de começar agradecendo por você estar aqui.\
+\
+Escrever sempre é um voto de confiança. Falamos com um abismo. Não sabemos exatamente quem vai ler, ou se algo vai importar. Mas acredito firmemente no potencial transformador da escrita e da leitura, principalmente nos dias de hoje.
+
+Tempo e atenção são a moeda do momento, e saber que você está depositando o seu bem mais precioso na leitura deste conteúdo me enche de gratidão.
+
+Não possuo um manifesto pra essa carta. Pelo menos, ainda não.
+
+Mas eu gostaria de criar um espaço para ideias que são difíceis de encaixar em qualquer outro lugar.
+
+Obrigado por ler a primeira.\
 
 > Tudo que precisava ser dito já foi dito. Mas, como ninguém estava ouvindo, é preciso dizer tudo de novo.
 > 
@@ -30,7 +42,7 @@ Seja bem-vindo, leitor! Gostaria de começar agradecendo pelo voto de confiança
 
 ## Nada vem do nada
 
-A ideia por trás dela é simples e um pouco desconfortável: nada é completamente original. Todo trabalho criativo é construído em cima do que veio antes. Não existe página em branco absoluta — existe uma pilha de coisas que você leu, viu e ouviu, e um recorte seu feito em cima dela.
+A ideia por trás dessa frase é simples e um pouco desconfortável: nada é completamente original. Todo trabalho criativo é construído em cima do que veio antes. Não existe página em branco absoluta — existe uma pilha de coisas que você leu, viu e ouviu, e um recorte seu feito em cima dela.
 
 Isso não é uma descoberta moderna, nem um sintoma da internet. Está no Eclesiastes, alguns milhares de anos antes de qualquer discussão sobre plágio em rede social:
 
