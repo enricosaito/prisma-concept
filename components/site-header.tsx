@@ -129,7 +129,15 @@ function SiteHeader() {
           aria-label="PRISMA — início"
           className="justify-self-start rounded-sm text-foreground outline-none transition-opacity hover:opacity-70 focus-visible:ring-3 focus-visible:ring-ring/50"
         >
-          <PrismaIcon className="size-7 sm:size-8" />
+          {/* Casado com a altura de maiúscula do wordmark, não escolhido a
+              olho. A "against" tem maiúscula de 0.851em — medido com a
+              opentype.js na própria fonte —, então a 30px dá 25.5px e a 36px dá
+              30.6px. Como o viewBox do símbolo está apertado na tinta, estes
+              números são o traço que aparece.
+
+              Não mexe na altura da barra: ela é fixa em h-14 / sm:h-16, e 30.6
+              cabe com folga nos 64. */}
+          <PrismaIcon className="size-[25.5px] sm:size-[30.6px]" />
         </Link>
 
         {/* Também é link, mesmo com o símbolo ao lado indo para o mesmo lugar:

@@ -12,10 +12,20 @@ import { cn } from "@/lib/utils"
  * Sem fundo próprio, de propósito: ele se apoia no vidro da barra. O retângulo
  * escuro da variante opaca é para o favicon, onde não há fundo em que se apoiar.
  */
+/**
+ * O viewBox está apertado na tinta, e não nos 256×256 do arquivo.
+ *
+ * A arte ocupa 164 de 256 — 64% da caixa —, então no arquivo original uma
+ * classe `size-8` desenhava 20,5px de traço em vez de 32. Recortando a moldura
+ * vazia, o tamanho pedido passa a ser o tamanho que aparece, e dá para casar o
+ * símbolo com a tipografia sem adivinhar.
+ *
+ * Medido rasterizando o SVG e lendo o canal alfa: tinta em x=42, y=50, 164×164.
+ */
 function PrismaIcon({ className, ...props }: React.ComponentProps<"svg">) {
   return (
     <svg
-      viewBox="0 0 256 256"
+      viewBox="42 50 164 164"
       fill="currentColor"
       aria-hidden="true"
       className={cn("size-7", className)}
