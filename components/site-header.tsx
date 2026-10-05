@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { RiCloseLine, RiMenuLine } from "@remixicon/react"
 
+import { PrismaIcon } from "@/components/prisma-icon"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { RainbowButton } from "@/components/ui/rainbow-button"
 import { Wordmark } from "@/components/wordmark"
@@ -114,19 +115,37 @@ function SiteHeader() {
         "motion-reduce:transition-none"
       )}
     >
-      {/* Full-bleed on purpose: the bar spans the viewport and pins the
-          wordmark and nav to the gutters, while page sections keep their
-          centred max-w-5xl measure. */}
-      <div className="flex h-14 w-full items-center justify-between gap-4 px-5 sm:h-16 sm:px-8">
+      {/* Full-bleed on purpose: the bar spans the viewport and pins the symbol
+          and the nav to the gutters, while page sections keep their centred
+          max-w-5xl measure.
+
+          Grid de três colunas, e não flex com `justify-between`: com flex o
+          wordmark ficaria centrado ENTRE o símbolo e o menu, que têm larguras
+          diferentes, e portanto fora do centro da tela. Com `1fr auto 1fr` as
+          laterais ficam do mesmo tamanho e o centro é o centro de verdade. */}
+      <div className="grid h-14 w-full grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 sm:h-16 sm:px-8">
         <Link
           href="/"
-          className="rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+          aria-label="PRISMA — início"
+          className="justify-self-start rounded-sm text-foreground outline-none transition-opacity hover:opacity-70 focus-visible:ring-3 focus-visible:ring-ring/50"
+        >
+          <PrismaIcon className="size-7 sm:size-8" />
+        </Link>
+
+        {/* Também é link, mesmo com o símbolo ao lado indo para o mesmo lugar:
+            as pessoas clicam no nome da publicação, e um masthead centrado que
+            não responde ao clique contraria um hábito de trinta anos. O custo é
+            repetir o destino para quem usa leitor de tela — e é o que todo
+            cabeçalho com símbolo e nome faz. */}
+        <Link
+          href="/"
+          className="justify-self-center rounded-sm outline-none transition-opacity hover:opacity-70 focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           <Wordmark className="text-3xl tracking-normal sm:text-4xl" />
         </Link>
 
         <nav
-          className="hidden items-center gap-1 sm:flex"
+          className="hidden items-center justify-self-end gap-1 sm:flex"
           aria-label="Principal"
         >
           <ThemeToggle className="mr-1" />
@@ -159,7 +178,7 @@ function SiteHeader() {
           </RainbowButton>
         </nav>
 
-        <div className="flex items-center gap-1 sm:hidden">
+        <div className="flex items-center justify-self-end gap-1 sm:hidden">
           <ThemeToggle />
           <button
             type="button"
