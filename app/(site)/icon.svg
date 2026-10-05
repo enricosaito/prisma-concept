@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="PRISMA">
   <title>PRISMA</title>
-  <defs><linearGradient id="spectrum" gradientUnits="userSpaceOnUse" x1="42.08" y1="213.92" x2="200" y2="56"><stop offset="0" stop-color="#FF4F5E"/><stop offset="0.17" stop-color="#FF9A3C"/><stop offset="0.33" stop-color="#FFD447"/><stop offset="0.5" stop-color="#45D483"/><stop offset="0.67" stop-color="#2FB8F0"/><stop offset="0.83" stop-color="#4C6EF5"/><stop offset="1" stop-color="#9D5CF0"/></linearGradient></defs>
-  <g fill="url(#spectrum)">
+  <rect width="256" height="256" fill="#1B1C1E"/>
+  <g fill="#EFEAE0">
     <path fill-rule="evenodd" d="M42.08 213.92Q86.25 135.41 115.12 50.08L200 56L205.92 140.88Q120.59 169.75 42.08 213.92ZM79.72 185.55Q124 128.6 133.75 56.28Q160.02 58.1 186.28 59.95Q179.39 101.52 191.99 141.74Q133.54 159.37 80.88 189.93Q77.31 190.4 79.72 185.55Z"/>
     <path d="M73.78 180.24L119.25 134.77Q140.97 113.06 142.08 100.32A12.56 12.56 0 1 1 155.68 113.92Q142.94 115.03 121.23 136.75L75.76 182.22ZM153.61 100.42L189.68 64.34L191.66 66.32L155.58 102.39Z"/>
   </g>
