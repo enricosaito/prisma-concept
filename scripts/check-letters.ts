@@ -26,8 +26,8 @@ const ROOT = process.cwd()
 const CONTENT_DIR = path.join(ROOT, "content", "cartas")
 const PUBLIC_DIR = path.join(ROOT, "public")
 
-/** O site tem estas rotas fixas; o resto de /… precisa ser uma carta. */
-const STATIC_ROUTES = new Set(["/", "/cartas", "/assinar"])
+/** O site tem uma rota fixa; o resto de /… precisa ser uma carta. */
+const STATIC_ROUTES = new Set(["/"])
 
 type Level = "erro" | "aviso"
 type Finding = { level: Level; file: string; message: string; hint?: string }
@@ -145,7 +145,11 @@ for (const letter of letters) {
     )
   }
   if (letter.updated && letter.updated < letter.date) {
-    add("erro", file, `updated (${letter.updated}) é anterior a date (${letter.date}).`)
+    add(
+      "erro",
+      file,
+      `updated (${letter.updated}) é anterior a date (${letter.date}).`
+    )
   }
 
   // --- o corpo -------------------------------------------------------------
@@ -168,7 +172,12 @@ for (const letter of letters) {
     }
     // Pular de ## direto para #### não quebra nada, mas desorganiza a hierarquia.
     if (/^#{4,}\s+/.test(line)) {
-      add("aviso", file, `linha ${n}: título de nível 4 ou mais.`, "A carta usa ## e ###.")
+      add(
+        "aviso",
+        file,
+        `linha ${n}: título de nível 4 ou mais.`,
+        "A carta usa ## e ###."
+      )
     }
   })
 
@@ -208,10 +217,15 @@ for (const letter of letters) {
   }
 
   // --- links e imagens no corpo -------------------------------------------
-  for (const [, , target] of letter.body.matchAll(/(!?)\[[^\]]*\]\(([^)\s]+)/g)) {
+  for (const [, , target] of letter.body.matchAll(
+    /(!?)\[[^\]]*\]\(([^)\s]+)/g
+  )) {
     if (/^(https?:|mailto:|#)/.test(target)) continue
 
-    if (target.startsWith("/covers/") || /\.(jpe?g|png|gif|webp|avif|svg)$/i.test(target)) {
+    if (
+      target.startsWith("/covers/") ||
+      /\.(jpe?g|png|gif|webp|avif|svg)$/i.test(target)
+    ) {
       if (!fs.existsSync(path.join(PUBLIC_DIR, target.replace(/^\//, "")))) {
         add("erro", file, `imagem inexistente no texto: ${target}`)
       }
@@ -263,7 +277,8 @@ const warnings = findings.filter((f) => f.level === "aviso")
 console.log("")
 if (findings.length) {
   const byFile = new Map<string, Finding[]>()
-  for (const f of findings) byFile.set(f.file, [...(byFile.get(f.file) ?? []), f])
+  for (const f of findings)
+    byFile.set(f.file, [...(byFile.get(f.file) ?? []), f])
 
   for (const [file, list] of [...byFile].sort()) {
     console.log(c.bold(file))
@@ -295,7 +310,11 @@ if (!drafts.length) console.log(c.dim("  nenhum"))
 console.log("")
 const summary = `${letters.length} carta(s) lida(s), ${errors.length} erro(s), ${warnings.length} aviso(s).`
 console.log(
-  errors.length ? c.red(summary) : warnings.length ? c.yellow(summary) : c.green(summary)
+  errors.length
+    ? c.red(summary)
+    : warnings.length
+      ? c.yellow(summary)
+      : c.green(summary)
 )
 
 // Avisos não derrubam o comando: são coisas que podem estar certas de propósito.

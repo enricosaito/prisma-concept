@@ -6,10 +6,10 @@ import { usePathname } from "next/navigation"
 import { RiCloseLine, RiMenuLine } from "@remixicon/react"
 
 import { PrismaIcon } from "@/components/prisma-icon"
+import { SubscribeDialog } from "@/components/subscribe-dialog"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { RainbowButton } from "@/components/ui/rainbow-button"
 import { Wordmark } from "@/components/wordmark"
-import { nav, navCta } from "@/lib/site"
+import { nav } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 function isActive(pathname: string, href: string) {
@@ -180,13 +180,7 @@ function SiteHeader() {
             </Link>
           ))}
 
-          <RainbowButton
-            asChild
-            variant="outline"
-            className="ml-2 h-10 rounded-[10px] px-6 text-[0.8rem]"
-          >
-            <Link href={navCta.href}>{navCta.label}</Link>
-          </RainbowButton>
+          <SubscribeDialog className="ml-2 h-10 rounded-[10px] px-6 text-[0.8rem]" />
         </nav>
 
         <div className="flex items-center gap-1 justify-self-end sm:hidden">
@@ -233,13 +227,7 @@ function SiteHeader() {
                 {item.label}
               </Link>
             ))}
-            <RainbowButton
-              asChild
-              variant="outline"
-              className="mt-5 h-11 w-full rounded-[10px] text-xs"
-            >
-              <Link href={navCta.href}>{navCta.label}</Link>
-            </RainbowButton>
+            <SubscribeDialog className="mt-5 h-11 w-full rounded-[10px] text-xs" />
           </nav>
         </div>
       ) : null}
