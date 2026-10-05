@@ -1,41 +1,48 @@
 import { cn } from "@/lib/utils"
 
 /**
- * O símbolo da PRISMA: a pena vista como um prisma, em traço cheio.
+ * O símbolo da PRISMA, em negativo: um selo cheio, com a pena vazada nele.
  *
- * Mesma arte do favicon — `public/icons/svg/prisma-icon-white-transparent.svg`
- * —, com uma diferença que é o motivo deste arquivo existir: ali o preenchimento
- * é `#EFEAE0` fixo, e aqui é `currentColor`. Na barra isso importa, porque o
- * símbolo precisa virar escuro no tema claro junto com o resto do texto, em vez
- * de desaparecer no fundo.
+ * Não existem duas versões do arquivo, uma por tema. O selo é pintado com
+ * `currentColor` e a arte com `var(--background)`, e esses dois tokens já
+ * trocam de lugar entre os temas:
  *
- * Sem fundo próprio, de propósito: ele se apoia no vidro da barra. O retângulo
- * escuro da variante opaca é para o favicon, onde não há fundo em que se apoiar.
- */
-/**
- * O viewBox está apertado na tinta, e não nos 256×256 do arquivo.
+ *     tema claro   fundo claro, texto escuro  ->  selo escuro, pena clara
+ *     tema escuro  fundo escuro, texto claro  ->  selo claro,  pena escura
  *
- * A arte ocupa 164 de 256 — 64% da caixa —, então no arquivo original uma
- * classe `size-8` desenhava 20,5px de traço em vez de 32. Recortando a moldura
- * vazia, o tamanho pedido passa a ser o tamanho que aparece, e dá para casar o
- * símbolo com a tipografia sem adivinhar.
+ * Ou seja, o contraste é sempre contra a página, e sempre no sentido oposto ao
+ * dela. É a mesma relação que `prisma-icon-black.svg` e `prisma-icon-white.svg`
+ * guardam separados — aqui ela é derivada, não duplicada.
  *
- * Medido rasterizando o SVG e lendo o canal alfa: tinta em x=42, y=50, 164×164.
+ * O viewBox é o do arquivo, 256 cheios, e não o recorte justo da tinta: a
+ * margem vazia em volta da pena é o respiro do selo, e é a mesma proporção do
+ * favicon.
+ *
+ * O `rx` arredonda os cantos em 17% do lado — abaixo dos ~22% de um ícone de
+ * app, que a esta altura leria como pastilha. O favicon segue de canto vivo,
+ * porque o navegador já recorta o seu como quiser na aba e nos favoritos.
+ *
+ * A arte é pintada por classe (`fill-background`) e não por `fill="var(--…)"`:
+ * variável CSS dentro de atributo de apresentação de SVG tem suporte irregular,
+ * enquanto a classe vira declaração CSS de verdade. O selo pode ficar em
+ * `currentColor` porque esse valor é parte do SVG desde sempre.
  */
 function PrismaIcon({ className, ...props }: React.ComponentProps<"svg">) {
   return (
     <svg
-      viewBox="42 50 164 164"
-      fill="currentColor"
+      viewBox="0 0 256 256"
       aria-hidden="true"
       className={cn("size-7", className)}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M42.08 213.92Q86.25 135.41 115.12 50.08L200 56L205.92 140.88Q120.59 169.75 42.08 213.92ZM79.72 185.55Q124 128.6 133.75 56.28Q160.02 58.1 186.28 59.95Q179.39 101.52 191.99 141.74Q133.54 159.37 80.88 189.93Q77.31 190.4 79.72 185.55Z"
-      />
-      <path d="M73.78 180.24L119.25 134.77Q140.97 113.06 142.08 100.32A12.56 12.56 0 1 1 155.68 113.92Q142.94 115.03 121.23 136.75L75.76 182.22ZM153.61 100.42L189.68 64.34L191.66 66.32L155.58 102.39Z" />
+      <rect width="256" height="256" rx="44" fill="currentColor" />
+      <g className="fill-background">
+        <path
+          fillRule="evenodd"
+          d="M42.08 213.92Q86.25 135.41 115.12 50.08L200 56L205.92 140.88Q120.59 169.75 42.08 213.92ZM79.72 185.55Q124 128.6 133.75 56.28Q160.02 58.1 186.28 59.95Q179.39 101.52 191.99 141.74Q133.54 159.37 80.88 189.93Q77.31 190.4 79.72 185.55Z"
+        />
+        <path d="M73.78 180.24L119.25 134.77Q140.97 113.06 142.08 100.32A12.56 12.56 0 1 1 155.68 113.92Q142.94 115.03 121.23 136.75L75.76 182.22ZM153.61 100.42L189.68 64.34L191.66 66.32L155.58 102.39Z" />
+      </g>
     </svg>
   )
 }

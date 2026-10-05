@@ -38,7 +38,7 @@ function ThemeToggle({ className }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme()
   const mounted = useMounted()
 
-  const box = "inline-flex size-9 items-center justify-center rounded-[10px]"
+  const box = "inline-flex size-10 items-center justify-center rounded-[10px]"
 
   if (!mounted) {
     return <span aria-hidden className={cn(box, className)} />
@@ -54,7 +54,7 @@ function ThemeToggle({ className }: { className?: string }) {
       className={cn(
         box,
         "cursor-pointer text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50",
-        "[&_svg]:size-[18px]",
+        "[&_svg]:size-5",
         className
       )}
     />

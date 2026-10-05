@@ -98,8 +98,8 @@ function SiteHeader() {
         // fio do espectro atravessando a barra inteira; saiu. O espectro
         // continua onde ele diz alguma coisa — o número da edição, a seta
         // "Ler", o sublinhado do link ativo —, e não como moldura.
-        // translate-y by its own height, so the bar clears itself at both h-14
-        // and sm:h-16 without either being hardcoded here.
+        // translate-y by its own height, so the bar clears itself at both h-16
+        // and sm:h-20 without either being hardcoded here.
         "transition-transform duration-200 ease-snappy",
         hidden
           ? [
@@ -123,21 +123,24 @@ function SiteHeader() {
           wordmark ficaria centrado ENTRE o símbolo e o menu, que têm larguras
           diferentes, e portanto fora do centro da tela. Com `1fr auto 1fr` as
           laterais ficam do mesmo tamanho e o centro é o centro de verdade. */}
-      <div className="grid h-14 w-full grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 sm:h-16 sm:px-8">
+      <div className="grid h-16 w-full grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 sm:h-20 sm:px-8">
         <Link
           href="/"
           aria-label="PRISMA — início"
-          className="justify-self-start rounded-sm text-foreground outline-none transition-opacity hover:opacity-70 focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="justify-self-start rounded-sm text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
         >
-          {/* Casado com a altura de maiúscula do wordmark, não escolhido a
-              olho. A "against" tem maiúscula de 0.851em — medido com a
-              opentype.js na própria fonte —, então a 30px dá 25.5px e a 36px dá
-              30.6px. Como o viewBox do símbolo está apertado na tinta, estes
-              números são o traço que aparece.
+          {/* O SELO casado com a altura de maiúscula do wordmark, não escolhido
+              a olho: a "against" tem maiúscula de 0.851em — medido com a
+              opentype.js na própria fonte —, o que dá 30.6px a 36px e 40.8px a
+              48px.
 
-              Não mexe na altura da barra: ela é fixa em h-14 / sm:h-16, e 30.6
-              cabe com folga nos 64. */}
-          <PrismaIcon className="size-[25.5px] sm:size-[30.6px]" />
+              É o selo que mede isso, e não a pena dentro dele, porque no
+              negativo o selo é o logo. A pena ocupa 64% da caixa, então ela
+              fica em ~26px no desktop — é o que acontece com qualquer logo em
+              selo ao lado de um nome, e é a proporção desenhada no arquivo.
+
+              Não mexe na altura da barra: ela é fixa em h-16 / sm:h-20. */}
+          <PrismaIcon className="size-[30.6px] sm:size-[40.8px]" />
         </Link>
 
         {/* Também é link, mesmo com o símbolo ao lado indo para o mesmo lugar:
@@ -147,13 +150,13 @@ function SiteHeader() {
             cabeçalho com símbolo e nome faz. */}
         <Link
           href="/"
-          className="justify-self-center rounded-sm outline-none transition-opacity hover:opacity-70 focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="justify-self-center rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
         >
-          <Wordmark className="text-3xl tracking-normal sm:text-4xl" />
+          <Wordmark className="text-4xl tracking-normal sm:text-5xl" />
         </Link>
 
         <nav
-          className="hidden items-center justify-self-end gap-1 sm:flex"
+          className="hidden items-center gap-1 justify-self-end sm:flex"
           aria-label="Principal"
         >
           <ThemeToggle className="mr-1" />
@@ -164,7 +167,7 @@ function SiteHeader() {
               href={item.href}
               aria-current={isActive(pathname, item.href) ? "page" : undefined}
               className={cn(
-                "relative rounded-sm px-3 py-2 font-label text-xs font-medium tracking-[0.18em] uppercase transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+                "relative rounded-sm px-3.5 py-2.5 font-label text-[0.8rem] font-medium tracking-[0.18em] uppercase transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
                 isActive(pathname, item.href)
                   ? "text-foreground"
                   : "text-muted-foreground hover:text-foreground"
@@ -172,7 +175,7 @@ function SiteHeader() {
             >
               {item.label}
               {isActive(pathname, item.href) ? (
-                <span className="absolute inset-x-3 -bottom-px h-px [background-image:var(--spectrum)]" />
+                <span className="absolute inset-x-3.5 -bottom-px h-px [background-image:var(--spectrum)]" />
               ) : null}
             </Link>
           ))}
@@ -180,13 +183,13 @@ function SiteHeader() {
           <RainbowButton
             asChild
             variant="outline"
-            className="ml-2 h-9 rounded-[10px] px-5 text-xs"
+            className="ml-2 h-10 rounded-[10px] px-6 text-[0.8rem]"
           >
             <Link href={navCta.href}>{navCta.label}</Link>
           </RainbowButton>
         </nav>
 
-        <div className="flex items-center justify-self-end gap-1 sm:hidden">
+        <div className="flex items-center gap-1 justify-self-end sm:hidden">
           <ThemeToggle />
           <button
             type="button"
@@ -197,9 +200,9 @@ function SiteHeader() {
             className="rounded-sm p-2 text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             {open ? (
-              <RiCloseLine className="size-5" />
+              <RiCloseLine className="size-6" />
             ) : (
-              <RiMenuLine className="size-5" />
+              <RiMenuLine className="size-6" />
             )}
           </button>
         </div>
