@@ -13,8 +13,9 @@ do `AGENTS.md` se apoia.
 npm run dev     # depois abra http://localhost:3000/keystatic
 ```
 
-**Só em desenvolvimento.** `/keystatic` dá 404 em produção, e o porquê — junto
-com o que seria preciso para funcionar publicado — está no fim deste documento.
+Publicado, o mesmo editor fica em `www.prismaconcept.com.br/keystatic`, atrás do
+login do GitHub. **Save vira commit** — não há mais `git commit` à mão. Como
+ligar isso está no fim deste documento.
 
 ---
 
@@ -122,42 +123,90 @@ faria os dois brigarem.
 
 ---
 
-## O editor só existe em desenvolvimento
+## Ligar o editor: o GitHub App
 
-`/keystatic` responde 404 em produção, de propósito. Não é uma limitação
-contornável com configuração: com `storage: local`, o Keystatic lê e grava **o
-disco do servidor que o roda**. Isso só faz sentido quando esse disco é o seu
-repositório.
+O editor grava pelo GitHub, então precisa de credenciais. **Sem elas o site
+funciona normalmente** e `/keystatic` mostra uma tela dizendo o que falta — não
+quebra nada, só não edita.
 
-Num deploy da Vercel o disco é somente-leitura e refeito a cada publicação —
-o editor não leria (é por isso que `prismaconcept.com.br/keystatic` mostrava
-zero cartas) e, se pudesse gravar, o que você escrevesse sumiria no deploy
-seguinte. E a rota ficava de pé, aberta, no domínio público.
+São quatro variáveis, e o Keystatic cria o App e as escreve para você:
 
-A guarda está em `app/(editor)/keystatic/[[...params]]/page.tsx` e na rota de
-API ao lado. Ela testa `NODE_ENV === "development"`, e não "não é a Vercel",
-para falhar fechada: qualquer ambiente que não seja o seu `npm run dev` não tem
-editor.
+### 1. Rodar o fluxo, local
 
-## Editar de qualquer lugar, depois
+```bash
+npm run dev     # abra http://localhost:3000/keystatic
+```
 
-Para escrever de qualquer navegador sem clonar o repositório, o Keystatic tem o
-**modo GitHub**: em vez do disco, ele lê e grava o repositório pela API do
-GitHub e **commita por você**. Aí ele faz sentido publicado, e publicar vira
-apertar Save e esperar o deploy.
+O Keystatic detecta que falta configuração e oferece criar um GitHub App. Siga
+o fluxo; ao final ele escreve no `.env.local`:
 
-O que muda:
+```
+NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG=
+KEYSTATIC_GITHUB_CLIENT_ID=
+KEYSTATIC_GITHUB_CLIENT_SECRET=
+KEYSTATIC_SECRET=
+```
 
-1. Em `keystatic.config.ts`:
-   ```ts
-   storage: { kind: "github", repo: "enricosaito/prisma-concept" }
-   ```
-2. Um GitHub App, criado por você em github.com/settings/apps, com permissão de
-   leitura e escrita em Contents.
-3. Três variáveis de ambiente na Vercel: `KEYSTATIC_GITHUB_CLIENT_ID`,
-   `KEYSTATIC_GITHUB_CLIENT_SECRET` e `KEYSTATIC_SECRET`.
-4. A guarda acima sai — o editor passa a existir em produção, protegido pelo
-   login do GitHub e pela sua permissão no repositório.
+Se preferir criar à mão, em github.com/settings/apps/new: **Callback URL**
+`http://127.0.0.1:3000/api/keystatic/github/oauth/callback`, **Request user
+authorization (OAuth) during installation** marcado, **Webhook** desmarcado, e
+em Permissions → Repository → **Contents: Read and write** e **Pull requests:
+Read and write**. Depois instale o App neste repositório.
 
-Vale fazer quando a vontade de escrever longe do computador aparecer. Enquanto
-escrever for sentar na mesa, o modo local é menos peça para manter.
+### 2. Copiar as quatro para a Vercel
+
+Settings → Environment Variables, nos três ambientes. **É o passo que o fluxo
+não faz por você**, e sem ele o editor publicado não autentica.
+
+### 3. Acrescentar a callback de produção
+
+No mesmo GitHub App, em Callback URLs, adicione a segunda:
+
+```
+https://www.prismaconcept.com.br/api/keystatic/github/oauth/callback
+```
+
+Um App aceita várias; a de localhost continua valendo.
+
+### 4. Publicar
+
+Qualquer deploy depois disso acende o editor em
+`www.prismaconcept.com.br/keystatic`.
+
+---
+
+## Quem protege o editor publicado
+
+Não há autenticação nossa — quem autentica é o GitHub, e quem autoriza é a sua
+permissão de escrita neste repositório. Em ordem:
+
+1. Sem sessão, o editor não lê nem escreve; a tela é a de entrar.
+2. Entrar não basta: o App só enxerga `enricosaito/prisma-concept`.
+3. Commitar exige permissão de escrita no repositório.
+
+Os commits saem em seu nome, via o App. O histórico mostra quem escreveu o quê,
+como qualquer commit.
+
+> `KEYSTATIC_GITHUB_CLIENT_SECRET` e `KEYSTATIC_SECRET` são segredos de
+> verdade. Nunca com prefixo `NEXT_PUBLIC_` — isso os colocaria no bundle do
+> navegador. Só `NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG` é público, e é só o
+> nome do App.
+
+---
+
+## O que muda no seu dia
+
+| | Antes (modo local) | Agora (modo GitHub) |
+| --- | --- | --- |
+| Onde | `npm run dev`, sua máquina | qualquer navegador |
+| Save | grava o arquivo | **commita no repositório** |
+| Publicar | `git commit` + `git push` à mão | o deploy sai do commit do Save |
+| Sem rede | funciona | não; edite os `.md` à mão |
+
+Continua valendo tudo o que já valia: `status: draft` esconde a carta do site
+publicado, e editar os arquivos à mão funciona como sempre.
+
+**Publicar não é instantâneo.** O Save vira commit, o commit dispara um deploy,
+e o deploy leva uns 40 segundos. É o preço de a prosa continuar sendo um
+arquivo seu, versionado frase por frase, em vez de um registro no banco de
+outra pessoa.

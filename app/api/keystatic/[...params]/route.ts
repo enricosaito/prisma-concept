@@ -1,23 +1,68 @@
+import type { NextRequest } from "next/server"
+
 import { makeRouteHandler } from "@keystatic/next/route-handler"
 
 import config from "@/keystatic.config"
 
 /**
- * O que o editor usa para ler e gravar os arquivos — e, pela mesma razão que a
- * página, só em desenvolvimento.
+ * O que o editor usa para ler e gravar, e também o que faz o login do GitHub.
  *
- * Esta é a metade que importa: a página é só interface, enquanto esta rota é a
- * que toca o disco. Num deploy ela não teria o que ler, mas também não tem por
- * que existir, então responde 404 como qualquer endereço que não existe.
+ * Além de ler e commitar, este handler serve as rotas de OAuth que o Keystatic
+ * precisa — `github/login`, `github/oauth/callback`, `github/created-app`,
+ * `github/refresh-token`. É por isso que o editor não precisou de nenhum
+ * sistema de autenticação nosso: quem autentica é o GitHub, e quem autoriza é
+ * a sua permissão de escrita neste repositório.
  */
-/** Pelo mesmo motivo da página: nada a gerar estaticamente aqui. */
+
 export const dynamic = "force-dynamic"
 
-const handlers = makeRouteHandler({ config })
+const VARIAVEIS = [
+  "KEYSTATIC_GITHUB_CLIENT_ID",
+  "KEYSTATIC_GITHUB_CLIENT_SECRET",
+  "KEYSTATIC_SECRET",
+] as const
 
-const disabled = () => new Response("Not Found", { status: 404 })
+/**
+ * O handler é criado na primeira requisição, não quando o módulo carrega.
+ *
+ * `makeRouteHandler` lança se faltar alguma credencial do GitHub, e no escopo
+ * do módulo isso derruba o `next build` inteiro — "Failed to collect page data"
+ * — mesmo que ninguém vá usar o editor naquele deploy. Sem variáveis
+ * configuradas, o site não compilaria.
+ *
+ * Adiando a criação, um deploy sem as variáveis publica normalmente e só o
+ * editor fica fora do ar, com uma mensagem que diz o que falta. O editor acende
+ * sozinho quando as variáveis existirem, sem precisar de outro commit.
+ */
+let handlers: ReturnType<typeof makeRouteHandler> | undefined
 
-const ativo = process.env.NODE_ENV === "development"
+function obterHandlers() {
+  if (!handlers) handlers = makeRouteHandler({ config })
+  return handlers
+}
 
-export const GET = ativo ? handlers.GET : disabled
-export const POST = ativo ? handlers.POST : disabled
+function faltando() {
+  return VARIAVEIS.filter((nome) => !process.env[nome])
+}
+
+function naoConfigurado() {
+  return Response.json(
+    {
+      erro: "O editor ainda não está configurado.",
+      faltando: faltando(),
+      comoResolver:
+        "Crie o GitHub App e preencha estas variáveis — em .env.local para rodar local, e nas Environment Variables da Vercel para o editor publicado. Passo a passo em docs/editor.md.",
+    },
+    { status: 503 }
+  )
+}
+
+export async function GET(request: NextRequest) {
+  if (faltando().length) return naoConfigurado()
+  return obterHandlers().GET(request)
+}
+
+export async function POST(request: NextRequest) {
+  if (faltando().length) return naoConfigurado()
+  return obterHandlers().POST(request)
+}
