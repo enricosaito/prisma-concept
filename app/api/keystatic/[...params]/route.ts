@@ -42,6 +42,10 @@ function obterHandlers() {
 }
 
 function faltando() {
+  // Em desenvolvimento nada é exigido: é por aqui que passa o fluxo que cria o
+  // GitHub App (`github/created-app`), e exigir as credenciais para poder
+  // configurá-las seria circular.
+  if (process.env.NODE_ENV === "development") return []
   return VARIAVEIS.filter((nome) => !process.env[nome])
 }
 

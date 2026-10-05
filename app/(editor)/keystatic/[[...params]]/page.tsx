@@ -42,9 +42,19 @@ export default function Page() {
   const faltando = VARIAVEIS.filter((nome) => !process.env[nome])
 
   /**
-   * Sem credenciais, a interface do Keystatic carregaria e não conseguiria ler
-   * nada — a casca vazia que já apareceu uma vez em produção. Melhor dizer o
-   * que falta do que mostrar um editor que não edita.
+   * Em desenvolvimento o editor sobe mesmo sem credenciais, porque é dele que
+   * sai a configuração: o Keystatic detecta o que falta e conduz a criação do
+   * GitHub App, gravando as variáveis no `.env.local` no fim. Mostrar o aviso
+   * aqui trancaria justamente a porta por onde se entra.
+   */
+  if (faltando.length && process.env.NODE_ENV === "development") {
+    return <Editor />
+  }
+
+  /**
+   * Em produção é o contrário: sem credenciais a interface carregaria e não
+   * conseguiria ler nada — a casca vazia que já apareceu uma vez no domínio
+   * público. Melhor dizer o que falta do que mostrar um editor que não edita.
    */
   if (faltando.length) {
     return (
