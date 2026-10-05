@@ -41,11 +41,27 @@ export default function Page() {
         ))}
       </div>
 
-      <div className="mt-12 rounded-xl border border-border bg-secondary px-6 py-8 sm:mt-16 sm:px-10 sm:py-10">
-        <h2 className="font-heading text-xl font-medium sm:text-2xl">
+      {/* Fecha a lista: cada item acima tem `border-t`, então sem esta regra
+        o último ficaria aberto e o convite colaria nele. É a mesma regra que
+        encerra o corpo de uma carta, na mesma cor. */}
+      <hr className="mt-12 border-border/70 sm:mt-16" />
+
+      {/* Mesmo tratamento do fim de uma carta: sem painel. Dentro de uma caixa
+        com fundo próprio o convite lia como anúncio encaixotado na página;
+        solto, lê como a publicação ainda falando. Não havia motivo para o
+        arquivo contrariar isso, nem para o site ter dois convites diferentes.
+
+        O título é o daqui, e não o "Gostou desta carta?" da carta: numa página
+        que lista todas, ninguém acabou de ler nenhuma. */}
+      <div className="mt-10 max-w-[45rem] sm:mt-12">
+        <h2 className="font-heading text-xl font-medium">
           Receba a próxima antes de todo mundo.
         </h2>
-        <SubscribeForm className="mt-6 max-w-md" />
+        <p className="mt-2 text-sm text-muted-foreground">
+          Inscreva-se gratuitamente e receba as próximas no seu e-mail toda
+          semana.
+        </p>
+        <SubscribeForm className="mt-6" />
       </div>
     </div>
   )
