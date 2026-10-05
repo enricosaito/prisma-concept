@@ -1,7 +1,10 @@
 export const site = {
   name: "PRISMA",
   wordmark: "PRISMA",
-  tagline: "Carta Semanal",
+  // Alimenta o título padrão das páginas, montado em app/(site)/layout.tsx.
+  // Por morar aqui e não lá, trocar esta linha troca o título em todo lugar
+  // que o derive.
+  tagline: "Enxergue além",
   description:
     "PRISMA é uma carta semanal onde nos aprofundamos sobre cultura, filosofia, tecnologia e arte — e o que acontece quando essas quatro coisas se atravessam.",
   signature: "Prisma Concept",
