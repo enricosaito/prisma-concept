@@ -3,7 +3,6 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { RiCloseLine, RiMenuLine } from "@remixicon/react"
 
 import { PrismaIcon } from "@/components/prisma-icon"
 import { SubscribeDialog } from "@/components/subscribe-dialog"
@@ -68,21 +67,7 @@ function useHiddenOnScrollDown() {
 
 function SiteHeader() {
   const pathname = usePathname()
-  const [open, setOpen] = React.useState(false)
-  const [openedAt, setOpenedAt] = React.useState(pathname)
-  const scrolledAway = useHiddenOnScrollDown()
-
-  // The mobile sheet lives inside the header, so hiding the bar would take the
-  // open menu with it.
-  const hidden = scrolledAway && !open
-
-  // Dismiss the mobile sheet whenever the route changes — including via the
-  // browser's back/forward buttons. Adjusting state during render (rather than
-  // in an effect) avoids a second render pass with the stale panel on screen.
-  if (openedAt !== pathname) {
-    setOpenedAt(pathname)
-    setOpen(false)
-  }
+  const hidden = useHiddenOnScrollDown()
 
   return (
     <header
@@ -115,42 +100,45 @@ function SiteHeader() {
         "motion-reduce:transition-none"
       )}
     >
-      {/* Full-bleed on purpose: the bar spans the viewport and pins the symbol
-          and the nav to the gutters, while page sections keep their centred
-          max-w-5xl measure.
+      {/* Full-bleed on purpose: the bar spans the viewport and pins the
+          wordmark and the nav to the gutters, while page sections keep their
+          centred max-w-5xl measure.
 
-          Grid de três colunas, e não flex com `justify-between`: com flex o
-          wordmark ficaria centrado ENTRE o símbolo e o menu, que têm larguras
-          diferentes, e portanto fora do centro da tela. Com `1fr auto 1fr` as
-          laterais ficam do mesmo tamanho e o centro é o centro de verdade. */}
-      <div className="grid h-16 w-full grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 sm:h-20 sm:px-8">
+          Duas colunas no mobile e três a partir do `sm`. O que faz isso
+          funcionar é que `display: none` tira o elemento do fluxo do grid, e
+          não apenas da vista: no mobile o símbolo e o menu somem, sobram duas
+          células, e o nome cai na primeira — à esquerda. No desktop as quatro
+          crianças voltam a ser três e o nome volta ao centro. Uma declaração
+          de colunas por faixa, sem nenhum condicional em JavaScript. */}
+      <div className="grid h-16 w-full grid-cols-[1fr_auto] items-center gap-4 px-5 sm:h-20 sm:grid-cols-[1fr_auto_1fr] sm:px-8">
+        {/* Só no desktop. No mobile o nome sozinho à esquerda já identifica a
+            publicação, e o selo ao lado dele numa barra de 360px gastava
+            espaço repetindo o que o nome diz. */}
         <Link
           href="/"
           aria-label="PRISMA — início"
-          className="justify-self-start rounded-sm text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="hidden justify-self-start rounded-sm text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:block"
         >
           {/* O SELO casado com a altura de maiúscula do wordmark, não escolhido
               a olho: a "against" tem maiúscula de 0.851em — medido com a
-              opentype.js na própria fonte —, o que dá 30.6px a 36px e 40.8px a
-              48px.
+              opentype.js na própria fonte —, o que dá 40.8px a 48px.
 
               É o selo que mede isso, e não a pena dentro dele, porque no
               negativo o selo é o logo. A pena ocupa 64% da caixa, então ela
-              fica em ~26px no desktop — é o que acontece com qualquer logo em
-              selo ao lado de um nome, e é a proporção desenhada no arquivo.
+              fica em ~26px — é o que acontece com qualquer logo em selo ao
+              lado de um nome, e é a proporção desenhada no arquivo.
 
               Não mexe na altura da barra: ela é fixa em h-16 / sm:h-20. */}
-          <PrismaIcon className="size-[30.6px] sm:size-[40.8px]" />
+          <PrismaIcon className="size-[40.8px]" />
         </Link>
 
-        {/* Também é link, mesmo com o símbolo ao lado indo para o mesmo lugar:
-            as pessoas clicam no nome da publicação, e um masthead centrado que
-            não responde ao clique contraria um hábito de trinta anos. O custo é
-            repetir o destino para quem usa leitor de tela — e é o que todo
-            cabeçalho com símbolo e nome faz. */}
+        {/* À esquerda no mobile, centrado no desktop. Lá ele divide a barra com
+            o selo e o menu e o centro é o lugar do masthead; aqui ele é o único
+            elemento à esquerda, e centrá-lo deixaria um vão à esquerda sem nada
+            que o justifique. */}
         <Link
           href="/"
-          className="justify-self-center rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="justify-self-start rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:justify-self-center"
         >
           <Wordmark className="text-4xl tracking-normal sm:text-5xl" />
         </Link>
@@ -183,54 +171,12 @@ function SiteHeader() {
           <SubscribeDialog className="ml-2 h-10 rounded-[10px] px-6 text-[0.8rem]" />
         </nav>
 
-        <div className="flex items-center gap-1 justify-self-end sm:hidden">
-          <ThemeToggle />
-          <button
-            type="button"
-            onClick={() => setOpen((value) => !value)}
-            aria-expanded={open}
-            aria-controls="mobile-nav"
-            aria-label={open ? "Fechar menu" : "Abrir menu"}
-            className="rounded-sm p-2 text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-          >
-            {open ? (
-              <RiCloseLine className="size-6" />
-            ) : (
-              <RiMenuLine className="size-6" />
-            )}
-          </button>
-        </div>
+        {/* No mobile a barra guarda só isto. Saíram o hamburguer e a gaveta que
+            ele abria: dentro dela havia um único link, "Início", para onde o
+            nome ao lado já leva. Um painel que desliza para oferecer o destino
+            em que você já está não é navegação, é cerimônia. */}
+        <ThemeToggle className="justify-self-end sm:hidden" />
       </div>
-
-      {open ? (
-        <div
-          id="mobile-nav"
-          // No blur of its own — it sits inside the header, so the header's
-          // backdrop-filter already frosts what is behind this panel too.
-          className="border-t border-border/40 bg-background/40 px-5 pb-5 sm:hidden"
-        >
-          <nav className="flex flex-col" aria-label="Principal (mobile)">
-            {nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-current={
-                  isActive(pathname, item.href) ? "page" : undefined
-                }
-                className={cn(
-                  "border-b border-border/60 py-3.5 font-label text-sm font-medium tracking-[0.18em] uppercase transition-colors",
-                  isActive(pathname, item.href)
-                    ? "text-accent"
-                    : "text-foreground"
-                )}
-              >
-                {item.label}
-              </Link>
-            ))}
-            <SubscribeDialog className="mt-5 h-11 w-full rounded-[10px] text-xs" />
-          </nav>
-        </div>
-      ) : null}
     </header>
   )
 }
