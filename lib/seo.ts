@@ -19,13 +19,17 @@ export function absoluteUrl(path: string): string {
 }
 
 /**
- * The publication is the author.
+ * The publication is the author, in the structured data.
  *
- * PRISMA is deliberately anonymous — there is no personal byline anywhere on
- * the site, and inventing one here would be a factual claim the publication
- * does not make. An Organization author is the honest shape for that. It does
- * not contradict the promise that a human writes the letters; it simply does
- * not name them.
+ * Not because nobody writes it — Enrico Saito does, and the welcome email
+ * says so in the From line. It is that the site itself carries no byline, by
+ * choice, and structured data should describe the page a reader lands on
+ * rather than assert something the page never shows.
+ *
+ * If a byline ever appears on the letters, this is the line to change: a
+ * Person author, with the Organization staying as publisher. Google reads
+ * the two differently, and a named author is worth having once the page
+ * backs it up.
  */
 const publisher = {
   "@type": "Organization",
