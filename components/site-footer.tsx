@@ -40,8 +40,8 @@ function SiteFooter() {
           }
         />
 
-        <p className="text-center font-label text-sm font-medium tracking-[0.16em] text-balance text-muted-foreground/45 uppercase">
-          © {new Date().getFullYear()} The Prisma Concept. Além do óbvio.
+        <p className="text-center font-label text-sm font-medium tracking-[0.16em] text-muted-foreground/45 uppercase">
+          © {new Date().getFullYear()} The Prisma Concept.
         </p>
       </div>
     </footer>
