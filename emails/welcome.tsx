@@ -6,6 +6,7 @@ import {
   Heading,
   Hr,
   Html,
+  Img,
   Link,
   Preview,
   Row,
@@ -35,8 +36,11 @@ function WelcomeEmail({
   return (
     <Html lang="pt-BR" dir="ltr">
       <Head />
+      {/* A linha que aparece na caixa de entrada ao lado do assunto. Sem
+          ela o cliente mostra as primeiras palavras do corpo, que aqui
+          seriam o wordmark solto. */}
       <Preview>
-        A primeira carta chega em breve. Enquanto isso, o arquivo está aberto.
+        Você está recebendo isso porque você acabou de assinar a PRISMA.
       </Preview>
       <Body style={body}>
         <Container style={container}>
@@ -56,6 +60,21 @@ function WelcomeEmail({
           <Section style={spacer}>&nbsp;</Section>
 
           <Section style={sheet}>
+            {/* PNG e não SVG: o Gmail remove <svg> da mensagem e o motor do
+                Word, que desenha o Outlook, não sabe renderizá-lo. Os cantos
+                arredondados vêm prontos no arquivo — `border-radius` em
+                e-mail não é confiável — e o fundo dos cantos é o branco do
+                papel, sem canal alfa, que é o que nenhum cliente erra.
+
+                Largura e altura em atributo, não em CSS: o Outlook ignora o
+                CSS e, sem os atributos, mostra a imagem no tamanho real. */}
+            <Img
+              src={`${url}/brand/prisma-selo-email.png`}
+              width="48"
+              height="48"
+              alt="PRISMA"
+              style={selo}
+            />
             <Text style={wordmark}>{site.wordmark}</Text>
 
             <Heading as="h1" style={heading}>
@@ -146,6 +165,11 @@ const sheet: React.CSSProperties = {
   border: `1px solid ${c.border}`,
   borderRadius: 6,
   padding: "36px 32px 32px",
+}
+
+const selo: React.CSSProperties = {
+  display: "block",
+  margin: "0 0 20px",
 }
 
 const wordmark: React.CSSProperties = {

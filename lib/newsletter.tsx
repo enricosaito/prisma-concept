@@ -171,7 +171,9 @@ async function sendWelcome(resend: Resend, address: string): Promise<void> {
       from: fromAddress(),
       to: address,
       replyTo: site.email,
-      subject: `Bem-vindo à ${site.signature}`,
+      // O assunto mora aqui e não no template, porque quem o lê é a caixa de
+      // entrada e não o corpo da mensagem.
+      subject: "você é incrível",
       react: (
         <WelcomeEmail url={site.url} unsubscribeUrl={saida ?? undefined} />
       ),
