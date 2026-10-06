@@ -43,6 +43,22 @@
   --color-3: oklch(66.9% 0.04 55.1);
   --color-4: oklch(63% 0.03 285.5);
   --color-5: oklch(61.9% 0.041 237.5);
+
+  /* O arco-íris do botão, e só dele.
+
+     Separado de --color-1..5 de propósito. Aqueles cinco são o espectro
+     editorial — abafado e puxado para o bronze, como lib/spectrum.ts explica,
+     justamente para NÃO ler como arco-íris de néon. Eles pintam as faixas do
+     e-mail, o Highlight dos títulos, a borda do formulário e a cor de cada
+     edição. Trocá-los por estes aqui levaria o néon para todos esses lugares.
+
+     Um só jogo para os dois temas: um arco-íris não tem versão clara e
+     escura. O que vira é o corpo do botão, que sai de --primary. */
+  --rainbow-1: hsl(0 100% 63%);
+  --rainbow-2: hsl(270 100% 63%);
+  --rainbow-3: hsl(210 100% 63%);
+  --rainbow-4: hsl(195 100% 63%);
+  --rainbow-5: hsl(90 100% 63%);
 }
 
 .dark {

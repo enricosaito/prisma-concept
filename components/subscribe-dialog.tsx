@@ -34,7 +34,7 @@ function SubscribeDialog({
   return (
     <Dialog.Root>
       <Dialog.Trigger
-        render={<RainbowButton variant="outline" size={size} />}
+        render={<RainbowButton size={size} />}
         className={className}
       >
         {navCta.label}

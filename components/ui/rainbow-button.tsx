@@ -16,18 +16,23 @@ const rainbowButtonVariants = cva(
   {
     variants: {
       variant: {
-        // Body colours come from --primary rather than the stock #121213/#fff,
-        // so the button is ink on paper and cream in the dark theme instead of
-        // pure white — and the `dark:` override is no longer needed at all.
+        // O corpo sai de --primary, e não do #121213/#fff fixo do original:
+        // assim o botão é tinta sobre papel no tema claro e creme no escuro,
+        // sem precisar do override `dark:` que a versão de origem tem.
+        //
+        // A borda usa --rainbow-1..5 e não --color-1..5. Os dois existem: o
+        // --color-* é o espectro editorial, abafado, que pinta as faixas do
+        // e-mail e a cor de cada edição; o --rainbow-* é o arco-íris saturado
+        // que só este botão usa.
         default:
-          "border-0 bg-[linear-gradient(var(--primary),var(--primary)),linear-gradient(var(--primary)_50%,color-mix(in_oklch,var(--primary)_60%,transparent)_80%,transparent),linear-gradient(90deg,var(--color-1),var(--color-5),var(--color-3),var(--color-4),var(--color-2))] bg-[length:200%] [background-clip:padding-box,border-box,border-box] [background-origin:border-box] text-primary-foreground [border:calc(0.125rem)_solid_transparent] before:absolute before:bottom-[-20%] before:left-1/2 before:z-0 before:h-1/5 before:w-3/5 before:-translate-x-1/2 before:animate-rainbow before:bg-[linear-gradient(90deg,var(--color-1),var(--color-5),var(--color-3),var(--color-4),var(--color-2))] before:bg-[length:200%] before:[filter:blur(0.75rem)]",
+          "border-0 bg-[linear-gradient(var(--primary),var(--primary)),linear-gradient(var(--primary)_50%,color-mix(in_oklch,var(--primary)_60%,transparent)_80%,transparent),linear-gradient(90deg,var(--rainbow-1),var(--rainbow-5),var(--rainbow-3),var(--rainbow-4),var(--rainbow-2))] bg-[length:200%] [background-clip:padding-box,border-box,border-box] [background-origin:border-box] text-primary-foreground [border:calc(0.125rem)_solid_transparent] before:absolute before:bottom-[-20%] before:left-1/2 before:z-0 before:h-1/5 before:w-3/5 before:-translate-x-1/2 before:animate-rainbow before:bg-[linear-gradient(90deg,var(--rainbow-1),var(--rainbow-5),var(--rainbow-3),var(--rainbow-4),var(--rainbow-2))] before:bg-[length:200%] before:[filter:blur(0.75rem)]",
         // Same token treatment as `default`, plus one fix: the stock variant
         // used `text-accent-foreground`, which in this theme is dark ink in
         // BOTH modes and would be invisible on the dark button.
         // `border-b-transparent` is what lets the spectrum show along the
         // bottom edge, so it stays.
         outline:
-          "border border-input border-b-transparent bg-[linear-gradient(var(--background),var(--background)),linear-gradient(var(--background)_50%,color-mix(in_oklch,var(--background)_60%,transparent)_80%,transparent),linear-gradient(90deg,var(--color-1),var(--color-5),var(--color-3),var(--color-4),var(--color-2))] bg-[length:200%] [background-clip:padding-box,border-box,border-box] [background-origin:border-box] text-foreground before:absolute before:bottom-[-20%] before:left-1/2 before:z-0 before:h-1/5 before:w-3/5 before:-translate-x-1/2 before:animate-rainbow before:bg-[linear-gradient(90deg,var(--color-1),var(--color-5),var(--color-3),var(--color-4),var(--color-2))] before:bg-[length:200%] before:[filter:blur(0.75rem)]",
+          "border border-input border-b-transparent bg-[linear-gradient(var(--background),var(--background)),linear-gradient(var(--background)_50%,color-mix(in_oklch,var(--background)_60%,transparent)_80%,transparent),linear-gradient(90deg,var(--rainbow-1),var(--rainbow-5),var(--rainbow-3),var(--rainbow-4),var(--rainbow-2))] bg-[length:200%] [background-clip:padding-box,border-box,border-box] [background-origin:border-box] text-foreground before:absolute before:bottom-[-20%] before:left-1/2 before:z-0 before:h-1/5 before:w-3/5 before:-translate-x-1/2 before:animate-rainbow before:bg-[linear-gradient(90deg,var(--rainbow-1),var(--rainbow-5),var(--rainbow-3),var(--rainbow-4),var(--rainbow-2))] before:bg-[length:200%] before:[filter:blur(0.75rem)]",
       },
       size: {
         default: "h-9 px-4 py-2",
