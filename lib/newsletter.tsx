@@ -1,6 +1,7 @@
 import { Resend, type ErrorResponse } from "resend"
 
 import { WelcomeEmail } from "@/emails/welcome"
+import { tokenFor } from "@/lib/newsletter-token"
 import { site } from "@/lib/site"
 
 /**
@@ -44,6 +45,19 @@ function resendClient(): Resend | null {
 
 function fromAddress(): string {
   return process.env.RESEND_FROM?.trim() || `${site.signature} <${site.email}>`
+}
+
+/**
+ * O link de descadastro de um clique, ou null se faltar `NEWSLETTER_SECRET`.
+ *
+ * Sem ele o e-mail sai sem `List-Unsubscribe-Post` e com o endereço de
+ * resposta como única saída — funciona, mas perde o sinal de confiança que o
+ * Gmail lê. Melhor degradar do que falhar o envio.
+ */
+function unsubscribeUrl(address: string): string | null {
+  const token = tokenFor(address)
+  if (!token) return null
+  return `${site.url}/api/unsubscribe?t=${encodeURIComponent(token)}`
 }
 
 export type SubscribeOutcome =
@@ -129,22 +143,43 @@ export async function subscribe(rawEmail: string): Promise<SubscribeOutcome> {
 }
 
 /**
- * Never fails the signup. The reader is on the list either way, and telling
- * them otherwise would only make them submit the form again.
+ * Nunca falha a inscrição. O leitor está na lista de todo jeito, e dizer o
+ * contrário só o faria enviar o formulário de novo.
  */
 async function sendWelcome(resend: Resend, address: string): Promise<void> {
+  const saida = unsubscribeUrl(address)
+
+  /**
+   * Os cabeçalhos de descadastro, em duas camadas.
+   *
+   * O `mailto:` sempre vai, porque funciona em qualquer cliente e porque uma
+   * resposta chega a uma pessoa. O `https:` e o `List-Unsubscribe-Post` só vão
+   * quando há segredo para assinar o token: juntos, eles são o que faz o Gmail
+   * e o Outlook mostrarem o botão "cancelar inscrição" ao lado do remetente
+   * (RFC 8058). Sem esse botão, a saída que o leitor encontra é o botão de
+   * spam — e essa marca fica no domínio, não no e-mail.
+   */
+  const headers: Record<string, string> = {
+    "List-Unsubscribe": saida
+      ? `<${saida}>, <mailto:${site.email}?subject=unsubscribe>`
+      : `<mailto:${site.email}?subject=unsubscribe>`,
+  }
+  if (saida) headers["List-Unsubscribe-Post"] = "List-Unsubscribe=One-Click"
+
   try {
     const { error } = await resend.emails.send({
       from: fromAddress(),
       to: address,
       replyTo: site.email,
       subject: `Bem-vindo à ${site.signature}`,
-      react: <WelcomeEmail url={site.url} />,
-      headers: {
-        // Gmail and Outlook surface a one-click unsubscribe from this; without
-        // it a reader's only exit is the spam button, which costs the domain.
-        "List-Unsubscribe": `<mailto:${site.email}?subject=unsubscribe>`,
-      },
+      react: (
+        <WelcomeEmail url={site.url} unsubscribeUrl={saida ?? undefined} />
+      ),
+      // A versão em texto puro não é cortesia: um e-mail só-HTML pontua pior em
+      // todo filtro de spam, porque é o formato de quem manda em massa sem se
+      // dar o trabalho. Ela também é o que alguns leitores realmente mostram.
+      text: welcomeText(saida),
+      headers,
     })
 
     if (error) {
@@ -152,5 +187,70 @@ async function sendWelcome(resend: Resend, address: string): Promise<void> {
     }
   } catch (error) {
     console.error("[subscribe] welcome email threw:", error)
+  }
+}
+
+/**
+ * O mesmo e-mail em texto puro.
+ *
+ * Escrito à mão, e não extraído do JSX, porque o que serve numa tela de HTML
+ * não serve aqui: sem botão, o link precisa estar escrito; sem régua, a
+ * separação é uma linha em branco.
+ */
+function welcomeText(saida: string | null): string {
+  const linhas = [
+    "Você está na lista.",
+    "",
+    "Obrigado por assinar. A cada quinze dias chega aqui uma carta sobre um",
+    "assunto só — virado devagar, até aparecer o que sempre esteve junto.",
+    "",
+    "Não é um resumo de notícias e não é uma lista. É um texto, escrito para ser",
+    "lido em menos de dez minutos, sobre cultura, filosofia, tecnologia e arte —",
+    "sempre pelo que essas coisas têm em comum, não pelo que as separa.",
+    "",
+    `Enquanto a próxima não sai, tudo o que já saiu continua aberto: ${site.url}`,
+    "",
+    "—",
+    site.signature,
+    "",
+    `Você recebeu este e-mail porque assinou a ${site.signature} em ${site.url}.`,
+  ]
+
+  if (saida) linhas.push(`Para sair da lista: ${saida}`)
+
+  return linhas.join("\n")
+}
+
+/**
+ * Marca o contato como descadastrado. Usado pela rota de um clique.
+ *
+ * Não apaga o contato: o Resend precisa guardar quem pediu para sair, senão um
+ * reenvio futuro incluiria essa pessoa de novo. Sem credenciais, só registra —
+ * quem chama responde 200 de todo jeito, porque o leitor não tem o que fazer
+ * com um erro nosso.
+ */
+export async function unsubscribe(rawEmail: string): Promise<void> {
+  const address = rawEmail.trim().toLowerCase()
+  const resend = resendClient()
+  const list = listConfig()
+
+  if (!resend || !list) {
+    console.info("[unsubscribe] Resend not configured; not stored:", address)
+    return
+  }
+
+  const lookup =
+    list.kind === "audience"
+      ? { email: address, audienceId: list.id }
+      : { email: address }
+
+  try {
+    const { error } = await resend.contacts.update({
+      ...lookup,
+      unsubscribed: true,
+    })
+    if (error) logResendError("unsubscribe failed", error)
+  } catch (error) {
+    console.error("[unsubscribe] unexpected Resend failure:", error)
   }
 }

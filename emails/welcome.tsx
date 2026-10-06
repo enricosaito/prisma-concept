@@ -24,7 +24,14 @@ import { SPECTRUM } from "@/lib/spectrum"
  * it is what Outlook and Gmail actually render. The layout stays one column so
  * it needs no breakpoints: a phone and a desktop client get the same letter.
  */
-function WelcomeEmail({ url = site.url }: { url?: string }) {
+function WelcomeEmail({
+  url = site.url,
+  unsubscribeUrl,
+}: {
+  url?: string
+  /** Ausente quando falta `NEWSLETTER_SECRET`: o rodapé então não promete. */
+  unsubscribeUrl?: string
+}) {
   return (
     <Html lang="pt-BR" dir="ltr">
       <Head />
@@ -92,10 +99,15 @@ function WelcomeEmail({ url = site.url }: { url?: string }) {
               </Link>
               .
             </Text>
-            <Text style={footerText}>
-              Para sair da lista, é só responder a esta mensagem — quem lê é uma
-              pessoa.
-            </Text>
+            {unsubscribeUrl ? (
+              <Text style={footerText}>
+                Não quer mais receber?{" "}
+                <Link href={unsubscribeUrl} style={footerLink}>
+                  Cancele a inscrição
+                </Link>
+                .
+              </Text>
+            ) : null}
           </Section>
         </Container>
       </Body>
