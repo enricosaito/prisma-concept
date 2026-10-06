@@ -20,7 +20,8 @@ import { cn } from "@/lib/utils"
  * destaque e a descrição canônica de `lib/site.ts`. Nada aqui foi reescrito.
  *
  * O que ficou de fora foi a lista de três promessas, que não cabia numa janela
- * e cujo texto dizia "a cada quinze dias" enquanto o resto do site diz semanal.
+ * e cujo texto dizia "a cada quinze dias" quando o resto do site já dizia
+ * semanal. A cadência correta é semanal, e o e-mail foi corrigido.
  * A contradição morre com a página; se as promessas voltarem, o número precisa
  * ser decidido antes.
  */

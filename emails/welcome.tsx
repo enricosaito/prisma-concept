@@ -82,9 +82,9 @@ function WelcomeEmail({
             </Heading>
 
             <Text style={paragraph}>
-              Obrigado por assinar. A cada quinze dias chega aqui uma carta
-              sobre um assunto só — virado devagar, até aparecer o que sempre
-              esteve junto.
+              Obrigado por assinar. Toda semana chega aqui uma carta sobre um
+              assunto só — virado devagar, até aparecer o que sempre esteve
+              junto.
             </Text>
 
             <Text style={paragraph}>

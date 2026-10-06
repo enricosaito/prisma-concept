@@ -203,7 +203,7 @@ function welcomeText(saida: string | null): string {
   const linhas = [
     "Você está na lista.",
     "",
-    "Obrigado por assinar. A cada quinze dias chega aqui uma carta sobre um",
+    "Obrigado por assinar. Toda semana chega aqui uma carta sobre um",
     "assunto só — virado devagar, até aparecer o que sempre esteve junto.",
     "",
     "Não é um resumo de notícias e não é uma lista. É um texto, escrito para ser",

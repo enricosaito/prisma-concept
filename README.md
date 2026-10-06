@@ -67,19 +67,19 @@ recortado; e as duas constantes (`0.12em` de baseline, `-0.15em` de kern
 
 ## Estrutura
 
-| Caminho                   | O que é                                           |
-| ------------------------- | ------------------------------------------------- |
-| `app/page.tsx`            | Home — hero + grade das Cartas                    |
-| `app/cartas/page.tsx`     | Cartas — arquivo completo                         |
-| `app/cartas/[slug]/`      | Página de leitura (pré-renderizada por slug)      |
-| `app/assinar/page.tsx`    | Página de assinatura                              |
-| `app/api/subscribe/`      | Route handler que recebe o e-mail                 |
-| `lib/newsletter.tsx`      | Resend: cadastro na lista + e-mail de boas-vindas |
-| `emails/`                 | Templates de e-mail (react-email)                 |
-| `content/cartas/*.md`     | **Os textos.** Uma carta = um arquivo             |
-| `lib/letters/`            | Modelo, validação e a camada de acesso            |
-| `lib/site.ts`             | Nome, tagline, links sociais, itens do menu       |
-| `components/`             | Header, footer, cards, formulário, marca          |
+| Caminho                | O que é                                           |
+| ---------------------- | ------------------------------------------------- |
+| `app/page.tsx`         | Home — hero + grade das Cartas                    |
+| `app/cartas/page.tsx`  | Cartas — arquivo completo                         |
+| `app/cartas/[slug]/`   | Página de leitura (pré-renderizada por slug)      |
+| `app/assinar/page.tsx` | Página de assinatura                              |
+| `app/api/subscribe/`   | Route handler que recebe o e-mail                 |
+| `lib/newsletter.tsx`   | Resend: cadastro na lista + e-mail de boas-vindas |
+| `emails/`              | Templates de e-mail (react-email)                 |
+| `content/cartas/*.md`  | **Os textos.** Uma carta = um arquivo             |
+| `lib/letters/`         | Modelo, validação e a camada de acesso            |
+| `lib/site.ts`          | Nome, tagline, links sociais, itens do menu       |
+| `components/`          | Header, footer, cards, formulário, marca          |
 
 ## Publicando uma carta nova
 
@@ -307,7 +307,7 @@ não deve confirmar para um estranho se um endereço já está cadastrado.
 ### Ainda não existe
 
 Enviar a carta em si. O que está pronto é a lista e o e-mail transacional; a
-edição quinzenal ainda sai só no site. O próximo passo é um Broadcast do Resend
+edição semanal ainda sai só no site. O próximo passo é um Broadcast do Resend
 alimentado pelo Markdown das cartas.
 
 ## Personalizando
