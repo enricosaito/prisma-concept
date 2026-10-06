@@ -6,24 +6,21 @@ import { RiCloseLine } from "@remixicon/react"
 import { Highlight } from "@/components/highlight"
 import { SubscribeForm } from "@/components/subscribe-form"
 import { RainbowButton } from "@/components/ui/rainbow-button"
-import { navCta, site } from "@/lib/site"
+import { navCta } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 /**
- * O convite para assinar, agora numa janela em vez de uma página.
+ * O convite para assinar, numa janela em vez de uma página.
  *
  * Substitui /assinar. Com uma carta publicada, mandar o leitor para outra
  * página só para digitar um e-mail cobrava uma navegação por um campo — e a
  * página ficava com três blocos de argumento em volta de um input.
  *
- * O texto é o da página antiga, palavra por palavra: o título com "Prisma" em
- * destaque e a descrição canônica de `lib/site.ts`. Nada aqui foi reescrito.
- *
- * O que ficou de fora foi a lista de três promessas, que não cabia numa janela
- * e cujo texto dizia "a cada quinze dias" quando o resto do site já dizia
- * semanal. A cadência correta é semanal, e o e-mail foi corrigido.
- * A contradição morre com a página; se as promessas voltarem, o número precisa
- * ser decidido antes.
+ * O texto é do autor, escrito para esta janela. Ele NÃO é o `site.description`
+ * e não deve ser trocado por ele: aquele é a descrição canônica que vai para a
+ * aba do navegador, para o cartão de compartilhamento e para a seção "Por quê?"
+ * da home, e descreve a publicação. Este aqui vende a assinatura, que é outro
+ * trabalho. Os dois divergem de propósito.
  */
 function SubscribeDialog({
   className,
@@ -71,11 +68,25 @@ function SubscribeDialog({
             </Dialog.Close>
 
             <Dialog.Title className="font-heading text-2xl leading-tight font-medium text-balance sm:text-3xl">
-              Assine a <Highlight>Prisma</Highlight>
+              Assine a <Highlight>Prisma</Highlight>, grátis
             </Dialog.Title>
 
-            <Dialog.Description className="mt-4 text-sm leading-relaxed text-pretty text-muted-foreground">
-              {site.description}
+            {/* Dois parágrafos, então o Description renderiza uma <div>: o
+                padrão dele é um <p>, e <p> dentro de <p> é HTML inválido —
+                o navegador fecha o primeiro sozinho e o layout quebra. */}
+            <Dialog.Description
+              render={<div />}
+              className="mt-4 space-y-3 text-sm leading-relaxed text-pretty text-muted-foreground"
+            >
+              <p>
+                PRISMA é uma carta semanal onde nos aprofundamos sobre diversos
+                assuntos em filosofia, arte, tecnologia, que vão te fazer ter
+                melhores ideias e ser um pensador mais afiado.
+              </p>
+              <p>
+                Você vai receber gratuitamente uma carta toda semana sobre o
+                futuro, a mente e a internet.
+              </p>
             </Dialog.Description>
 
             <SubscribeForm className="mt-6" />
