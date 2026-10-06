@@ -49,17 +49,17 @@
   --sidebar-accent-foreground: oklch(0.1769 0.0026 247.98);
   --sidebar-border: oklch(0.8799 0.0254 89.23);
   --sidebar-ring: oklch(0.54 0.016 250);
-  --color-1: oklch(68% 0.079 69.8);
-  --color-2: oklch(74.8% 0.087 81.7);
-  --color-3: oklch(66.9% 0.04 55.1);
-  --color-4: oklch(63% 0.03 285.5);
-  --color-5: oklch(61.9% 0.041 237.5);
+  --color-1: oklch(0.604 0.008 240);
+  --color-2: oklch(0.604 0.018 253);
+  --color-3: oklch(0.604 0.028 266);
+  --color-4: oklch(0.604 0.038 279);
+  --color-5: oklch(0.604 0.045 292);
 
   /* O arco-íris do botão, e só dele.
 
      Separado de --color-1..5 de propósito. Aqueles cinco são o espectro
-     editorial — abafado e puxado para o bronze, como lib/spectrum.ts explica,
-     justamente para NÃO ler como arco-íris de néon. Eles pintam as faixas do
+     editorial — frio e de luminosidade constante, como lib/spectrum.ts
+     explica, justamente para NÃO ler como arco-íris de néon. Eles pintam as
      e-mail, o Highlight dos títulos, a borda do formulário e a cor de cada
      edição. Trocá-los por estes aqui levaria o néon para todos esses lugares.
 
@@ -104,11 +104,11 @@
   --sidebar-accent-foreground: oklch(0.9399 0.0092 89.23);
   --sidebar-border: oklch(0.8799 0.0254 89.23 / 15%);
   --sidebar-ring: oklch(0.8 0.016 250);
-  --color-1: oklch(68% 0.079 69.8);
-  --color-2: oklch(74.8% 0.087 81.7);
-  --color-3: oklch(66.9% 0.04 55.1);
-  --color-4: oklch(63% 0.03 285.5);
-  --color-5: oklch(61.9% 0.041 237.5);
+  --color-1: oklch(0.604 0.008 240);
+  --color-2: oklch(0.604 0.018 253);
+  --color-3: oklch(0.604 0.028 266);
+  --color-4: oklch(0.604 0.038 279);
+  --color-5: oklch(0.604 0.045 292);
 }
 
 @theme inline {
