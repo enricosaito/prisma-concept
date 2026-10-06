@@ -70,14 +70,19 @@ export default function Page() {
             already a list, and a second one would read as more of the same. */}
         <div className="mt-5 grid gap-7 border-t border-border pt-8 sm:mt-6 sm:pt-9 md:grid-cols-[0.85fr_1.15fr] md:gap-14">
           <p className="font-heading text-2xl leading-snug font-medium text-balance sm:text-[2rem]">
-            A internet está cheia de opiniões rasas, conteúdo de IA e super
-            estímulos — nosso objetivo é fazer o oposto.
+            Vivemos cercados de informação — mas onde estão as ideias que
+            realmente nos conectam com o universo?
           </p>
           <div className="space-y-5 text-lg leading-relaxed text-pretty text-muted-foreground">
             <p>{site.description}</p>
             <p>
-              Te apresentamos um espaço para questionar profundamente o mundo,
-              se tornar um pensador mais afiado e despertar sua curiosidade.
+              Juntamos arte, histórias e ideias para enxergar o mundo de outro
+              jeito.
+            </p>
+            <p>
+              Te apresentamos um espaço para questionar profundamente sua visão
+              de mundo, se tornar um pensador mais afiado e despertar sua
+              curiosidade.
             </p>
           </div>
         </div>
