@@ -5,7 +5,18 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Editorial palette — warm ink on cool paper, bronze accent. */
+  /* Editorial palette — warm ink on cool paper, silver accent.
+
+     O accent era bronze, oklch(0.6804 0.0786 69.79). A prata não é só gosto:
+     o bronze dava 2.72:1 contra o papel claro, abaixo do mínimo de 3:1 até
+     para elemento de interface, e ele é usado como texto no hover dos links.
+     A prata dá 4.69:1 no claro e 10.15:1 no escuro — passa AA para texto nos
+     dois.
+
+     Croma 0.016 é o que faz ler como prata e não como ardósia: a diferença
+     entre os canais RGB fica em 16 de 255, contra 86 do bronze. Frio o
+     bastante para não ser cinza morto, discreto o bastante para não virar
+     azul. */
   --background: oklch(0.9757 0.0017 247.84);
   --foreground: oklch(0.1769 0.0026 247.98);
   --card: oklch(1 0 0);
@@ -18,12 +29,12 @@
   --secondary-foreground: oklch(0.1769 0.0026 247.98);
   --muted: oklch(0.9399 0.0092 89.23);
   --muted-foreground: oklch(0.4867 0.0055 248);
-  --accent: oklch(0.6804 0.0786 69.79);
+  --accent: oklch(0.54 0.016 250);
   --accent-foreground: oklch(0.1769 0.0026 247.98);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.8799 0.0254 89.23);
   --input: oklch(0.8799 0.0254 89.23);
-  --ring: oklch(0.6804 0.0786 69.79);
+  --ring: oklch(0.54 0.016 250);
   --chart-1: oklch(0.6804 0.0786 69.79);
   --chart-2: oklch(0.8799 0.0254 89.23);
   --chart-3: oklch(0.4867 0.0055 248);
@@ -37,18 +48,18 @@
   --sidebar-accent: oklch(0.9399 0.0092 89.23);
   --sidebar-accent-foreground: oklch(0.1769 0.0026 247.98);
   --sidebar-border: oklch(0.8799 0.0254 89.23);
-  --sidebar-ring: oklch(0.6804 0.0786 69.79);
-  --color-1: oklch(68% 0.079 69.8);
-  --color-2: oklch(74.8% 0.087 81.7);
-  --color-3: oklch(66.9% 0.04 55.1);
-  --color-4: oklch(63% 0.03 285.5);
-  --color-5: oklch(61.9% 0.041 237.5);
+  --sidebar-ring: oklch(0.54 0.016 250);
+  --color-1: oklch(0.604 0.008 240);
+  --color-2: oklch(0.604 0.018 253);
+  --color-3: oklch(0.604 0.028 266);
+  --color-4: oklch(0.604 0.038 279);
+  --color-5: oklch(0.604 0.045 292);
 
   /* O arco-íris do botão, e só dele.
 
      Separado de --color-1..5 de propósito. Aqueles cinco são o espectro
-     editorial — abafado e puxado para o bronze, como lib/spectrum.ts explica,
-     justamente para NÃO ler como arco-íris de néon. Eles pintam as faixas do
+     editorial — frio e de luminosidade constante, como lib/spectrum.ts
+     explica, justamente para NÃO ler como arco-íris de néon. Eles pintam as
      e-mail, o Highlight dos títulos, a borda do formulário e a cor de cada
      edição. Trocá-los por estes aqui levaria o néon para todos esses lugares.
 
@@ -74,12 +85,12 @@
   --secondary-foreground: oklch(0.9399 0.0092 89.23);
   --muted: oklch(0.2687 0.004 248);
   --muted-foreground: oklch(0.7089 0.0141 89.23);
-  --accent: oklch(0.7404 0.0786 69.79);
+  --accent: oklch(0.8 0.016 250);
   --accent-foreground: oklch(0.1769 0.0026 247.98);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(0.8799 0.0254 89.23 / 15%);
   --input: oklch(0.8799 0.0254 89.23 / 20%);
-  --ring: oklch(0.7404 0.0786 69.79);
+  --ring: oklch(0.8 0.016 250);
   --chart-1: oklch(0.7404 0.0786 69.79);
   --chart-2: oklch(0.8799 0.0254 89.23);
   --chart-3: oklch(0.7089 0.0141 89.23);
@@ -92,12 +103,12 @@
   --sidebar-accent: oklch(0.2687 0.004 248);
   --sidebar-accent-foreground: oklch(0.9399 0.0092 89.23);
   --sidebar-border: oklch(0.8799 0.0254 89.23 / 15%);
-  --sidebar-ring: oklch(0.7404 0.0786 69.79);
-  --color-1: oklch(68% 0.079 69.8);
-  --color-2: oklch(74.8% 0.087 81.7);
-  --color-3: oklch(66.9% 0.04 55.1);
-  --color-4: oklch(63% 0.03 285.5);
-  --color-5: oklch(61.9% 0.041 237.5);
+  --sidebar-ring: oklch(0.8 0.016 250);
+  --color-1: oklch(0.604 0.008 240);
+  --color-2: oklch(0.604 0.018 253);
+  --color-3: oklch(0.604 0.028 266);
+  --color-4: oklch(0.604 0.038 279);
+  --color-5: oklch(0.604 0.045 292);
 }
 
 @theme inline {
@@ -230,8 +241,22 @@
      19px from sm, both at a 1.6 line-height, with ~20px between blocks. The
      gap is deliberately under one line — it reads as a pause rather than a
      break, which is what lets the generous leading do the work. */
+  /* O corpo corre a 85% da tinta no claro e a 92% no escuro.
+
+     A assimetria é de propósito. Sobre papel claro, 85% tira o peso do preto
+     cheio sem custar legibilidade — 11.63:1. Sobre fundo escuro os mesmos
+     85% davam quase o mesmo número, 11.53:1, mas a leitura é outra: texto
+     claro sobre escuro já perde definição, e rebaixar ainda mais engrossava
+     o cinza em vez de suavizá-lo. A 92% o escuro dá 13.49:1.
+
+     92% e não 100% para que sobre um degrau acima do corpo. A tinta cheia
+     fica reservada ao que precisa saltar: os títulos e o <strong>. Com o
+     corpo no cheio, os dois perderiam o realce por cor e sobraria só o
+     tamanho e o peso.
+
+     O cinza que o corpo usava no escuro desceu para as citações. */
   .prose-letter {
-    @apply text-[1.0625rem] leading-[1.6] text-foreground/85 sm:text-[1.1875rem];
+    @apply text-[1.0625rem] leading-[1.6] text-foreground/85 sm:text-[1.1875rem] dark:text-foreground/92;
   }
   .prose-letter > * + * {
     @apply mt-5;
@@ -253,7 +278,7 @@
     @apply mt-9 font-heading text-[1.5rem] leading-[1.25] font-medium text-foreground;
   }
   .prose-letter blockquote {
-    @apply border-l-2 border-accent pl-5 text-foreground/70 italic;
+    @apply border-l-2 border-accent pl-5 text-foreground/70 italic dark:text-foreground/85;
   }
   .prose-letter a {
     @apply underline decoration-accent underline-offset-4 transition-colors hover:text-accent;
@@ -268,10 +293,13 @@
      the old block model had no inline formatting at all, so neither element had
      a rule here.
 
-     `font-medium`, not the browser's 700: the body runs at text-foreground/85,
-     and Literata's bold against that reads as a different, heavier typeface
-     rather than as emphasis. Lifting the colour to full strength and the weight
-     one step does the same job with less shouting. */
+     `font-medium`, não o 700 do navegador: no tema claro o corpo corre a 85%
+     da tinta, e o negrito da Literata contra isso lia como uma segunda fonte,
+     mais pesada, em vez de ênfase. Subir a cor ao cheio e o peso um degrau faz
+     o mesmo trabalho sem gritar.
+
+     No tema escuro o corpo corre a 92%, então o degrau existe nos dois temas
+     — menor no escuro, onde são 8 pontos em vez de 15, mas presente. */
   .prose-letter strong {
     @apply font-medium text-foreground;
   }
