@@ -2,18 +2,12 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 
 import { PrismaIcon } from "@/components/prisma-icon"
 import { SubscribeDialog } from "@/components/subscribe-dialog"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Wordmark } from "@/components/wordmark"
-import { nav } from "@/lib/site"
 import { cn } from "@/lib/utils"
-
-function isActive(pathname: string, href: string) {
-  return href === "/" ? pathname === "/" : pathname.startsWith(href)
-}
 
 /** Distance scrolled before the bar is allowed to retreat at all. */
 const HIDE_AFTER = 96
@@ -66,7 +60,6 @@ function useHiddenOnScrollDown() {
 }
 
 function SiteHeader() {
-  const pathname = usePathname()
   const hidden = useHiddenOnScrollDown()
 
   return (
@@ -143,33 +136,14 @@ function SiteHeader() {
           <Wordmark className="text-4xl tracking-normal sm:text-5xl" />
         </Link>
 
-        <nav
-          className="hidden items-center gap-1 justify-self-end sm:flex"
-          aria-label="Principal"
-        >
+        {/* Um <div> e não um <nav>: com o "Início" fora, o que resta aqui é
+            um controle de tema e um botão que abre um diálogo. Nenhum dos
+            dois navega para lugar nenhum, e anunciar um marco de navegação
+            que não leva a nada é pior do que não ter marco. */}
+        <div className="hidden items-center gap-1 justify-self-end sm:flex">
           <ThemeToggle className="mr-1" />
-
-          {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              aria-current={isActive(pathname, item.href) ? "page" : undefined}
-              className={cn(
-                "relative rounded-sm px-3.5 py-2.5 font-label text-[0.8rem] font-medium tracking-[0.18em] uppercase transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
-                isActive(pathname, item.href)
-                  ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
-              )}
-            >
-              {item.label}
-              {isActive(pathname, item.href) ? (
-                <span className="absolute inset-x-3.5 -bottom-px h-px [background-image:var(--spectrum)]" />
-              ) : null}
-            </Link>
-          ))}
-
           <SubscribeDialog className="ml-2 h-10 rounded-[10px] px-6 text-[0.8rem]" />
-        </nav>
+        </div>
 
         {/* No mobile a barra guarda só isto. Saíram o hamburguer e a gaveta que
             ele abria: dentro dela havia um único link, "Início", para onde o
