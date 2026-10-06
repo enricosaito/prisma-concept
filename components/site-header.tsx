@@ -3,12 +3,12 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { RiCloseLine, RiMenuLine } from "@remixicon/react"
 
+import { PrismaIcon } from "@/components/prisma-icon"
+import { SubscribeDialog } from "@/components/subscribe-dialog"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { RainbowButton } from "@/components/ui/rainbow-button"
 import { Wordmark } from "@/components/wordmark"
-import { nav, navCta } from "@/lib/site"
+import { nav } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 function isActive(pathname: string, href: string) {
@@ -67,21 +67,7 @@ function useHiddenOnScrollDown() {
 
 function SiteHeader() {
   const pathname = usePathname()
-  const [open, setOpen] = React.useState(false)
-  const [openedAt, setOpenedAt] = React.useState(pathname)
-  const scrolledAway = useHiddenOnScrollDown()
-
-  // The mobile sheet lives inside the header, so hiding the bar would take the
-  // open menu with it.
-  const hidden = scrolledAway && !open
-
-  // Dismiss the mobile sheet whenever the route changes — including via the
-  // browser's back/forward buttons. Adjusting state during render (rather than
-  // in an effect) avoids a second render pass with the stale panel on screen.
-  if (openedAt !== pathname) {
-    setOpenedAt(pathname)
-    setOpen(false)
-  }
+  const hidden = useHiddenOnScrollDown()
 
   return (
     <header
@@ -97,8 +83,8 @@ function SiteHeader() {
         // fio do espectro atravessando a barra inteira; saiu. O espectro
         // continua onde ele diz alguma coisa — o número da edição, a seta
         // "Ler", o sublinhado do link ativo —, e não como moldura.
-        // translate-y by its own height, so the bar clears itself at both h-14
-        // and sm:h-16 without either being hardcoded here.
+        // translate-y by its own height, so the bar clears itself at both h-16
+        // and sm:h-20 without either being hardcoded here.
         "transition-transform duration-200 ease-snappy",
         hidden
           ? [
@@ -115,18 +101,50 @@ function SiteHeader() {
       )}
     >
       {/* Full-bleed on purpose: the bar spans the viewport and pins the
-          wordmark and nav to the gutters, while page sections keep their
-          centred max-w-5xl measure. */}
-      <div className="flex h-14 w-full items-center justify-between gap-4 px-5 sm:h-16 sm:px-8">
+          wordmark and the nav to the gutters, while page sections keep their
+          centred max-w-5xl measure.
+
+          Duas colunas no mobile e três a partir do `sm`. O que faz isso
+          funcionar é que `display: none` tira o elemento do fluxo do grid, e
+          não apenas da vista: no mobile o símbolo e o menu somem, sobram duas
+          células, e o nome cai na primeira — à esquerda. No desktop as quatro
+          crianças voltam a ser três e o nome volta ao centro. Uma declaração
+          de colunas por faixa, sem nenhum condicional em JavaScript. */}
+      <div className="grid h-16 w-full grid-cols-[1fr_auto] items-center gap-4 px-5 sm:h-20 sm:grid-cols-[1fr_auto_1fr] sm:px-8">
+        {/* Só no desktop. No mobile o nome sozinho à esquerda já identifica a
+            publicação, e o selo ao lado dele numa barra de 360px gastava
+            espaço repetindo o que o nome diz. */}
         <Link
           href="/"
-          className="rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+          aria-label="PRISMA — início"
+          className="hidden justify-self-start rounded-sm text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:block"
         >
-          <Wordmark className="text-3xl tracking-normal sm:text-4xl" />
+          {/* O SELO casado com a altura de maiúscula do wordmark, não escolhido
+              a olho: a "against" tem maiúscula de 0.851em — medido com a
+              opentype.js na própria fonte —, o que dá 40.8px a 48px.
+
+              É o selo que mede isso, e não a pena dentro dele, porque no
+              negativo o selo é o logo. A pena ocupa 64% da caixa, então ela
+              fica em ~26px — é o que acontece com qualquer logo em selo ao
+              lado de um nome, e é a proporção desenhada no arquivo.
+
+              Não mexe na altura da barra: ela é fixa em h-16 / sm:h-20. */}
+          <PrismaIcon className="size-[40.8px]" />
+        </Link>
+
+        {/* À esquerda no mobile, centrado no desktop. Lá ele divide a barra com
+            o selo e o menu e o centro é o lugar do masthead; aqui ele é o único
+            elemento à esquerda, e centrá-lo deixaria um vão à esquerda sem nada
+            que o justifique. */}
+        <Link
+          href="/"
+          className="justify-self-start rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:justify-self-center"
+        >
+          <Wordmark className="text-4xl tracking-normal sm:text-5xl" />
         </Link>
 
         <nav
-          className="hidden items-center gap-1 sm:flex"
+          className="hidden items-center gap-1 justify-self-end sm:flex"
           aria-label="Principal"
         >
           <ThemeToggle className="mr-1" />
@@ -137,7 +155,7 @@ function SiteHeader() {
               href={item.href}
               aria-current={isActive(pathname, item.href) ? "page" : undefined}
               className={cn(
-                "relative rounded-sm px-3 py-2 font-label text-xs font-medium tracking-[0.18em] uppercase transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+                "relative rounded-sm px-3.5 py-2.5 font-label text-[0.8rem] font-medium tracking-[0.18em] uppercase transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
                 isActive(pathname, item.href)
                   ? "text-foreground"
                   : "text-muted-foreground hover:text-foreground"
@@ -145,74 +163,20 @@ function SiteHeader() {
             >
               {item.label}
               {isActive(pathname, item.href) ? (
-                <span className="absolute inset-x-3 -bottom-px h-px [background-image:var(--spectrum)]" />
+                <span className="absolute inset-x-3.5 -bottom-px h-px [background-image:var(--spectrum)]" />
               ) : null}
             </Link>
           ))}
 
-          <RainbowButton
-            asChild
-            variant="outline"
-            className="ml-2 h-9 rounded-[10px] px-5 text-xs"
-          >
-            <Link href={navCta.href}>{navCta.label}</Link>
-          </RainbowButton>
+          <SubscribeDialog className="ml-2 h-10 rounded-[10px] px-6 text-[0.8rem]" />
         </nav>
 
-        <div className="flex items-center gap-1 sm:hidden">
-          <ThemeToggle />
-          <button
-            type="button"
-            onClick={() => setOpen((value) => !value)}
-            aria-expanded={open}
-            aria-controls="mobile-nav"
-            aria-label={open ? "Fechar menu" : "Abrir menu"}
-            className="rounded-sm p-2 text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-          >
-            {open ? (
-              <RiCloseLine className="size-5" />
-            ) : (
-              <RiMenuLine className="size-5" />
-            )}
-          </button>
-        </div>
+        {/* No mobile a barra guarda só isto. Saíram o hamburguer e a gaveta que
+            ele abria: dentro dela havia um único link, "Início", para onde o
+            nome ao lado já leva. Um painel que desliza para oferecer o destino
+            em que você já está não é navegação, é cerimônia. */}
+        <ThemeToggle className="justify-self-end sm:hidden" />
       </div>
-
-      {open ? (
-        <div
-          id="mobile-nav"
-          // No blur of its own — it sits inside the header, so the header's
-          // backdrop-filter already frosts what is behind this panel too.
-          className="border-t border-border/40 bg-background/40 px-5 pb-5 sm:hidden"
-        >
-          <nav className="flex flex-col" aria-label="Principal (mobile)">
-            {nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-current={
-                  isActive(pathname, item.href) ? "page" : undefined
-                }
-                className={cn(
-                  "border-b border-border/60 py-3.5 font-label text-sm font-medium tracking-[0.18em] uppercase transition-colors",
-                  isActive(pathname, item.href)
-                    ? "text-accent"
-                    : "text-foreground"
-                )}
-              >
-                {item.label}
-              </Link>
-            ))}
-            <RainbowButton
-              asChild
-              variant="outline"
-              className="mt-5 h-11 w-full rounded-[10px] text-xs"
-            >
-              <Link href={navCta.href}>{navCta.label}</Link>
-            </RainbowButton>
-          </nav>
-        </div>
-      ) : null}
     </header>
   )
 }

@@ -23,13 +23,13 @@ export default function NotFound() {
       </h1>
       <p className="mt-5 max-w-prose text-lg leading-relaxed text-pretty text-muted-foreground">
         Pode ter sido um endereço digitado errado, ou uma carta que ainda não
-        saiu. O arquivo completo está sempre aberto.
+        saiu.
       </p>
       <Link
-        href="/cartas"
+        href="/"
         className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-foreground underline decoration-accent underline-offset-4 transition-colors outline-none hover:text-accent focus-visible:ring-3 focus-visible:ring-ring/50"
       >
-        Ver todas as cartas
+        Voltar para o início
       </Link>
     </div>
   )

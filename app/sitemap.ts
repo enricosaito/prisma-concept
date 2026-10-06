@@ -11,6 +11,9 @@ import { absoluteUrl } from "@/lib/seo"
  * The four legacy paths in next.config.ts (/carta, /biblioteca and their
  * slugs) are deliberately absent: a sitemap lists canonical URLs, and listing
  * a 308 invites a crawler to spend its budget on redirects.
+ *
+ * /cartas e /assinar também saíram: as páginas não existem mais, e os 307
+ * que cobrem seus endereços são redirects, que um sitemap não lista.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const letters = getPublishedLetters()
@@ -23,17 +26,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: latest ? (latest.updated ?? latest.date) : undefined,
       changeFrequency: "weekly",
       priority: 1,
-    },
-    {
-      url: absoluteUrl("/cartas"),
-      lastModified: latest ? (latest.updated ?? latest.date) : undefined,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: absoluteUrl("/assinar"),
-      changeFrequency: "yearly",
-      priority: 0.5,
     },
     ...letters.map((letter) => ({
       url: absoluteUrl(`/cartas/${letter.slug}`),
