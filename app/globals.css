@@ -241,18 +241,22 @@
      19px from sm, both at a 1.6 line-height, with ~20px between blocks. The
      gap is deliberately under one line — it reads as a pause rather than a
      break, which is what lets the generous leading do the work. */
-  /* O corpo corre a 85% da tinta no claro e a 100% no escuro.
+  /* O corpo corre a 85% da tinta no claro e a 92% no escuro.
 
      A assimetria é de propósito. Sobre papel claro, 85% tira o peso do preto
-     cheio sem custar legibilidade — 11.63:1. Sobre fundo escuro, os mesmos
-     85% davam 11.53:1, perto do mesmo número, mas a leitura é outra: texto
+     cheio sem custar legibilidade — 11.63:1. Sobre fundo escuro os mesmos
+     85% davam quase o mesmo número, 11.53:1, mas a leitura é outra: texto
      claro sobre escuro já perde definição, e rebaixar ainda mais engrossava
-     o cinza em vez de suavizá-lo. A 100% o escuro dá 15.85:1.
+     o cinza em vez de suavizá-lo. A 92% o escuro dá 13.49:1.
 
-     O cinza que o corpo usava no escuro não sumiu — desceu para as citações,
-     que é onde recuar faz sentido. */
+     92% e não 100% para que sobre um degrau acima do corpo. A tinta cheia
+     fica reservada ao que precisa saltar: os títulos e o <strong>. Com o
+     corpo no cheio, os dois perderiam o realce por cor e sobraria só o
+     tamanho e o peso.
+
+     O cinza que o corpo usava no escuro desceu para as citações. */
   .prose-letter {
-    @apply text-[1.0625rem] leading-[1.6] text-foreground/85 sm:text-[1.1875rem] dark:text-foreground;
+    @apply text-[1.0625rem] leading-[1.6] text-foreground/85 sm:text-[1.1875rem] dark:text-foreground/92;
   }
   .prose-letter > * + * {
     @apply mt-5;
@@ -294,10 +298,8 @@
      mais pesada, em vez de ênfase. Subir a cor ao cheio e o peso um degrau faz
      o mesmo trabalho sem gritar.
 
-     No tema escuro o corpo já corre a 100%, então aqui sobra só o peso. A
-     ênfase fica mais discreta ali do que no claro — é o preço de ter o corpo
-     na tinta cheia, e não há para onde subir a cor. Se algum dia incomodar, o
-     caminho é o corpo voltar a 92% no escuro, que devolve o degrau. */
+     No tema escuro o corpo corre a 92%, então o degrau existe nos dois temas
+     — menor no escuro, onde são 8 pontos em vez de 15, mas presente. */
   .prose-letter strong {
     @apply font-medium text-foreground;
   }
