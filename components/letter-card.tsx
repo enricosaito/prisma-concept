@@ -187,7 +187,19 @@ function LetterListItem({
         // Without this the link's name is the image description, then the
         // title, then the standfirst, then the date, read end to end.
         aria-label={letter.title}
-        className="group flex items-start gap-5 rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:gap-8"
+        className={cn(
+          "group flex flex-col items-start gap-4 rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+          // A partir do sm a capa volta para o lado do texto. Abaixo disso
+          // ela fica em cima, e o motivo é a medida: numa tela de 390px, a
+          // capa e as margens deixavam 202px para o título, onde ele quebrava
+          // em cinco linhas. Empilhado, a coluna inteira fica para o texto e o
+          // mesmo título cabe em três.
+          //
+          // O vão em branco à esquerda era sintoma disso: a coluna de texto
+          // passava de 480px de altura contra uma capa de 213px, e não há
+          // altura de capa que resolva — o problema era a largura.
+          "sm:flex-row sm:gap-8"
+        )}
       >
         {art ? (
           // The tilt and spotlight the card grid used to carry, now on the
@@ -198,9 +210,9 @@ function LetterListItem({
             tiltLimit={6}
             scale={1.02}
             effect="gravitate"
-            className="w-32 shrink-0 rounded-xl border border-border sm:w-48"
+            className="w-40 shrink-0 rounded-xl border border-border sm:w-48"
           >
-            <LetterCover cover={art} sizes="(min-width: 640px) 192px, 128px" />
+            <LetterCover cover={art} sizes="(min-width: 640px) 192px, 160px" />
           </TiltCard>
         ) : null}
         {/* Capped rather than left to fill the row: at full width the title ran
