@@ -20,16 +20,12 @@ export const site = {
   email: "carta@prismaconcept.com.br",
 } as const
 
-/** Plain text links in the bar. */
-export const nav = [{ href: "/", label: "Início" }] as const
-
 /**
- * A única ação destacada, o botão do espectro no cabeçalho e no pé da gaveta
- * do mobile.
+ * A única ação da barra, e desde que o link "Início" saiu, a única coisa
+ * clicável nela além do nome e do símbolo.
  *
- * Sem `href`: o botão abre o diálogo de assinatura (components/subscribe-dialog)
- * em vez de navegar. Era /cartas com o rótulo "Ler cartas"; com uma carta
- * publicada, o arquivo não tinha o que arquivar, e pedir assinatura vale mais
- * do que oferecer uma lista de um item.
+ * Sem `href`: o botão abre o diálogo de assinatura em vez de navegar. O
+ * rótulo é "Assinar" e não "Inscrever-se" para falar a mesma palavra que o
+ * botão do formulário, que sempre disse isso.
  */
-export const navCta = { label: "Inscrever-se" } as const
+export const navCta = { label: "Assinar" } as const
