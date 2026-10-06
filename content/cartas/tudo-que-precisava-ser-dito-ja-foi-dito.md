@@ -34,7 +34,7 @@ Não possuo um manifesto pra essa carta. Pelo menos, ainda não.
 
 Mas eu gostaria de criar um espaço para ideias que são difíceis de encaixar em qualquer outro lugar.
 
-Obrigado por ler a primeira.\
+Obrigado por ler a primeira.
 
 > Tudo que precisava ser dito já foi dito. Mas, como ninguém estava ouvindo, é preciso dizer tudo de novo.
 > 

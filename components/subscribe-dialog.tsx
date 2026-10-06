@@ -68,7 +68,7 @@ function SubscribeDialog({
             </Dialog.Close>
 
             <Dialog.Title className="font-heading text-2xl leading-tight font-medium text-balance sm:text-3xl">
-              Assine a <Highlight>Prisma</Highlight>, grátis
+              Assine a <Highlight>Prisma</Highlight>, de graça
             </Dialog.Title>
 
             {/* Dois parágrafos, então o Description renderiza uma <div>: o
@@ -78,11 +78,6 @@ function SubscribeDialog({
               render={<div />}
               className="mt-4 space-y-3 text-sm leading-relaxed text-pretty text-muted-foreground"
             >
-              <p>
-                PRISMA é uma carta semanal onde nos aprofundamos sobre diversos
-                assuntos em filosofia, arte, tecnologia, que vão te fazer ter
-                melhores ideias e ser um pensador mais afiado.
-              </p>
               <p>
                 Você vai receber gratuitamente uma carta toda semana sobre o
                 futuro, a mente e a internet.
