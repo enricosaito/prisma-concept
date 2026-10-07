@@ -70,16 +70,19 @@ export const metadata: Metadata = {
     template: `%s — ${site.name}`,
   },
   description: site.description,
+  // O título dos cartões de compartilhamento carrega a assinatura, igual ao
+  // título da aba. Antes era só "PRISMA": quem recebia o link no WhatsApp via
+  // o nome pelado, sem nada que dissesse o que a publicação é.
   openGraph: {
     type: "website",
     locale: "pt_BR",
     siteName: site.name,
-    title: site.name,
+    title: `${site.name} — ${site.tagline}`,
     description: site.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: site.name,
+    title: `${site.name} — ${site.tagline}`,
     description: site.description,
   },
 }

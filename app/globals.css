@@ -312,19 +312,6 @@
   }
 }
 
-/* The dispersed spectrum, as one ramp. Decorative accents draw from this
-   instead of all being the same copper. */
-:root {
-  --spectrum: linear-gradient(
-    90deg,
-    var(--color-1),
-    var(--color-2),
-    var(--color-3),
-    var(--color-4),
-    var(--color-5)
-  );
-}
-
 /* Text painted by a moving gradient (AnimatedGradientText / Highlight).
    `background-clip: text` is the effect, but it is also the failure mode: the
    glyphs are drawn in `transparent` and the gradient shows through the holes,

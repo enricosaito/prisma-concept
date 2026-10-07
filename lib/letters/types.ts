@@ -55,9 +55,9 @@ export type LetterMeta = {
    * Issue number, shown bare as 1. Explicit rather than derived from sort order
    * so inserting an older letter never renumbers the ones already published.
    *
-   * It doubles as the letter's stable identity: `issueColor()` in
-   * `lib/spectrum.ts` maps it to a band of the spectrum, so the number is
-   * already load-bearing beyond display and a separate id would be ceremony.
+   * It doubles as the letter's stable identity. A UUID on a slug-addressed
+   * filesystem publication would be ceremony: the number is author-assigned,
+   * ordered and already printed on the page.
    */
   issue: number
   /** Taken from the filename, never written in the frontmatter. */
