@@ -50,11 +50,13 @@ export default function Page() {
               of letters, which a three-up grid of thumbnails does not. The
               letters now open the page, so they are set at `lead` size. */}
           <div className="flex flex-col gap-10 sm:gap-14">
-            {letters.map((letter) => (
+            {letters.map((letter, indice) => (
               <LetterListItem
                 key={letter.slug}
                 letter={letter}
                 variant="lead"
+                // Só a primeira: é ela que está acima da dobra.
+                eager={indice === 0}
               />
             ))}
           </div>
@@ -77,7 +79,8 @@ export default function Page() {
             <p>{site.description}</p>
             <p>
               Juntamos arte, histórias e ideias que te conectam com o universo.
-              Torne-se um pensador mais afiado e pronto para navegar pelo mar de incertezas do futuro.
+              Torne-se um pensador mais afiado e pronto para navegar pelo mar de
+              incertezas do futuro.
             </p>
           </div>
         </div>

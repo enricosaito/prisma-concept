@@ -166,6 +166,7 @@ function LetterListItem({
   letter,
   className,
   variant = "archive",
+  eager = false,
 }: {
   letter: LetterMeta
   className?: string
@@ -176,6 +177,15 @@ function LetterListItem({
    * reading time.
    */
   variant?: "lead" | "archive"
+  /**
+   * Só para a primeira carta da home, que é a imagem acima da dobra e a
+   * maior da tela — a LCP. Sem isto o navegador adia justamente o que ele
+   * deveria buscar primeiro, e o Next avisa no console por isso.
+   *
+   * As outras ficam preguiçosas de propósito: marcar todas anularia o ganho,
+   * porque a primeira passaria a disputar banda com as que ninguém vê ainda.
+   */
+  eager?: boolean
 }) {
   const art = letter.thumb ?? letter.cover
   const lead = variant === "lead"
@@ -212,7 +222,11 @@ function LetterListItem({
             effect="gravitate"
             className="w-40 shrink-0 rounded-xl border border-border sm:w-48"
           >
-            <LetterCover cover={art} sizes="(min-width: 640px) 192px, 160px" />
+            <LetterCover
+              cover={art}
+              sizes="(min-width: 640px) 192px, 160px"
+              eager={eager}
+            />
           </TiltCard>
         ) : null}
         {/* Capped rather than left to fill the row: at full width the title ran
