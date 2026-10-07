@@ -19,6 +19,21 @@ import { site } from "@/lib/site"
 import { SPECTRUM } from "@/lib/spectrum"
 
 /**
+ * As cartas que o e-mail de boas-vindas indica.
+ *
+ * Lista à mão de propósito: "favoritas" é escolha do autor, não as últimas
+ * publicadas. Ela não acompanha content/cartas/ sozinha — quando uma carta
+ * nova merecer entrar, é aqui.
+ */
+export const FAVORITAS = [
+  {
+    slug: "tudo-que-precisava-ser-dito-ja-foi-dito",
+    titulo:
+      "Tudo que precisava ser dito já foi dito, mas ninguém estava ouvindo",
+  },
+] as const
+
+/**
  * Sent once, the moment someone joins the list.
  *
  * Everything here is inline styles on tables — that is not a stylistic choice,
@@ -75,34 +90,55 @@ function WelcomeEmail({
               alt="PRISMA"
               style={selo}
             />
-            <Text style={wordmark}>{site.wordmark}</Text>
+            {/* O wordmark em texto saiu: o selo acima já identifica, e o nome
+                repetido logo abaixo dele era a mesma coisa dita duas vezes. */}
 
             <Heading as="h1" style={heading}>
-              Você está na lista.
+              Bem-vindo, leitor!
             </Heading>
 
             <Text style={paragraph}>
-              Obrigado por assinar. Toda semana chega aqui uma carta sobre um
-              assunto só — virado devagar, até aparecer o que sempre esteve
-              junto.
+              Você está recebendo isso porque acaba de assinar a PRISMA.
             </Text>
 
             <Text style={paragraph}>
-              Não é um resumo de notícias e não é uma lista. É um texto, escrito
-              para ser lido em menos de dez minutos, sobre cultura, filosofia,
-              tecnologia e arte — sempre pelo que essas coisas têm em comum, não
-              pelo que as separa.
+              Como um assinante gratuito você vai receber 1 carta por semana.
             </Text>
 
             <Text style={paragraph}>
-              Enquanto a próxima não sai, tudo o que já saiu continua aberto:
+              Essas cartas irão discutir sobre habilidades de alto valor para se
+              adquirir na era da internet, mindsets cruciais para adotar,
+              oportunidades chave para aproveitar, e nossos conceitos favoritos
+              de psicologia, filosofia, tech e arte.
             </Text>
 
-            <Section style={{ marginTop: 24, marginBottom: 8 }}>
-              <Link href={url} style={button}>
-                Ler as cartas
-              </Link>
-            </Section>
+            <Text style={paragraph}>
+              Aqui estão algumas das nossas publicações favoritas:
+            </Text>
+
+            {/* Escrito à mão, e não gerado da lista de cartas: "favoritas" é
+                escolha editorial, não as últimas N. Quando houver mais, é aqui
+                que se acrescenta. */}
+            <ul style={lista}>
+              {FAVORITAS.map((carta) => (
+                <li key={carta.slug} style={itemLista}>
+                  <Link href={`${url}/cartas/${carta.slug}`} style={linkLista}>
+                    {carta.titulo}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            <Text style={paragraph}>Nossa filosofia é simples:</Text>
+
+            <Text style={filosofia}>
+              Apontar contra um mar de problemas.
+              <br />
+              Te dar ferramentas para se tornar um pensador mais afiado.
+              <br />
+              Fazer você enxergar a beleza e os detalhes que sempre estiveram
+              nas nossas vidas.
+            </Text>
 
             <Hr style={rule} />
 
@@ -172,15 +208,6 @@ const selo: React.CSSProperties = {
   margin: "0 0 20px",
 }
 
-const wordmark: React.CSSProperties = {
-  fontFamily: serif,
-  fontSize: 15,
-  letterSpacing: "0.36em",
-  textTransform: "uppercase",
-  color: c.foreground,
-  margin: "0 0 28px",
-}
-
 const heading: React.CSSProperties = {
   fontFamily: serif,
   fontSize: 30,
@@ -198,18 +225,34 @@ const paragraph: React.CSSProperties = {
   margin: "0 0 16px",
 }
 
-// Mail clients ignore most button markup, so this is a padded inline link —
-// which every client does render, and which still reads as a button.
-const button: React.CSSProperties = {
-  display: "inline-block",
-  backgroundColor: c.foreground,
-  color: c.background,
-  fontSize: 13,
-  letterSpacing: "0.12em",
-  textTransform: "uppercase",
-  textDecoration: "none",
-  padding: "13px 24px",
-  borderRadius: 4,
+const lista: React.CSSProperties = {
+  margin: "0 0 16px",
+  paddingLeft: 20,
+}
+
+const itemLista: React.CSSProperties = {
+  fontSize: 16,
+  lineHeight: "1.65",
+  color: c.foreground,
+  marginBottom: 6,
+}
+
+const linkLista: React.CSSProperties = {
+  color: c.foreground,
+  textDecoration: "underline",
+  textDecorationColor: c.accent,
+  textUnderlineOffset: 3,
+}
+
+/* As três linhas da filosofia, quebradas por <br> e não por parágrafos: elas
+   são uma frase em três tempos, e o espaço entre parágrafos as separaria
+   demais. */
+const filosofia: React.CSSProperties = {
+  fontFamily: serif,
+  fontSize: 16,
+  lineHeight: "1.8",
+  color: c.foreground,
+  margin: "0 0 16px",
 }
 
 const rule: React.CSSProperties = {
