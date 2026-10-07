@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 
 import { LetterListItem } from "@/components/letter-card"
+import { SubscribeForm } from "@/components/subscribe-form"
 import { GridPattern } from "@/components/ui/grid-pattern"
 import { getPublishedLetters } from "@/lib/letters/source"
 import { jsonLdHtml, websiteJsonLd } from "@/lib/seo"
@@ -83,6 +84,28 @@ export default function Page() {
               incertezas do futuro.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* Assinar, no fim da home.
+
+          Existe porque sem ela não havia caminho nenhum no celular: o botão da
+          barra só aparece a partir do sm, e quem chega pelo Instagram num
+          telefone caía numa página sem como assinar — precisava abrir uma carta
+          e rolar até o fim.
+
+          Mesmo tratamento do fim de uma carta: sem painel, com a regra acima.
+          Encaixotado, o convite lia como anúncio deixado na página. */}
+      <section className="mx-auto mt-16 max-w-5xl px-5 sm:mt-24 sm:px-8">
+        <hr className="border-border/70" />
+        <div className="mt-10 max-w-[45rem] sm:mt-12">
+          <h2 className="font-heading text-xl font-medium">
+            Receba a próxima no seu e-mail.
+          </h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Inscreva-se gratuitamente e receba as próximas cartas toda semana.
+          </p>
+          <SubscribeForm className="mt-6" />
         </div>
       </section>
     </>

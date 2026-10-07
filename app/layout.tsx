@@ -3,6 +3,7 @@ import { Archivo, Fraunces, Literata } from "next/font/google"
 import localFont from "next/font/local"
 
 import "./globals.css"
+import { Analytics } from "@vercel/analytics/next"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -113,6 +114,13 @@ export default function RootLayout({
             <SiteFooter />
           </div>
         </ThemeProvider>
+        {/* Fora do ThemeProvider porque não desenha nada: é só o coletor.
+
+            Sem cookie e sem banner de consentimento — ele não identifica
+            visitante, agrega. No plano Pro cada evento é cobrado a US$0,03
+            por mil, descontado do crédito mensal; no volume atual isso são
+            centavos, mas é bom saber que escala com o tráfego. */}
+        <Analytics />
       </body>
     </html>
   )
