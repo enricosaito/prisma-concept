@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -311,19 +310,6 @@
   .prose-letter figcaption {
     @apply mt-2 font-label text-xs text-muted-foreground;
   }
-}
-
-/* The dispersed spectrum, as one ramp. Decorative accents draw from this
-   instead of all being the same copper. */
-:root {
-  --spectrum: linear-gradient(
-    90deg,
-    var(--color-1),
-    var(--color-2),
-    var(--color-3),
-    var(--color-4),
-    var(--color-5)
-  );
 }
 
 /* Text painted by a moving gradient (AnimatedGradientText / Highlight).

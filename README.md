@@ -83,12 +83,7 @@ recortado; e as duas constantes (`0.12em` de baseline, `-0.15em` de kern
 
 ## Publicando uma carta nova
 
-**Pelo navegador:** abra `/keystatic` — em produção ou em `npm run dev` — e
-clique em **New Carta**. Formulário para os metadados, editor de texto para a
-prosa. **Save commita no repositório**, e o deploy sai desse commit: não há
-`git commit` à mão. O guia é [`docs/editor.md`](docs/editor.md).
-
-**À mão:** crie um `content/cartas/<slug>.md`, escreva, e troque
+Crie um `content/cartas/<slug>.md`, escreva, e troque
 `status: draft` por `status: published`. A rota, a home, o arquivo, o sitemap e
 as tags de compartilhamento se montam sozinhos a partir do arquivo — o nome
 dele é a URL.

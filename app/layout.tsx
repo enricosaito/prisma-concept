@@ -2,7 +2,8 @@ import type { Metadata } from "next"
 import { Archivo, Fraunces, Literata } from "next/font/google"
 import localFont from "next/font/local"
 
-import "../globals.css"
+import "./globals.css"
+import { Analytics } from "@vercel/analytics/next"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -31,7 +32,7 @@ const fontHeading = Fraunces({
 // optical nudge documented in components/wordmark.tsx, which "against" does
 // not.
 const fontDisplay = localFont({
-  src: "../../public/fonts/against regular.otf",
+  src: "../public/fonts/against regular.otf",
   variable: "--font-display",
   display: "swap",
 })
@@ -70,16 +71,19 @@ export const metadata: Metadata = {
     template: `%s — ${site.name}`,
   },
   description: site.description,
+  // O título dos cartões de compartilhamento carrega a assinatura, igual ao
+  // título da aba. Antes era só "PRISMA": quem recebia o link no WhatsApp via
+  // o nome pelado, sem nada que dissesse o que a publicação é.
   openGraph: {
     type: "website",
     locale: "pt_BR",
     siteName: site.name,
-    title: site.name,
+    title: `${site.name} — ${site.tagline}`,
     description: site.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: site.name,
+    title: `${site.name} — ${site.tagline}`,
     description: site.description,
   },
 }
@@ -110,6 +114,13 @@ export default function RootLayout({
             <SiteFooter />
           </div>
         </ThemeProvider>
+        {/* Fora do ThemeProvider porque não desenha nada: é só o coletor.
+
+            Sem cookie e sem banner de consentimento — ele não identifica
+            visitante, agrega. No plano Pro cada evento é cobrado a US$0,03
+            por mil, descontado do crédito mensal; no volume atual isso são
+            centavos, mas é bom saber que escala com o tráfego. */}
+        <Analytics />
       </body>
     </html>
   )

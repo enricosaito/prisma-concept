@@ -148,6 +148,11 @@ O que mudaria no código, em qualquer um dos três: os cinco corpos de função 
 
 ### Recomendação
 
+> **Nota de outubro de 2026.** O Keystatic chegou a ser instalado e foi
+> removido depois: o editor pedia um GitHub App, variáveis em dois lugares e
+> um segundo layout raiz, e as cartas continuaram sendo escritas à mão. A
+> análise abaixo segue valendo como comparação; a recomendação, não.
+
 **Nenhum CMS agora, e o próximo passo concreto é o Keystatic** — quando o atrito
 aparecer, não antes.
 

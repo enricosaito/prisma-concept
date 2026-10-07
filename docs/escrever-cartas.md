@@ -1,10 +1,5 @@
 # Como publicar uma carta
 
-> Também dá para escrever pelo navegador, em `npm run dev` +
-> http://localhost:3000/keystatic — o guia do editor é [`editor.md`](editor.md).
-> O que está abaixo continua valendo: os arquivos são os mesmos, e editar à mão
-> segue funcionando.
-
 Uma carta é **um arquivo** em `content/cartas/`. Nada mais precisa ser editado — nem
 rota, nem lista, nem código. A home, o arquivo, o sitemap e as tags de
 compartilhamento se montam a partir daqui.
@@ -21,8 +16,7 @@ compartilhamento se montam a partir daqui.
    no deploy seguinte.
 
 Enquanto o status for `draft`, a carta **não existe** para o site publicado: não
-é gerada, não entra na contagem do arquivo, não entra no sitemap, e a URL dá
-404.
+é gerada, não entra na contagem do arquivo, não entra no sitemap, e a URL dá 404.
 
 ## Conferindo antes de publicar
 
@@ -65,14 +59,14 @@ futuro, porque quase sempre é um ano digitado errado.
 
 ## A frontmatter
 
-| Campo            | Obrigatório | O que é                                                      |
-| ---------------- | ----------- | ------------------------------------------------------------ |
-| `issue`          | sim         | O número da carta. Único, e não muda depois de publicada.     |
-| `status`         | sim¹        | `draft` ou `published`.                                       |
+| Campo            | Obrigatório | O que é                                                        |
+| ---------------- | ----------- | -------------------------------------------------------------- |
+| `issue`          | sim         | O número da carta. Único, e não muda depois de publicada.      |
+| `status`         | sim¹        | `draft` ou `published`.                                        |
 | `date`           | sim         | `"AAAA-MM-DD"`. Ordena o arquivo e aparece sob o título.       |
 | `category`       | sim         | `Tecnologia`, `Arte`, `Design` ou `Escrita`.                   |
 | `readingMinutes` | sim         | Minutos de leitura, do seu próprio julgamento.                 |
-| `title`          | sim         | O título da carta.                                            |
+| `title`          | sim         | O título da carta.                                             |
 | `dek`            | sim         | A linha que aparece sob o título nas listagens.                |
 | `cover`          | não         | A imagem no topo da carta. `src` + `alt`.                      |
 | `thumb`          | não         | A imagem nas listagens, quando a arte pede um formato em pé.   |
@@ -92,6 +86,17 @@ Sobre imagens: `src` é um caminho dentro de `public/`, começando com `/`. O
 ou use `""` se ela for puramente decorativa. A proporção da casa para `thumb` é
 **3:5** (por exemplo 1080×1800); `cover` fica bem em 3:2. Para fugir disso,
 `ratio: "3 / 5"` manda na caixa e `position: "top"` escolhe o corte.
+
+**Imagem dentro do texto** é Markdown comum, e o arquivo mora em
+`public/assets/` — separado de `public/covers/`, que guarda só a arte de capa
+e de listagem:
+
+```markdown
+![O Louco, do tarô de Rider-Waite](/assets/the-fool-web.jpg "A legenda, se houver")
+```
+
+O terceiro campo, entre aspas, vira a legenda sob a imagem. O `alt` continua
+obrigatório pelo mesmo motivo de sempre.
 
 ## O texto
 

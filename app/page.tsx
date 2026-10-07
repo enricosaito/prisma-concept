@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 
 import { LetterListItem } from "@/components/letter-card"
+import { SubscribeForm } from "@/components/subscribe-form"
 import { GridPattern } from "@/components/ui/grid-pattern"
 import { getPublishedLetters } from "@/lib/letters/source"
 import { jsonLdHtml, websiteJsonLd } from "@/lib/seo"
@@ -50,11 +51,13 @@ export default function Page() {
               of letters, which a three-up grid of thumbnails does not. The
               letters now open the page, so they are set at `lead` size. */}
           <div className="flex flex-col gap-10 sm:gap-14">
-            {letters.map((letter) => (
+            {letters.map((letter, indice) => (
               <LetterListItem
                 key={letter.slug}
                 letter={letter}
                 variant="lead"
+                // Só a primeira: é ela que está acima da dobra.
+                eager={indice === 0}
               />
             ))}
           </div>
@@ -77,9 +80,32 @@ export default function Page() {
             <p>{site.description}</p>
             <p>
               Juntamos arte, histórias e ideias que te conectam com o universo.
-              Torne-se um pensador mais afiado e pronto para navegar pelo mar de incertezas do futuro.
+              Torne-se um pensador mais afiado e pronto para navegar pelo mar de
+              incertezas do futuro.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* Assinar, no fim da home.
+
+          Existe porque sem ela não havia caminho nenhum no celular: o botão da
+          barra só aparece a partir do sm, e quem chega pelo Instagram num
+          telefone caía numa página sem como assinar — precisava abrir uma carta
+          e rolar até o fim.
+
+          Mesmo tratamento do fim de uma carta: sem painel, com a regra acima.
+          Encaixotado, o convite lia como anúncio deixado na página. */}
+      <section className="mx-auto mt-16 max-w-5xl px-5 sm:mt-24 sm:px-8">
+        <hr className="border-border/70" />
+        <div className="mt-10 max-w-[45rem] sm:mt-12">
+          <h2 className="font-heading text-xl font-medium">
+            Receba a próxima no seu e-mail.
+          </h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Inscreva-se gratuitamente e receba as próximas cartas toda semana.
+          </p>
+          <SubscribeForm className="mt-6" />
         </div>
       </section>
     </>

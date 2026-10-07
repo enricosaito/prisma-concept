@@ -26,14 +26,3 @@ export const SPECTRUM = [
   "#7c7f98", // 4 violeta
   "#817d9b", // 5 ametista
 ] as const
-
-/**
- * Each issue takes the next band of the spectrum, so a grid of letters reads
- * as one beam split across them rather than as a column of identical copper.
- * Cycles every five.
- */
-export function issueColor(issue: number): string {
-  const band =
-    (((issue - 1) % SPECTRUM.length) + SPECTRUM.length) % SPECTRUM.length
-  return `var(--color-${band + 1})`
-}
