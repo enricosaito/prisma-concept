@@ -1,6 +1,6 @@
 import { Resend, type ErrorResponse } from "resend"
 
-import { WelcomeEmail } from "@/emails/welcome"
+import { FAVORITAS, WelcomeEmail } from "@/emails/welcome"
 import { tokenFor } from "@/lib/newsletter-token"
 import { site } from "@/lib/site"
 
@@ -201,16 +201,29 @@ async function sendWelcome(resend: Resend, address: string): Promise<void> {
  */
 function welcomeText(saida: string | null): string {
   const linhas = [
-    "Você está na lista.",
+    "Bem-vindo, leitor!",
     "",
-    "Obrigado por assinar. Toda semana chega aqui uma carta sobre um",
-    "assunto só — virado devagar, até aparecer o que sempre esteve junto.",
+    "Você está recebendo isso porque acaba de assinar a PRISMA.",
     "",
-    "Não é um resumo de notícias e não é uma lista. É um texto, escrito para ser",
-    "lido em menos de dez minutos, sobre cultura, filosofia, tecnologia e arte —",
-    "sempre pelo que essas coisas têm em comum, não pelo que as separa.",
+    "Como um assinante gratuito você vai receber 1 carta por semana.",
     "",
-    `Enquanto a próxima não sai, tudo o que já saiu continua aberto: ${site.url}`,
+    "Essas cartas irão discutir sobre habilidades de alto valor para se",
+    "adquirir na era da internet, mindsets cruciais para adotar, oportunidades",
+    "chave para aproveitar, e nossos conceitos favoritos de psicologia,",
+    "filosofia, tech e arte.",
+    "",
+    "Aqui estão algumas das nossas publicações favoritas:",
+    "",
+    ...FAVORITAS.map(
+      (carta) => `- ${carta.titulo}\n  ${site.url}/cartas/${carta.slug}`
+    ),
+    "",
+    "Nossa filosofia é simples:",
+    "",
+    "Apontar contra um mar de problemas.",
+    "Te dar ferramentas para se tornar um pensador mais afiado.",
+    "Fazer você enxergar a beleza e os detalhes que sempre estiveram nas",
+    "nossas vidas.",
     "",
     "—",
     site.signature,
