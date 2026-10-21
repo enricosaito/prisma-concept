@@ -1,7 +1,7 @@
 "use client"
 
 import { Dialog } from "@base-ui/react/dialog"
-import { RiCloseLine } from "@remixicon/react"
+import { RiCloseLine, RiMailLine } from "@remixicon/react"
 
 import { Highlight } from "@/components/highlight"
 import { SubscribeForm } from "@/components/subscribe-form"
@@ -35,6 +35,7 @@ function SubscribeDialog({
         render={<RainbowButton size={size} />}
         className={className}
       >
+        <RiMailLine aria-hidden className="size-4" />
         {navCta.label}
       </Dialog.Trigger>
 

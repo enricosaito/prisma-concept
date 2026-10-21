@@ -93,9 +93,10 @@ function SiteHeader() {
         "motion-reduce:transition-none"
       )}
     >
-      {/* Full-bleed on purpose: the bar spans the viewport and pins the
-          wordmark and the nav to the gutters, while page sections keep their
-          centred max-w-5xl measure.
+      {/* The glass spans the viewport, but its contents sit on the same
+          centred max-w-5xl measure as the page sections and the footer, so
+          the seal and the button line up with the edges of the text below
+          instead of being pinned to the gutters of a wide screen.
 
           Duas colunas no mobile e três a partir do `sm`. O que faz isso
           funcionar é que `display: none` tira o elemento do fluxo do grid, e
@@ -103,7 +104,7 @@ function SiteHeader() {
           células, e o nome cai na primeira — à esquerda. No desktop as quatro
           crianças voltam a ser três e o nome volta ao centro. Uma declaração
           de colunas por faixa, sem nenhum condicional em JavaScript. */}
-      <div className="grid h-16 w-full grid-cols-[1fr_auto] items-center gap-4 px-5 sm:h-20 sm:grid-cols-[1fr_auto_1fr] sm:px-8">
+      <div className="mx-auto grid h-16 w-full max-w-5xl grid-cols-[1fr_auto] items-center gap-4 px-5 sm:h-20 sm:grid-cols-[1fr_auto_1fr] sm:px-8">
         {/* Só no desktop. No mobile o nome sozinho à esquerda já identifica a
             publicação, e o selo ao lado dele numa barra de 360px gastava
             espaço repetindo o que o nome diz. */}

@@ -25,7 +25,7 @@ export const site = {
  * clicável nela além do nome e do símbolo.
  *
  * Sem `href`: o botão abre o diálogo de assinatura em vez de navegar. O
- * rótulo é "Assinar" e não "Inscrever-se" para falar a mesma palavra que o
- * botão do formulário, que sempre disse isso.
+ * rótulo diz o que o botão oferece, "Newsletter", com o ícone de e-mail ao
+ * lado; o verbo "Assinar" fica para o botão do formulário, dentro do diálogo.
  */
-export const navCta = { label: "Assinar" } as const
+export const navCta = { label: "Newsletter" } as const
