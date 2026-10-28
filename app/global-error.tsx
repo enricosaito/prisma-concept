@@ -36,8 +36,8 @@ export default function GlobalError({
           alignItems: "center",
           justifyContent: "center",
           padding: "0 1.5rem",
-          backgroundColor: "#f6f7f8",
-          color: "#101112",
+          backgroundColor: "#f9f6f2",
+          color: "#0c1723",
           fontFamily: "ui-serif, Georgia, 'Times New Roman', Times, serif",
           lineHeight: 1.6,
         }}
@@ -47,7 +47,7 @@ export default function GlobalError({
             que o next-themes aplicaria. */}
         <style>{`
           @media (prefers-color-scheme: dark) {
-            body { background-color: #101112 !important; color: #edebe4 !important; }
+            body { background-color: #06101c !important; color: #edebe4 !important; }
             .prisma-sub { color: #abaaa5 !important; }
             .prisma-ref { color: #6f6e6b !important; }
           }
@@ -61,7 +61,7 @@ export default function GlobalError({
               fontSize: "0.7rem",
               letterSpacing: "0.22em",
               textTransform: "uppercase",
-              color: "#5d6062",
+              color: "#555e6a",
               fontFamily:
                 "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
             }}
@@ -84,7 +84,7 @@ export default function GlobalError({
             style={{
               margin: "1.25rem 0 0",
               fontSize: "1.0625rem",
-              color: "#5d6062",
+              color: "#555e6a",
             }}
           >
             O erro é nosso, não seu. Tente de novo — se insistir, volte daqui a
