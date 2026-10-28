@@ -27,16 +27,30 @@ import { cn } from "@/lib/utils"
  * enquanto a classe vira declaração CSS de verdade. O selo pode ficar em
  * `currentColor` porque esse valor é parte do SVG desde sempre.
  */
-function PrismaIcon({ className, ...props }: React.ComponentProps<"svg">) {
+function PrismaIcon({
+  className,
+  bare = false,
+  ...props
+}: React.ComponentProps<"svg"> & {
+  /**
+   * Só a pena, sem o selo: a versão transparente do arquivo. Pintada em
+   * `currentColor`, então segue a cor do texto em volta nos dois temas.
+   *
+   * O viewBox aqui é o recorte justo da tinta (42→206 nos dois eixos), não os
+   * 256 do selo: sem o selo não há respiro a preservar, e a margem vazia só
+   * empurraria a pena para longe do que estiver ao lado dela.
+   */
+  bare?: boolean
+}) {
   return (
     <svg
-      viewBox="0 0 256 256"
+      viewBox={bare ? "42 50 164 164" : "0 0 256 256"}
       aria-hidden="true"
       className={cn("size-7", className)}
       {...props}
     >
-      <rect width="256" height="256" rx="44" fill="currentColor" />
-      <g className="fill-background">
+      {!bare && <rect width="256" height="256" rx="44" fill="currentColor" />}
+      <g className={bare ? "fill-current" : "fill-background"}>
         <path
           fillRule="evenodd"
           d="M42.08 213.92Q86.25 135.41 115.12 50.08L200 56L205.92 140.88Q120.59 169.75 42.08 213.92ZM79.72 185.55Q124 128.6 133.75 56.28Q160.02 58.1 186.28 59.95Q179.39 101.52 191.99 141.74Q133.54 159.37 80.88 189.93Q77.31 190.4 79.72 185.55Z"

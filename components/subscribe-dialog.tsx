@@ -1,11 +1,11 @@
 "use client"
 
 import { Dialog } from "@base-ui/react/dialog"
-import { RiCloseLine, RiMailLine } from "@remixicon/react"
+import { RiCloseLine } from "@remixicon/react"
 
 import { Highlight } from "@/components/highlight"
 import { SubscribeForm } from "@/components/subscribe-form"
-import { RainbowButton } from "@/components/ui/rainbow-button"
+import { Button } from "@/components/ui/button"
 import { navCta } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
@@ -21,22 +21,21 @@ import { cn } from "@/lib/utils"
  * aba do navegador, para o cartão de compartilhamento e para a seção "Por quê?"
  * da home, e descreve a publicação. Este aqui vende a assinatura, que é outro
  * trabalho. Os dois divergem de propósito.
+ *
+ * O gatilho é o Button liso, sem o arco-íris: na barra ele fica sempre à
+ * vista, e o brilho animado ali competia com a leitura. O arco-íris segue no
+ * "Assinar" do formulário, que é onde a assinatura de fato acontece.
  */
-function SubscribeDialog({
-  className,
-  size,
-}: {
-  className?: string
-  size?: "default" | "sm" | "lg"
-}) {
+function SubscribeDialog({ className }: { className?: string }) {
   return (
     <Dialog.Root>
-      <Dialog.Trigger
-        render={<RainbowButton size={size} />}
-        className={className}
-      >
-        <RiMailLine aria-hidden className="size-4" />
-        {navCta.label}
+      <Dialog.Trigger render={<Button />} className={className}>
+        {/* O Button centra a caixa do texto, e com a Literata isso já põe a
+            tinta das maiúsculas no meio. Mas "Newsletter" é quase todo caixa
+            baixa, cujo centro fica ~2px abaixo, e a palavra lia baixa. Um
+            pixel acima divide a diferença entre os dois centros. O <span> é
+            item flex, então o `translate` vale nele. */}
+        <span className="-translate-y-px">{navCta.label}</span>
       </Dialog.Trigger>
 
       <Dialog.Portal>
@@ -63,7 +62,7 @@ function SubscribeDialog({
           >
             <Dialog.Close
               aria-label="Fechar"
-              className="absolute top-4 right-4 rounded-sm p-1.5 text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+              className="absolute top-4 right-4 p-1.5 text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
             >
               <RiCloseLine className="size-5" />
             </Dialog.Close>

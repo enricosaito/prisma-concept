@@ -8,6 +8,9 @@ import { MotionConfig } from "motion/react"
  * The shadcn scaffold shipped a "press d to toggle dark mode" hotkey here. It
  * is gone: the navbar's ThemeToggle is the only way to switch now, so a bare
  * letter key cannot surprise anyone mid-page.
+ *
+ * O escuro é o padrão para todo mundo, sem seguir o tema do sistema: quem
+ * chega vê a publicação no escuro, e o claro fica a um clique no ThemeToggle.
  */
 function ThemeProvider({
   children,
@@ -16,8 +19,8 @@ function ThemeProvider({
   return (
     <NextThemesProvider
       attribute="class"
-      defaultTheme="system"
-      enableSystem
+      defaultTheme="dark"
+      enableSystem={false}
       disableTransitionOnChange
       {...props}
     >
