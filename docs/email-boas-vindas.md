@@ -54,7 +54,7 @@ import sharp from "sharp";
 import fs from "node:fs";
 const arte = fs.readFileSync("public/icons/svg/prisma-icon-white-transparent.svg","utf8");
 const paths = arte.slice(arte.indexOf("<g"), arte.indexOf("</g>")+4);
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256"><rect width="256" height="256" rx="44" fill="#002147"/>${paths}</svg>`;
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256"><rect width="256" height="256" rx="44" fill="#1B1C1E"/>${paths}</svg>`;
 await sharp(Buffer.from(svg)).resize(96,96).flatten({background:"#ffffff"})
   .png({compressionLevel:9,palette:false}).toFile("public/brand/prisma-selo-email.png");
 '

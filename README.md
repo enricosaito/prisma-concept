@@ -147,6 +147,7 @@ Vindos do registry `@spell` (`components.json`), ficam soltos em `components/`:
 | ------------------------ | --------------------------------------------------- |
 | `rainbow-button`         | "Assinar" do header e do menu mobile (`outline`)    |
 | `animated-gradient-text` | `components/highlight.tsx` — palavras em destaque   |
+| `animated-theme-toggler` | Troca de tema no header (`components/theme-toggle`) |
 | `grid-pattern`           | Grade tracejada no fundo do hero                    |
 | `shine-border`           | Borda animada do campo de e-mail                    |
 
@@ -156,6 +157,12 @@ neon de fábrica. Dois ajustes que valem nota:
 - **`light-rays`** foi trocada pela `grid-pattern` no hero e **não é mais
   usada** (o arquivo fica, já corrigido: PRNG com semente em vez de
   `Math.random()` dentro de um `useEffect`, mais um prop `blend`).
+- **`animated-theme-toggler`** é usado em modo **controlado**. Solto, ele grava
+  `localStorage.theme` e observa a classe `dark` por conta própria, brigando com
+  o next-themes — que é a fonte da verdade aqui — e os dois divergiriam no
+  reload ou numa troca de tema do sistema. Controlado, ele só roda a view
+  transition e devolve o valor novo. `components/theme-toggle.tsx` também adia a
+  renderização até montar, porque `resolvedTheme` é `undefined` no servidor.
 - **`animated-gradient-text`** pinta com `background-clip: text`, e isso já
   custou a palavra em destaque no mobile. O texto é desenhado em
   `transparent` e o gradiente aparece pelos buracos, então **qualquer coisa que
@@ -302,12 +309,12 @@ alimentado pelo Markdown das cartas.
 
 - **Textos do site, Instagram, e-mail:** `lib/site.ts`
 - **Cores:** tokens em `app/globals.css` (`:root` e `.dark`). A paleta atual é
-  papel `#f6f7f8`, tinta azul Oxford `#002147` e acento prata.
+  papel `#f6f7f8`, tinta `#101112` e bronze `#b89062`.
 - **Fontes:** `Mermaid1001` (wordmark) + Jost (nav/botões) + Playfair Display
   (títulos) + Inter
   (texto) + Geist Mono (rótulos), configuradas em `app/layout.tsx`.
-- **Tema:** só o claro, sem alternância. A barra, o fim da home e o rodapé
-  são escuros (azul Oxford) pela classe `dark` posta neles.
+- **Tema:** claro/escuro seguem o sistema; o botão no header alterna (o atalho
+  de tecla `d` do scaffold foi removido).
 - **Ícone:** o original de 1024px é `public/favicon.jpg`. O que o navegador usa
   são os três arquivos em `app/`, gerados a partir dele — `favicon.ico`
   (16/32/48/64px), `icon.jpg` (512px) e `apple-icon.jpg` (180px, tela inicial
