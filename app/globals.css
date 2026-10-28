@@ -4,7 +4,15 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Editorial palette — warm ink on cool paper, silver accent.
+  /* Editorial palette — Oxford blue ink on cool paper, silver accent.
+
+     A cor da marca é o azul Oxford, #002147 = oklch(0.2504 0.0809 254.4).
+     Ela entra onde antes estava a tinta quase preta: o texto e os botões no
+     claro, o fundo no escuro. O site é claro sempre; o `.dark` abaixo vale
+     só onde a classe é posta à mão — a barra, o fim da home e o rodapé —, e
+     é por isso que essas faixas saem em azul Oxford. Os degraus de superfície do escuro — card,
+     secondary, muted — sobem a partir dela no mesmo matiz, com o croma
+     cedendo um pouco a cada degrau para não virar azul-royal.
 
      O accent era bronze, oklch(0.6804 0.0786 69.79). A prata não é só gosto:
      o bronze dava 2.72:1 contra o papel claro, abaixo do mínimo de 3:1 até
@@ -17,19 +25,19 @@
      bastante para não ser cinza morto, discreto o bastante para não virar
      azul. */
   --background: oklch(0.9757 0.0017 247.84);
-  --foreground: oklch(0.1769 0.0026 247.98);
+  --foreground: oklch(0.2504 0.0809 254.4);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.1769 0.0026 247.98);
+  --card-foreground: oklch(0.2504 0.0809 254.4);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.1769 0.0026 247.98);
-  --primary: oklch(0.1769 0.0026 247.98);
+  --popover-foreground: oklch(0.2504 0.0809 254.4);
+  --primary: oklch(0.2504 0.0809 254.4);
   --primary-foreground: oklch(0.9757 0.0017 247.84);
   --secondary: oklch(0.9399 0.0092 89.23);
-  --secondary-foreground: oklch(0.1769 0.0026 247.98);
+  --secondary-foreground: oklch(0.2504 0.0809 254.4);
   --muted: oklch(0.9399 0.0092 89.23);
   --muted-foreground: oklch(0.4867 0.0055 248);
   --accent: oklch(0.54 0.016 250);
-  --accent-foreground: oklch(0.1769 0.0026 247.98);
+  --accent-foreground: oklch(0.2504 0.0809 254.4);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.8799 0.0254 89.23);
   --input: oklch(0.8799 0.0254 89.23);
@@ -38,14 +46,14 @@
   --chart-2: oklch(0.8799 0.0254 89.23);
   --chart-3: oklch(0.4867 0.0055 248);
   --chart-4: oklch(0.3867 0 89.88);
-  --chart-5: oklch(0.1769 0.0026 247.98);
+  --chart-5: oklch(0.2504 0.0809 254.4);
   --radius: 0.25rem;
   --sidebar: oklch(0.9757 0.0017 247.84);
-  --sidebar-foreground: oklch(0.1769 0.0026 247.98);
-  --sidebar-primary: oklch(0.1769 0.0026 247.98);
+  --sidebar-foreground: oklch(0.2504 0.0809 254.4);
+  --sidebar-primary: oklch(0.2504 0.0809 254.4);
   --sidebar-primary-foreground: oklch(0.9757 0.0017 247.84);
   --sidebar-accent: oklch(0.9399 0.0092 89.23);
-  --sidebar-accent-foreground: oklch(0.1769 0.0026 247.98);
+  --sidebar-accent-foreground: oklch(0.2504 0.0809 254.4);
   --sidebar-border: oklch(0.8799 0.0254 89.23);
   --sidebar-ring: oklch(0.54 0.016 250);
   --color-1: oklch(0.604 0.008 240);
@@ -72,20 +80,20 @@
 }
 
 .dark {
-  --background: oklch(0.1769 0.0026 247.98);
+  --background: oklch(0.2504 0.0809 254.4);
   --foreground: oklch(0.9399 0.0092 89.23);
-  --card: oklch(0.2246 0.0034 248);
+  --card: oklch(0.29 0.074 254.4);
   --card-foreground: oklch(0.9399 0.0092 89.23);
-  --popover: oklch(0.2246 0.0034 248);
+  --popover: oklch(0.29 0.074 254.4);
   --popover-foreground: oklch(0.9399 0.0092 89.23);
   --primary: oklch(0.9399 0.0092 89.23);
-  --primary-foreground: oklch(0.1769 0.0026 247.98);
-  --secondary: oklch(0.2687 0.004 248);
+  --primary-foreground: oklch(0.2504 0.0809 254.4);
+  --secondary: oklch(0.33 0.068 254.4);
   --secondary-foreground: oklch(0.9399 0.0092 89.23);
-  --muted: oklch(0.2687 0.004 248);
+  --muted: oklch(0.33 0.068 254.4);
   --muted-foreground: oklch(0.7089 0.0141 89.23);
   --accent: oklch(0.8 0.016 250);
-  --accent-foreground: oklch(0.1769 0.0026 247.98);
+  --accent-foreground: oklch(0.2504 0.0809 254.4);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(0.8799 0.0254 89.23 / 15%);
   --input: oklch(0.8799 0.0254 89.23 / 20%);
@@ -94,12 +102,12 @@
   --chart-2: oklch(0.8799 0.0254 89.23);
   --chart-3: oklch(0.7089 0.0141 89.23);
   --chart-4: oklch(0.4867 0.0055 248);
-  --chart-5: oklch(0.2687 0.004 248);
-  --sidebar: oklch(0.1769 0.0026 247.98);
+  --chart-5: oklch(0.33 0.068 254.4);
+  --sidebar: oklch(0.2504 0.0809 254.4);
   --sidebar-foreground: oklch(0.9399 0.0092 89.23);
   --sidebar-primary: oklch(0.7404 0.0786 69.79);
-  --sidebar-primary-foreground: oklch(0.1769 0.0026 247.98);
-  --sidebar-accent: oklch(0.2687 0.004 248);
+  --sidebar-primary-foreground: oklch(0.2504 0.0809 254.4);
+  --sidebar-accent: oklch(0.33 0.068 254.4);
   --sidebar-accent-foreground: oklch(0.9399 0.0092 89.23);
   --sidebar-border: oklch(0.8799 0.0254 89.23 / 15%);
   --sidebar-ring: oklch(0.8 0.016 250);
@@ -345,11 +353,4 @@
   to {
     stroke-dashoffset: -10;
   }
-}
-/* AnimatedThemeToggler drives the clip-path itself; the default
-   cross-fade would fight it. */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
 }

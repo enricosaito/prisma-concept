@@ -9,7 +9,7 @@
 export const email = {
   background: "#f6f7f8", // --background
   paper: "#ffffff", // --card
-  foreground: "#101112", // --foreground
+  foreground: "#002147", // --foreground, o azul Oxford
   muted: "#5d6062", // --muted-foreground
   secondary: "#edebe4", // --secondary
   border: "#ded7c5", // --border

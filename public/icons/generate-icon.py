@@ -149,7 +149,7 @@ def paths4(bow=(0,0,0,0),ccut=0.12,cround=0.35,**k):
 
 """PRISMA icon v11: Didone nib. Thick/thin strokes with swells, concave flanks, sharp tip, a teardrop ball terminal on the slit."""
 import math,re,sys
-INK='#1B1C1E';CR='#EFEAE0'
+INK='#002147';CR='#EFEAE0'
 SP=['#FF4F5E','#FF9A3C','#FFD447','#45D483','#2FB8F0','#4C6EF5','#9D5CF0']
 P=dict(t=120,s=46,b=40,w=(14,3.5,10,3.5),swell=(5,0,3.5,0),hair=2,rb=9,hy=6,bow=(-3,0,0,-3),theta=50,lead=22,ccut=0.08)
 outer,inner,ycut=paths4(**P)

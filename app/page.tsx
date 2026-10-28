@@ -72,11 +72,13 @@ export default function Page() {
         {/* Two columns rather than another card grid: the letters above are
             already a list, and a second one would read as more of the same. */}
         <div className="mt-5 grid gap-7 border-t border-border pt-8 sm:mt-6 sm:pt-9 md:grid-cols-[0.85fr_1.15fr] md:gap-14">
-          <p className="font-heading text-2xl leading-snug font-medium text-balance sm:text-[2rem]">
+          <p className="font-heading text-2xl leading-snug font-bold text-balance sm:text-[2rem]">
             Vivemos cercados de informação — mas onde estão as ideias que
             realmente nos transformam?
           </p>
-          <div className="space-y-5 text-lg leading-relaxed text-pretty text-muted-foreground">
+          {/* Na tinta cheia, não no cinza de apoio: é o argumento da página, e
+              no cinza lia como nota de rodapé. */}
+          <div className="space-y-5 text-lg leading-relaxed text-pretty text-foreground">
             <p>{site.description}</p>
             <p>
               Juntamos arte, histórias e ideias que te conectam com o universo.

@@ -5,7 +5,6 @@ import Link from "next/link"
 
 import { PrismaIcon } from "@/components/prisma-icon"
 import { SubscribeDialog } from "@/components/subscribe-dialog"
-import { ThemeToggle } from "@/components/theme-toggle"
 import { Wordmark } from "@/components/wordmark"
 import { cn } from "@/lib/utils"
 
@@ -69,8 +68,8 @@ function SiteHeader() {
         // A barra é escura nos dois temas. Os tokens de cor (`--background`,
         // `--foreground`…) são redefinidos dentro de `.dark` em globals.css, e
         // a variante `dark:` casa com qualquer descendente de `.dark`; com a
-        // classe aqui, tudo na barra resolve para os valores do escuro, e o
-        // ThemeToggle só muda a página embaixo dela (e o próprio ícone).
+        // classe aqui, tudo na barra resolve para os valores do escuro — o
+        // azul Oxford —, sobre uma página que é sempre clara.
         "dark",
         // Fundo sólido, a cor da página. Já foi vidro fosco (translúcido, com
         // blur), mas o conteúdo passando por baixo sujava a barra.
@@ -164,17 +163,14 @@ function SiteHeader() {
           <Wordmark className="translate-y-[1.5px] text-[calc(var(--cap)/0.851)] leading-none tracking-normal sm:translate-y-0 sm:text-5xl" />
         </Link>
 
-        {/* Um <div> e não um <nav>: o que fica aqui é um controle de tema e um
-            botão que abre um diálogo. Nenhum dos dois navega para lugar
-            nenhum, e anunciar um marco de navegação que não leva a nada é pior
-            do que não ter marco.
+        {/* Um <div> e não um <nav>: o que fica aqui é um botão que abre um
+            diálogo. Ele não navega para lugar nenhum, e anunciar um marco de
+            navegação que não leva a nada é pior do que não ter marco.
 
-            O tema é um quadrado de `--btn` de lado, então tem a altura do
-            botão ao lado. O botão leva `bg-clip-border` porque o Button pinta
-            o fundo só dentro da borda transparente de 1px; sem isso o creme
-            fica 2px mais baixo que o contorno do quadrado. */}
+            O botão leva `bg-clip-border` porque o Button pinta o fundo só
+            dentro da borda transparente de 1px; sem isso o creme fica 2px
+            mais baixo que a altura `--btn` que a barra reserva para ele. */}
         <div className="flex items-center gap-2 sm:justify-self-end">
-          <ThemeToggle className="size-[var(--btn)] [&_svg]:size-4 sm:[&_svg]:size-[18px]" />
           {/* Nas duas larguras, porque é a ação da página. Em caixa baixa,
               sem o espaçamento largo dos outros botões e na Literata do
               texto, e não na Archivo das etiquetas, para soar como a
