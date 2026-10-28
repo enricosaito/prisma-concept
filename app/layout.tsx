@@ -6,7 +6,7 @@ import "./globals.css"
 import { Analytics } from "@vercel/analytics/next"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
-import { ThemeProvider } from "@/components/theme-provider"
+import { MotionProvider } from "@/components/motion-provider"
 import { site } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
@@ -96,7 +96,6 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      suppressHydrationWarning
       className={cn(
         "antialiased",
         "font-sans",
@@ -107,14 +106,14 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-svh">
-        <ThemeProvider>
+        <MotionProvider>
           <div className="flex min-h-svh flex-col">
             <SiteHeader />
             <main className="flex-1">{children}</main>
             <SiteFooter />
           </div>
-        </ThemeProvider>
-        {/* Fora do ThemeProvider porque não desenha nada: é só o coletor.
+        </MotionProvider>
+        {/* Fora do MotionProvider porque não desenha nada: é só o coletor.
 
             Sem cookie e sem banner de consentimento — ele não identifica
             visitante, agrega. No plano Pro cada evento é cobrado a US$0,03
