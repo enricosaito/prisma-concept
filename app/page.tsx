@@ -95,17 +95,26 @@ export default function Page() {
           e rolar até o fim.
 
           Mesmo tratamento do fim de uma carta: sem painel, com a regra acima.
-          Encaixotado, o convite lia como anúncio deixado na página. */}
-      <section className="mx-auto mt-16 max-w-5xl px-5 sm:mt-24 sm:px-8">
-        <hr className="border-border/70" />
-        <div className="mt-10 max-w-[45rem] sm:mt-12">
-          <h2 className="font-heading text-xl font-medium">
-            Receba a próxima no seu e-mail.
-          </h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Inscreva-se gratuitamente e receba as próximas cartas toda semana.
-          </p>
-          <SubscribeForm className="mt-6" />
+          Encaixotado, o convite lia como anúncio deixado na página.
+
+          Escuro nos dois temas, como a barra e o rodapé, e de ponta a ponta:
+          a classe `dark` fixa os tokens do escuro aqui dentro, e o fundo
+          encosta no do rodapé logo abaixo, então do <hr> para baixo a página
+          é uma faixa escura só, seja qual for o tema escolhido. O espaço
+          acima da regra é margem, e fica com o fundo da página. */}
+      <section className="dark mt-16 bg-background text-foreground sm:mt-24">
+        <div className="mx-auto max-w-5xl px-5 sm:px-8">
+          <hr className="border-border/70" />
+          <div className="mt-10 max-w-[45rem] sm:mt-12">
+            <h2 className="font-heading text-xl font-medium">
+              Receba a próxima no seu e-mail.
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Inscreva-se gratuitamente e receba as próximas cartas toda
+              semana.
+            </p>
+            <SubscribeForm className="mt-6" />
+          </div>
         </div>
       </section>
     </>

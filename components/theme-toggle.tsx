@@ -33,12 +33,17 @@ function useMounted() {
  * server: committing to an icon too early would both mismatch hydration and
  * momentarily drop the component into uncontrolled mode. The placeholder holds
  * the same box so the navbar does not shift.
+ *
+ * Um quadrado com borda, de canto vivo, para fazer par com o botão da
+ * newsletter ao lado: mesma altura, mesma geometria. Na barra, que é escura
+ * nos dois temas, só o ícone diz em que tema a página está.
  */
 function ThemeToggle({ className }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme()
   const mounted = useMounted()
 
-  const box = "inline-flex size-10 items-center justify-center rounded-[10px]"
+  const box =
+    "inline-flex size-10 items-center justify-center rounded-none border border-border"
 
   if (!mounted) {
     return <span aria-hidden className={cn(box, className)} />

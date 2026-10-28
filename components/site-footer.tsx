@@ -20,7 +20,12 @@ function SiteFooter() {
 
   return (
     // No rule across the top — the footer just fades out under the content.
-    <footer className="mt-16 sm:mt-24">
+    //
+    // Escuro nos dois temas, como a barra: a classe `dark` fixa os tokens do
+    // escuro aqui dentro. O respiro de cima é padding, e não margem, para que
+    // o fundo escuro cubra o vão e encoste na seção de assinatura da home,
+    // que também é escura.
+    <footer className="dark bg-background pt-16 text-foreground sm:pt-24">
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-4 px-5 py-10 sm:px-8">
         {/* Drawn once when the footer scrolls into view. It takes the column's
             width up to 23rem, so it shrinks with the gutters on a narrow phone

@@ -12,8 +12,12 @@ import { cn } from "@/lib/utils"
 
 type Status = "idle" | "loading" | "success" | "error"
 
-/** Shared with the header CTA so the two "Assinar" buttons match. */
-const FIELD = "h-10 rounded-[10px]"
+/**
+ * Shared by the field and the "Assinar" button so the two sit flush. Square,
+ * like every button on the site: a rounded field beside a square button would
+ * read as two different systems.
+ */
+const FIELD = "h-10 rounded-none"
 
 function SubscribeForm({ className }: { className?: string }) {
   const [email, setEmail] = React.useState("")
