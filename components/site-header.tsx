@@ -5,6 +5,7 @@ import Link from "next/link"
 
 import { PrismaIcon } from "@/components/prisma-icon"
 import { SubscribeDialog } from "@/components/subscribe-dialog"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { Wordmark } from "@/components/wordmark"
 import { cn } from "@/lib/utils"
 
@@ -68,9 +69,10 @@ function SiteHeader() {
         // A barra é escura nos dois temas. Os tokens de cor (`--background`,
         // `--foreground`…) são redefinidos dentro de `.dark` em globals.css, e
         // a variante `dark:` casa com qualquer descendente de `.dark`; com a
-        // classe aqui, tudo na barra resolve para os valores do escuro — o
-        // azul Oxford —, sobre uma página que é sempre clara.
-        "dark",
+        // classe aqui, tudo na barra resolve para os valores do escuro, e o
+        // ThemeToggle só muda a página embaixo dela (e o próprio ícone).
+        // `oxford` troca o preto do escuro pelo azul da marca, só na barra.
+        "dark oxford",
         // Fundo sólido, a cor da página. Já foi vidro fosco (translúcido, com
         // blur), mas o conteúdo passando por baixo sujava a barra.
         "bg-background",
@@ -120,18 +122,17 @@ function SiteHeader() {
           fica cerca de um terço acima das maiúsculas, e os três dividem o
           mesmo centro. */}
       <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between gap-4 px-5 [--btn:32px] [--cap:15.5px] [--nib:21px] sm:grid sm:h-20 sm:grid-cols-[1fr_auto_1fr] sm:px-8 sm:[--btn:40px]">
-        {/* Só no desktop. O SELO casado com a altura de maiúscula do nome ao
-            centro, não escolhido a olho: a "against" tem maiúscula de 0.851em
-            — medido com a opentype.js na própria fonte —, o que dá 40.8px a
-            48px. É o selo que mede isso, e não a pena dentro dele, porque no
-            negativo o selo é o logo. */}
+        {/* Só no desktop. A pena vazada, como no mobile, e não mais o selo:
+            sobre o azul da barra o quadrado creme pesava mais que o nome.
+            Mesma proporção do mobile — a pena um terço acima da maiúscula do
+            nome, que a 48px da "against" (maiúscula de 0.851em) dá 40.8px. */}
         <Link
           href="/"
           aria-label="PRISMA — início"
           tabIndex={-1}
           className="hidden justify-self-start rounded-sm text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:block"
         >
-          <PrismaIcon className="size-[40.8px]" />
+          <PrismaIcon bare className="size-[55px]" />
         </Link>
 
         {/* Um link só para a pena e o nome no mobile: são o mesmo destino, e
@@ -163,14 +164,17 @@ function SiteHeader() {
           <Wordmark className="translate-y-[1.5px] text-[calc(var(--cap)/0.851)] leading-none tracking-normal sm:translate-y-0 sm:text-5xl" />
         </Link>
 
-        {/* Um <div> e não um <nav>: o que fica aqui é um botão que abre um
-            diálogo. Ele não navega para lugar nenhum, e anunciar um marco de
-            navegação que não leva a nada é pior do que não ter marco.
+        {/* Um <div> e não um <nav>: o que fica aqui é um controle de tema e um
+            botão que abre um diálogo. Nenhum dos dois navega para lugar
+            nenhum, e anunciar um marco de navegação que não leva a nada é pior
+            do que não ter marco.
 
-            O botão leva `bg-clip-border` porque o Button pinta o fundo só
-            dentro da borda transparente de 1px; sem isso o creme fica 2px
-            mais baixo que a altura `--btn` que a barra reserva para ele. */}
+            O tema é um quadrado de `--btn` de lado, então tem a altura do
+            botão ao lado. O botão leva `bg-clip-border` porque o Button pinta
+            o fundo só dentro da borda transparente de 1px; sem isso o creme
+            fica 2px mais baixo que o contorno do quadrado. */}
         <div className="flex items-center gap-2 sm:justify-self-end">
+          <ThemeToggle className="size-[var(--btn)] [&_svg]:size-4 sm:[&_svg]:size-[18px]" />
           {/* Nas duas larguras, porque é a ação da página. Em caixa baixa,
               sem o espaçamento largo dos outros botões e na Literata do
               texto, e não na Archivo das etiquetas, para soar como a

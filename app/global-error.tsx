@@ -37,12 +37,21 @@ export default function GlobalError({
           justifyContent: "center",
           padding: "0 1.5rem",
           backgroundColor: "#f6f7f8",
-          color: "#002147",
+          color: "#101112",
           fontFamily: "ui-serif, Georgia, 'Times New Roman', Times, serif",
           lineHeight: 1.6,
         }}
       >
         <title>Algo quebrou — PRISMA</title>
+        {/* O tema escuro por media query: sem o layout, não há a classe .dark
+            que o next-themes aplicaria. */}
+        <style>{`
+          @media (prefers-color-scheme: dark) {
+            body { background-color: #101112 !important; color: #edebe4 !important; }
+            .prisma-sub { color: #abaaa5 !important; }
+            .prisma-ref { color: #6f6e6b !important; }
+          }
+        `}</style>
 
         <main style={{ maxWidth: "32rem" }}>
           <p
