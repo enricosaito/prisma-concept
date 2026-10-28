@@ -80,8 +80,7 @@ function SiteHeader() {
         // continua onde ele diz alguma coisa — o número da edição, a seta
         // "Ler", o sublinhado do link ativo —, e não como moldura.
         // translate-y by its own height, so the bar clears itself at both h-14
-        // and sm:h-16 without either being hardcoded here. The button keeps
-        // 12px above and below it at both sizes (--btn 32/40 in 56/64).
+        // and sm:h-20 without either being hardcoded here.
         "transition-transform duration-200 ease-snappy",
         // Só a partir do `sm`. No mobile a barra fica parada: ela carrega o
         // botão da newsletter, e lá ele não tem outro lugar onde esteja sempre
@@ -105,17 +104,41 @@ function SiteHeader() {
           the seal and the button line up with the edges of the text below
           instead of being pinned to the gutters of a wide screen.
 
-          A pena e o nome formam um bloco só, à esquerda, e a newsletter fica
-          à direita, nas duas larguras.
+          Duas composições, uma por faixa:
 
-          Três medidas mandam na barra: `--nib`, a altura da pena; `--cap`, a
-          altura de maiúscula do nome; e `--btn`, a altura do botão. A pena
-          fica cerca de um terço acima das maiúsculas, para que o símbolo pese
-          um pouco mais que as letras sem engoli-las. Os três dividem o mesmo
-          centro, então ficam alinhados mesmo com alturas diferentes. */}
-      <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between gap-4 px-5 [--btn:32px] [--cap:15.5px] [--nib:21px] sm:h-16 sm:px-8 sm:[--btn:40px] sm:[--cap:24px] sm:[--nib:32px]">
-        {/* Um link só para os dois: são o mesmo destino, e dois links lado a
-            lado para a home seriam duas paradas de Tab para o mesmo lugar.
+          - Mobile: a pena vazada e o nome num bloco só, à esquerda, e os
+            controles à direita. Uma linha flex.
+          - Desktop: o masthead. O selo à esquerda, o nome grande no centro e
+            os controles à direita, num grid de três colunas `1fr auto 1fr`,
+            que centra o nome na barra seja qual for a largura dos lados.
+
+          O selo só existe no desktop e a pena só no mobile; `display: none`
+          tira cada um do fluxo, então o flex do mobile e o grid do desktop
+          veem só os filhos que lhes cabem.
+
+          No mobile três medidas mandam: `--nib`, a altura da pena; `--cap`, a
+          altura de maiúscula do nome; e `--btn`, a altura dos botões. A pena
+          fica cerca de um terço acima das maiúsculas, e os três dividem o
+          mesmo centro. */}
+      <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between gap-4 px-5 [--btn:32px] [--cap:15.5px] [--nib:21px] sm:grid sm:h-20 sm:grid-cols-[1fr_auto_1fr] sm:px-8 sm:[--btn:40px]">
+        {/* Só no desktop. O SELO casado com a altura de maiúscula do nome ao
+            centro, não escolhido a olho: a "against" tem maiúscula de 0.851em
+            — medido com a opentype.js na própria fonte —, o que dá 40.8px a
+            48px. É o selo que mede isso, e não a pena dentro dele, porque no
+            negativo o selo é o logo. */}
+        <Link
+          href="/"
+          aria-label="PRISMA — início"
+          tabIndex={-1}
+          className="hidden justify-self-start rounded-sm text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:block"
+        >
+          <PrismaIcon className="size-[40.8px]" />
+        </Link>
+
+        {/* Um link só para a pena e o nome no mobile: são o mesmo destino, e
+            dois links lado a lado para a home seriam duas paradas de Tab para
+            o mesmo lugar. No desktop a pena some e sobra o nome, centrado.
+            (O selo à esquerda sai da ordem de Tab pelo mesmo motivo.)
 
             O nome não pode simplesmente ter `--cap` de fonte: o corpo da
             fonte é maior que as maiúsculas. A "against" tem maiúscula de
@@ -131,13 +154,14 @@ function SiteHeader() {
             "Newsletter" — 1.5px nas duas larguras, medidos no
             navegador com a Literata do botão e já descontado o pixel que o
             próprio "Newsletter" sobe (ver subscribe-dialog.tsx). Se a fonte
-            ou o tamanho do botão mudarem, meça de novo. */}
+            ou o tamanho do botão mudarem, meça de novo. No desktop o nome é o
+            masthead, grande demais para casar com o botão, e o ajuste sai. */}
         <Link
           href="/"
-          className="flex shrink-0 items-center gap-[calc(var(--nib)*0.25)] rounded-sm text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="flex shrink-0 items-center gap-[calc(var(--nib)*0.25)] rounded-sm text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:justify-self-center"
         >
-          <PrismaIcon bare className="size-[var(--nib)]" />
-          <Wordmark className="translate-y-[1.5px] text-[calc(var(--cap)/0.851)] leading-none tracking-normal" />
+          <PrismaIcon bare className="size-[var(--nib)] sm:hidden" />
+          <Wordmark className="translate-y-[1.5px] text-[calc(var(--cap)/0.851)] leading-none tracking-normal sm:translate-y-0 sm:text-5xl" />
         </Link>
 
         {/* Um <div> e não um <nav>: o que fica aqui é um controle de tema e um
@@ -149,7 +173,7 @@ function SiteHeader() {
             botão ao lado. O botão leva `bg-clip-border` porque o Button pinta
             o fundo só dentro da borda transparente de 1px; sem isso o creme
             fica 2px mais baixo que o contorno do quadrado. */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 sm:justify-self-end">
           <ThemeToggle className="size-[var(--btn)] [&_svg]:size-4 sm:[&_svg]:size-[18px]" />
           {/* Nas duas larguras, porque é a ação da página. Em caixa baixa,
               sem o espaçamento largo dos outros botões e na Literata do
