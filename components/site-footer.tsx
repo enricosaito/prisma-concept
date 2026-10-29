@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation"
 
+import { SeaEdge } from "@/components/sea-edge"
 import { Signature } from "@/components/signature"
 import { site } from "@/lib/site"
 import { cn } from "@/lib/utils"
@@ -19,37 +20,41 @@ function SiteFooter() {
   const ink = afterALetter ? "text-foreground" : "text-muted-foreground/45"
 
   return (
-    // No rule across the top — the footer just fades out under the content.
+    // O fundo do mar, no azul Oxford dos dois temas, com as linhas da
+    // gravura aparecendo à medida que desce (`sea-texture`).
     //
-    // Escuro nos dois temas, como a barra: a classe `dark` fixa os tokens do
-    // escuro aqui dentro. O respiro de cima é padding, e não margem, para que
-    // o fundo escuro cubra o vão e encoste na seção de assinatura da home,
-    // que também é escura.
-    <footer className="dark bg-background pt-16 text-foreground sm:pt-24">
-      <div className="mx-auto flex max-w-5xl flex-col items-center gap-4 px-5 py-10 sm:px-8">
-        {/* Drawn once when the footer scrolls into view. It takes the column's
+    // Fora da home ele abre com a própria onda. Na home não: lá a seção de
+    // assinatura logo acima já é mar e já desenhou a onda, e o rodapé só
+    // continua a faixa. O respiro de cima é padding, e não margem, para que o
+    // azul cubra o vão.
+    <>
+      {pathname === "/" ? null : <SeaEdge className="mt-16 sm:mt-24" />}
+      <footer className="dark oxford sea-texture bg-background pt-16 text-foreground sm:pt-24">
+        <div className="mx-auto flex max-w-5xl flex-col items-center gap-4 px-5 py-10 sm:px-8">
+          {/* Drawn once when the footer scrolls into view. It takes the column's
             width up to 23rem, so it shrinks with the gutters on a narrow phone
             rather than running past them. */}
-        <Signature
-          text={site.signature}
-          fontSrc="/fonts/LastoriaBoldRegular.otf"
-          color="currentColor"
-          fontSize={40}
-          duration={1.4}
-          inView
-          className={cn("max-w-[23rem]", ink)}
-          fallback={
-            <p className={cn("font-heading text-2xl italic", ink)}>
-              {site.signature}
-            </p>
-          }
-        />
+          <Signature
+            text={site.signature}
+            fontSrc="/fonts/LastoriaBoldRegular.otf"
+            color="currentColor"
+            fontSize={40}
+            duration={1.4}
+            inView
+            className={cn("max-w-[23rem]", ink)}
+            fallback={
+              <p className={cn("font-heading text-2xl italic", ink)}>
+                {site.signature}
+              </p>
+            }
+          />
 
-        <p className="text-center font-label text-sm font-medium tracking-[0.16em] text-muted-foreground/45 uppercase">
-          © {new Date().getFullYear()} The Prisma Concept.
-        </p>
-      </div>
-    </footer>
+          <p className="text-center font-label text-sm font-medium tracking-[0.16em] text-muted-foreground/45 uppercase">
+            © {new Date().getFullYear()} The Prisma Concept.
+          </p>
+        </div>
+      </footer>
+    </>
   )
 }
 
