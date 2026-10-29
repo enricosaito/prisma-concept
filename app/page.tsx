@@ -107,9 +107,14 @@ export default function Page() {
           onda: esta já é a dele.
 
           Abre com o lema, grande, logo abaixo da onda: é onde o mar começa, e
-          o convite para assinar vem como resposta a ele. */}
+          o convite para assinar vem como resposta a ele.
+
+          `relative z-10` porque o rodapé logo abaixo é posicionado (por causa
+          da textura) e, vindo depois, pintava por cima do fim desta seção —
+          comia a borda de baixo do campo e o brilho do botão. O `pb-4` tira o
+          formulário de cima da junta. */}
       <SeaEdge className="mt-16 sm:mt-24" />
-      <section className="dark oxford -mb-px bg-background pt-12 text-foreground sm:pt-20">
+      <section className="dark oxford relative z-10 -mb-px bg-background pt-12 pb-4 text-foreground sm:pt-20">
         <div className="mx-auto max-w-5xl px-5 sm:px-8">
           <p className="max-w-[18ch] font-heading text-4xl leading-[1.1] font-medium text-balance sm:text-6xl">
             {site.motto}
