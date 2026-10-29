@@ -4,6 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 
 import { PrismaIcon } from "@/components/prisma-icon"
+import { SeaEdge } from "@/components/sea-edge"
 import { SubscribeDialog } from "@/components/subscribe-dialog"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Wordmark } from "@/components/wordmark"
@@ -65,7 +66,7 @@ function SiteHeader() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 border-b border-border/40",
+        "sticky top-0 z-50",
         // A barra é escura nos dois temas. Os tokens de cor (`--background`,
         // `--foreground`…) são redefinidos dentro de `.dark` em globals.css, e
         // a variante `dark:` casa com qualquer descendente de `.dark`; com a
@@ -76,19 +77,19 @@ function SiteHeader() {
         // Fundo sólido, a cor da página. Já foi vidro fosco (translúcido, com
         // blur), mas o conteúdo passando por baixo sujava a barra.
         "bg-background",
-        // A borda de baixo é só a hairline do `border-b` acima. Aqui havia um
-        // fio do espectro atravessando a barra inteira; saiu. O espectro
-        // continua onde ele diz alguma coisa — o número da edição, a seta
-        // "Ler", o sublinhado do link ativo —, e não como moldura.
-        // translate-y by its own height, so the bar clears itself at both h-14
-        // and sm:h-20 without either being hardcoded here.
+        // Sem borda embaixo: a barra termina numa onda, a SeaEdge virada que
+        // pende dela (no fim do <header>). É a superfície do mar, e o fim da
+        // página, que entra no mar pela mesma onda, é o fundo.
+        //
+        // Ao esconder, a barra sobe a própria altura mais a da onda (h-6 no
+        // sm), para que a onda não fique pendurada no topo da tela.
         "transition-transform duration-200 ease-snappy",
         // Só a partir do `sm`. No mobile a barra fica parada: ela carrega o
         // botão da newsletter, e lá ele não tem outro lugar onde esteja sempre
         // à mão.
         hidden
           ? [
-              "sm:-translate-y-full",
+              "sm:-translate-y-[calc(100%+1.5rem)]",
               // Tabbing into a bar parked off-screen would focus something the
               // reader cannot see, so focus brings it back.
               "sm:focus-within:translate-y-0",
@@ -124,15 +125,18 @@ function SiteHeader() {
       <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between gap-4 px-5 [--btn:32px] [--cap:15.5px] [--nib:21px] sm:grid sm:h-20 sm:grid-cols-[1fr_auto_1fr] sm:px-8 sm:[--btn:40px]">
         {/* Só no desktop. A pena vazada, como no mobile, e não mais o selo:
             sobre o azul da barra o quadrado creme pesava mais que o nome.
-            Mesma proporção do mobile — a pena um terço acima da maiúscula do
-            nome, que a 48px da "against" (maiúscula de 0.851em) dá 40.8px. */}
+
+            44px, pouco acima da maiúscula do nome (40.8px: 48px da "against",
+            de maiúscula 0.851em). Já foi 55px, a mesma proporção do mobile,
+            mas numa barra de 80px isso deixava a pena a 12px das bordas,
+            espremida; com 44px sobram 18px de cada lado. */}
         <Link
           href="/"
           aria-label="PRISMA — início"
           tabIndex={-1}
           className="hidden justify-self-start rounded-sm text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:block"
         >
-          <PrismaIcon bare className="size-[55px]" />
+          <PrismaIcon bare className="size-[44px]" />
         </Link>
 
         {/* Um link só para a pena e o nome no mobile: são o mesmo destino, e
@@ -182,6 +186,9 @@ function SiteHeader() {
           <SubscribeDialog className="h-[var(--btn)] gap-1.5 bg-clip-border px-2.5 font-sans text-[0.8125rem] tracking-normal normal-case sm:gap-2 sm:px-4 sm:text-[0.9375rem]" />
         </div>
       </div>
+
+      {/* A onda que termina a barra, pendurada embaixo dela. */}
+      <SeaEdge flip className="absolute inset-x-0 top-full -mt-px" />
     </header>
   )
 }

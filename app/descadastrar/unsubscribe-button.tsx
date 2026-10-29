@@ -15,7 +15,7 @@ function UnsubscribeButton({ token }: { token: string }) {
 
   if (estado === "pronto") {
     return (
-      <p className="mt-8 rounded-[10px] border border-accent/40 bg-accent/10 px-4 py-3.5 text-sm">
+      <p className="mt-8 border border-accent/40 bg-accent/10 px-4 py-3.5 text-sm">
         Pronto. Você saiu da lista.
       </p>
     )

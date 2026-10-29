@@ -139,23 +139,30 @@
   --muted: oklch(0.33 0.068 254.4);
 }
 
-/* A onda da linha d'água (components/sea-edge.tsx). Período fixo de 240px e
-   amplitude baixa: é a linha de um mar calmo em gravura, não um desenho de
-   onda. A máscara pinta o fundo do elemento só abaixo da curva. */
+/* A onda da linha d'água (components/sea-edge.tsx). Período fixo de 240px.
+
+   Já foi uma senoide baixa e regular — um mar calmo, o oposto do "mar de
+   problemas" do lema. Agora é ondulação de verdade: duas cristas de alturas
+   diferentes por período, sem chegar a virar desenho de onda. Cada período
+   começa e termina na mesma altura e com a curva na horizontal, então a
+   repetição não deixa emenda. A máscara pinta o fundo do elemento só abaixo
+   da curva. */
 .sea-edge {
-  --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 12' preserveAspectRatio='none'%3E%3Cpath d='M0 12V6Q60 0 120 6T240 6V12Z'/%3E%3C/svg%3E");
+  --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 16' preserveAspectRatio='none'%3E%3Cpath d='M0 16V9C20 9 30 3 60 4S100 11 130 10S175 1 205 3S230 9 240 9V16Z'/%3E%3C/svg%3E");
   -webkit-mask: var(--wave) repeat-x 0 100% / 240px 100%;
   mask: var(--wave) repeat-x 0 100% / 240px 100%;
 }
 
 /* O fundo do mar: linhas onduladas paralelas, como o mar das gravuras das
-   capas, em creme a 7% sobre o azul. Textura, não ilustração — some à
+   capas, em creme a 9% sobre o azul. Textura, não ilustração — some à
    distância e aparece só de perto.
 
-   Num pseudo-elemento para que a máscara, que faz as linhas surgirem aos
-   poucos de cima para baixo (mais fundo, mais denso), não apague o
-   conteúdo. `isolation` prende o `z-index: -1` dentro do bloco: as linhas
-   ficam acima do fundo azul e abaixo do texto. */
+   Num pseudo-elemento para que a máscara não apague o conteúdo. Por padrão
+   as linhas surgem aos poucos de cima para baixo (mais fundo, mais denso);
+   `--sea-mask: none` as deixa cheias desde o topo, que é como a home usa,
+   para o mar já estar presente atrás do lema. `isolation` prende o
+   `z-index: -1` dentro do bloco: as linhas ficam acima do fundo azul e
+   abaixo do texto. */
 .sea-texture {
   position: relative;
   isolation: isolate;
@@ -166,9 +173,15 @@
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='18' fill='none' stroke='%23efeae0' stroke-opacity='0.07'%3E%3Cpath d='M0 5Q24 1 48 5T96 5'/%3E%3Cpath d='M-48 14Q-24 10 0 14T48 14T96 14T144 14'/%3E%3C/svg%3E");
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 70%);
-  mask-image: linear-gradient(to bottom, transparent, black 70%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='18' fill='none' stroke='%23efeae0' stroke-opacity='0.09'%3E%3Cpath d='M0 5Q24 1 48 5T96 5'/%3E%3Cpath d='M-48 14Q-24 10 0 14T48 14T96 14T144 14'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(
+    --sea-mask,
+    linear-gradient(to bottom, transparent, black 70%)
+  );
+  mask-image: var(
+    --sea-mask,
+    linear-gradient(to bottom, transparent, black 70%)
+  );
 }
 
 @theme inline {
@@ -272,15 +285,6 @@
     @apply border-border outline-ring/50;
   }
 
-  /* Fraunces ships a quirk axis, and it is the reason this face was chosen over
-     a safer one: WONK 1 swaps in the flared, slightly off-kilter alternates.
-     `opsz` is deliberately left out of this declaration so that
-     font-optical-sizing keeps matching it to the rendered size — Fraunces is
-     drawn differently at 20px and at 60px, and naming opsz here would freeze it
-     at one value for every heading on the site. */
-  .font-heading {
-    font-variation-settings: "WONK" 1;
-  }
   body {
     @apply bg-background text-foreground;
     font-synthesis-weight: none;
@@ -322,15 +326,17 @@
     @apply mt-5;
   }
   /* Headings run larger than the nominal ratio to the body would suggest,
-     because Fraunces has a 14% smaller x-height than Literata (0.44em against
-     0.51em). At the old 28px a section heading was 1.47x the body on paper but
-     only 1.27x to the eye, which read as slightly larger text rather than as a
-     break. 32px puts the perceived ratio back near 1.45x.
+     because the heading face has a smaller x-height than Literata. The sizes
+     were set for Fraunces (0.44em against 0.51em): at 28px a section heading
+     was 1.47x the body on paper but only 1.27x to the eye, so it went to 32px.
+     Source Serif 4, which replaced it, measures 0.47em at 32px against
+     Literata's 0.51em at 19px — a smaller gap — and at the same 32px reads
+     ~1.56x, close enough that the sizes stayed.
 
-     No tracking here either: Fraunces carries an optical-size axis that tightens
-     the fitting as the type grows, so the `tracking-tight` these headings
-     inherited from Playfair — a wide-set Didone that needed it — was tightening
-     a face that had already tightened itself. */
+     No tracking here either: Source Serif 4 carries an optical-size axis that
+     tightens the fitting as the type grows, so the `tracking-tight` these
+     headings inherited from Playfair — a wide-set Didone that needed it —
+     would tighten a face that already tightens itself. */
   .prose-letter h2 {
     @apply mt-10 font-heading text-[1.75rem] leading-[1.2] font-medium text-foreground sm:text-[2rem];
   }

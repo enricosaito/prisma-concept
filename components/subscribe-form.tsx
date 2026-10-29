@@ -4,10 +4,8 @@ import * as React from "react"
 import { RiCheckLine } from "@remixicon/react"
 
 import { Spinner } from "@/components/spinner"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { RainbowButton } from "@/components/ui/rainbow-button"
-import { ShineBorder } from "@/components/ui/shine-border"
-import { SPECTRUM } from "@/lib/spectrum"
 import { cn } from "@/lib/utils"
 
 type Status = "idle" | "loading" | "success" | "error"
@@ -58,7 +56,7 @@ function SubscribeForm({ className }: { className?: string }) {
     return (
       <div
         className={cn(
-          "flex items-center gap-3 rounded-[10px] border border-accent/40 bg-accent/10 px-4 py-3.5",
+          "flex items-center gap-3 border border-accent/40 bg-accent/10 px-4 py-3.5",
           className
         )}
       >
@@ -76,16 +74,11 @@ function SubscribeForm({ className }: { className?: string }) {
         <label htmlFor="subscribe-email" className="sr-only">
           Seu e-mail
         </label>
-        {/* ShineBorder is an absolutely-positioned mask-composite overlay, so
-            the field needs a positioned wrapper carrying the same radius for
-            its `rounded-[inherit]` to land on. */}
-        <div className={cn("relative sm:flex-1", FIELD)}>
-          <ShineBorder
-            shineColor={[...SPECTRUM]}
-            borderWidth={1}
-            duration={14}
-            className="rounded-[inherit]"
-          />
+        {/* Parado. Aqui já houve uma ShineBorder, um brilho correndo pela
+            borda, e o "Assinar" era o arco-íris animado: no lugar exato em que
+            se pede o e-mail do leitor, os dois liam como truque de startup e
+            custavam confiança. Firmeza aqui é não se mexer. */}
+        <div className="sm:flex-1">
           <Input
             id="subscribe-email"
             type="email"
@@ -98,7 +91,7 @@ function SubscribeForm({ className }: { className?: string }) {
             className={cn(FIELD, "w-full px-4")}
           />
         </div>
-        <RainbowButton
+        <Button
           type="submit"
           disabled={status === "loading"}
           className={cn(FIELD, "w-full px-6 text-xs sm:w-auto")}
@@ -111,7 +104,7 @@ function SubscribeForm({ className }: { className?: string }) {
           ) : (
             "Assinar"
           )}
-        </RainbowButton>
+        </Button>
       </form>
 
       {/* Nothing sits under the field at rest — the blocks that use this form

@@ -15,10 +15,10 @@ import { cn } from "@/lib/utils"
  * browser assumes the image is as wide as the viewport and pulls a needlessly
  * large file, so each caller states the width it actually renders at.
  *
- * No radius or border of its own: a cover sitting flush inside a rounded card
- * would otherwise draw a second, tighter curve inside the card's own. Callers
- * that stand alone add `rounded-xl border border-border`; callers that bleed to
- * a rounded parent's edge let that parent's `overflow-hidden` do the clipping.
+ * No border of its own: callers that stand alone add `border border-border`;
+ * callers that bleed to a parent's edge let that parent's `overflow-hidden` do
+ * the clipping. No radius anywhere — the site's corners are all square now,
+ * covers included.
  */
 function LetterCover({
   cover,
