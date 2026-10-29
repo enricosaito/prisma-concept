@@ -221,7 +221,7 @@ const heading: React.CSSProperties = {
 const paragraph: React.CSSProperties = {
   fontSize: 16,
   lineHeight: "1.7",
-  color: "#33363a",
+  color: "#303943",
   margin: "0 0 16px",
 }
 

@@ -8,6 +8,11 @@ export const site = {
   description:
     "PRISMA é uma carta semanal onde nos aprofundamos sobre cultura, filosofia, tecnologia e arte — e o que acontece quando essas quatro coisas se atravessam.",
   signature: "Prisma Concept",
+  // O lema, nas palavras do autor. É a versão dele do "to take arms against
+  // a sea of troubles" do Hamlet, em português e com "aponte" no lugar de
+  // "arms" — então não é citação e não leva crédito, e não deve ser
+  // "corrigida" para uma tradução do Shakespeare.
+  motto: "Aponte contra um mar de problemas",
   // The canonical host, with the `www.` — the apex 308s here, and this feeds
   // `metadataBase`, the OG tags and the link in the welcome email. The bare
   // `prismaconcept.com` that used to sit here belongs to someone else.

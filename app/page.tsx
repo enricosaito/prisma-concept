@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 
 import { LetterListItem } from "@/components/letter-card"
+import { SeaEdge } from "@/components/sea-edge"
 import { SubscribeForm } from "@/components/subscribe-form"
 import { GridPattern } from "@/components/ui/grid-pattern"
 import { getPublishedLetters } from "@/lib/letters/source"
@@ -96,24 +97,29 @@ export default function Page() {
           telefone caía numa página sem como assinar — precisava abrir uma carta
           e rolar até o fim.
 
-          Mesmo tratamento do fim de uma carta: sem painel, com a regra acima.
-          Encaixotado, o convite lia como anúncio deixado na página.
+          Sem painel: encaixotado, o convite lia como anúncio deixado na
+          página.
 
-          Escuro nos dois temas, como a barra e o rodapé, e de ponta a ponta:
-          a classe `dark` fixa os tokens do escuro aqui dentro, e o fundo
-          encosta no do rodapé logo abaixo, então do <hr> para baixo a página
-          é uma faixa escura só, seja qual for o tema escolhido. O espaço
-          acima da regra é margem, e fica com o fundo da página. */}
-      <section className="dark mt-16 bg-background text-foreground sm:mt-24">
+          É o fundo do mar. A página entra nele pela onda da SeaEdge, e daqui
+          para baixo, com o rodapé, é uma faixa azul Oxford só, nos dois
+          temas. O espaço acima da onda é margem, e fica com o fundo da
+          página. O rodapé, ao ver que está na home, não desenha a própria
+          onda: esta já é a dele.
+
+          Abre com o lema, grande, logo abaixo da onda: é onde o mar começa, e
+          o convite para assinar vem como resposta a ele. */}
+      <SeaEdge className="mt-16 sm:mt-24" />
+      <section className="dark oxford -mb-px bg-background pt-12 text-foreground sm:pt-20">
         <div className="mx-auto max-w-5xl px-5 sm:px-8">
-          <hr className="border-border/70" />
-          <div className="mt-10 max-w-[45rem] sm:mt-12">
+          <p className="max-w-[18ch] font-heading text-4xl leading-[1.1] font-medium text-balance sm:text-6xl">
+            {site.motto}
+          </p>
+          <div className="mt-12 max-w-[45rem] sm:mt-16">
             <h2 className="font-heading text-xl font-medium">
               Receba a próxima no seu e-mail.
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Inscreva-se gratuitamente e receba as próximas cartas toda
-              semana.
+              Inscreva-se gratuitamente e receba as próximas cartas toda semana.
             </p>
             <SubscribeForm className="mt-6" />
           </div>
