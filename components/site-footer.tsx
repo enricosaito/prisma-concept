@@ -17,6 +17,7 @@ function SiteFooter() {
   // author putting his name to what was just read. Everywhere else the same
   // mark is a wordmark closing a page, and recedes.
   const afterALetter = LETTER_ROUTE.test(pathname)
+  const onHome = pathname === "/"
   const ink = afterALetter ? "text-foreground" : "text-muted-foreground/45"
 
   return (
@@ -25,11 +26,17 @@ function SiteFooter() {
     //
     // Fora da home ele abre com a própria onda. Na home não: lá a seção de
     // assinatura logo acima já é mar e já desenhou a onda, e o rodapé só
-    // continua a faixa. O respiro de cima é padding, e não margem, para que o
-    // azul cubra o vão.
+    // continua a faixa — e, pelo mesmo motivo, continua as linhas cheias
+    // (`--sea-mask: none`), sem recomeçar o degradê no meio do mar. O respiro
+    // de cima é padding, e não margem, para que o azul cubra o vão.
     <>
-      {pathname === "/" ? null : <SeaEdge className="mt-16 sm:mt-24" />}
-      <footer className="dark oxford sea-texture bg-background pt-16 text-foreground sm:pt-24">
+      {onHome ? null : <SeaEdge className="mt-16 sm:mt-24" />}
+      <footer
+        className={cn(
+          "dark oxford sea-texture bg-background pt-16 text-foreground sm:pt-24",
+          onHome && "[--sea-mask:none]"
+        )}
+      >
         <div className="mx-auto flex max-w-5xl flex-col items-center gap-4 px-5 py-10 sm:px-8">
           {/* Drawn once when the footer scrolls into view. It takes the column's
             width up to 23rem, so it shrinks with the gutters on a narrow phone

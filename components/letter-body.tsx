@@ -67,7 +67,7 @@ const components: Components = {
           alt={alt ?? ""}
           loading="lazy"
           decoding="async"
-          className="w-full rounded-xl border border-border"
+          className="w-full border border-border"
         />
         {title ? <figcaption>{title}</figcaption> : null}
       </figure>

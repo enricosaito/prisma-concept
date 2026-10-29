@@ -56,7 +56,7 @@ function SubscribeForm({ className }: { className?: string }) {
     return (
       <div
         className={cn(
-          "flex items-center gap-3 rounded-[10px] border border-accent/40 bg-accent/10 px-4 py-3.5",
+          "flex items-center gap-3 border border-accent/40 bg-accent/10 px-4 py-3.5",
           className
         )}
       >

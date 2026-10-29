@@ -25,7 +25,7 @@ export default function Error({
 
   return (
     <div className="mx-auto flex max-w-5xl flex-col items-start px-5 pt-24 pb-10 sm:px-8 sm:pt-32">
-      <p className="font-label text-[0.7rem] font-medium tracking-[0.22em] text-muted-foreground uppercase">
+      <p className="font-label text-[0.7rem] font-semibold tracking-[0.22em] text-muted-foreground uppercase">
         Algo quebrou
       </p>
       <h1 className="mt-5 font-heading text-4xl leading-tight font-medium text-balance sm:text-5xl">

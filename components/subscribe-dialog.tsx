@@ -53,7 +53,7 @@ function SubscribeDialog({ className }: { className?: string }) {
         <Dialog.Viewport className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-5">
           <Dialog.Popup
             className={cn(
-              "relative w-full max-w-lg rounded-xl border border-border bg-background p-6 shadow-2xl sm:p-8",
+              "relative w-full max-w-lg border border-border bg-background p-6 shadow-2xl sm:p-8",
               "transition-all duration-200 ease-snappy",
               "data-ending-style:scale-95 data-ending-style:opacity-0",
               "data-starting-style:scale-95 data-starting-style:opacity-0",

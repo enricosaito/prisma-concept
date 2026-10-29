@@ -23,7 +23,7 @@ function SeaEdge({ flip, className }: { flip?: boolean; className?: string }) {
     <div
       aria-hidden
       className={cn(
-        "dark oxford sea-edge -mb-px h-3 bg-background sm:h-4",
+        "dark oxford sea-edge -mb-px h-4 bg-background sm:h-6",
         flip && "-scale-y-100",
         className
       )}

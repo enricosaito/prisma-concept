@@ -32,7 +32,7 @@ export default function Page() {
         <div className="mx-auto max-w-5xl px-5 pt-12 pb-10 sm:px-8 sm:pt-20 sm:pb-14">
           {/* No "Ver todas" alongside: the header's own button already goes to
               /cartas, and two links to it a few pixels apart read as a mistake. */}
-          <h1 className="mb-6 font-label text-[0.7rem] font-medium tracking-[0.22em] text-muted-foreground uppercase sm:mb-8">
+          <h1 className="mb-6 font-label text-[0.7rem] font-semibold tracking-[0.22em] text-muted-foreground uppercase sm:mb-8">
             Cartas
           </h1>
           {/* A list rather than a card grid: the upright covers read as a shelf
@@ -54,12 +54,12 @@ export default function Page() {
 
       {/* Por quê? */}
       <section className="mx-auto mt-16 max-w-5xl px-5 sm:mt-24 sm:px-8">
-        <h2 className="font-label text-[0.7rem] font-medium tracking-[0.22em] text-muted-foreground uppercase">
+        <h2 className="font-label text-[0.7rem] font-semibold tracking-[0.22em] text-muted-foreground uppercase">
           Por quê?
         </h2>
         {/* Two columns rather than another card grid: the letters above are
             already a list, and a second one would read as more of the same. */}
-        <div className="mt-5 grid gap-7 border-t border-border pt-8 sm:mt-6 sm:pt-9 md:grid-cols-[0.85fr_1.15fr] md:gap-14">
+        <div className="mt-5 grid gap-7 border-t border-foreground/80 pt-8 sm:mt-6 sm:pt-9 md:grid-cols-[0.85fr_1.15fr] md:gap-14">
           <p className="font-heading text-2xl leading-snug font-bold text-balance sm:text-[2rem]">
             Vivemos cercados de informação — mas onde estão as ideias que
             realmente nos transformam?
@@ -93,17 +93,20 @@ export default function Page() {
           página. O rodapé, ao ver que está na home, não desenha a própria
           onda: esta já é a dele.
 
-          Abre com o lema, grande, logo abaixo da onda: é onde o mar começa, e
-          o convite para assinar vem como resposta a ele.
+          Abre com o lema, grande e em semibold, logo abaixo da onda: é onde o
+          mar começa, e o convite para assinar vem como resposta a ele. As
+          linhas da gravura já estão cheias aqui (`--sea-mask: none`), atrás
+          do lema, e seguem assim pelo rodapé: o mar tem presença onde o lema
+          o enfrenta, e não só no fundo da página.
 
           `relative z-10` porque o rodapé logo abaixo é posicionado (por causa
           da textura) e, vindo depois, pintava por cima do fim desta seção —
           comia a borda de baixo do campo e o brilho do botão. O `pb-4` tira o
           formulário de cima da junta. */}
       <SeaEdge className="mt-16 sm:mt-24" />
-      <section className="dark oxford relative z-10 -mb-px bg-background pt-12 pb-4 text-foreground sm:pt-20">
+      <section className="dark oxford sea-texture relative z-10 -mb-px bg-background pt-12 pb-4 text-foreground [--sea-mask:none] sm:pt-20">
         <div className="mx-auto max-w-5xl px-5 sm:px-8">
-          <p className="max-w-[18ch] font-heading text-4xl leading-[1.1] font-medium text-balance sm:text-6xl">
+          <p className="max-w-[18ch] font-heading text-4xl leading-[1.1] font-semibold text-balance sm:text-6xl">
             {site.motto}
           </p>
           <div className="mt-12 max-w-[45rem] sm:mt-16">

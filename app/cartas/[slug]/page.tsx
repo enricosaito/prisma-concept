@@ -113,7 +113,7 @@ export default async function Page({
           <LetterCover
             cover={letter.cover}
             sizes="(min-width: 768px) 720px, 100vw"
-            className="mx-auto mt-8 max-w-[45rem] rounded-xl border border-border sm:mt-10"
+            className="mx-auto mt-8 max-w-[45rem] border border-border sm:mt-10"
             eager
           />
         ) : null}
@@ -128,7 +128,7 @@ export default async function Page({
           sign-off block; the signature moved to the footer but the line still
           earns its place, because without it the subscribe block reads as one
           more section of the letter rather than as what comes after it. */}
-        <hr className="mx-auto mt-12 max-w-[45rem] border-border/70 sm:mt-16" />
+        <hr className="mx-auto mt-12 max-w-[45rem] border-foreground/80 sm:mt-16" />
 
         {/* No panel around this one. Boxing it made it read as an advertisement
           dropped into the page; unboxed it reads as the letter still talking. */}
@@ -145,7 +145,7 @@ export default async function Page({
 
         {more.length > 0 ? (
           <section className="mx-auto mt-16 max-w-5xl sm:mt-24">
-            <h2 className="mb-6 font-label text-[0.7rem] font-medium tracking-[0.22em] text-muted-foreground uppercase">
+            <h2 className="mb-6 font-label text-[0.7rem] font-semibold tracking-[0.22em] text-muted-foreground uppercase">
               Continue lendo
             </h2>
             <div className="grid gap-5 sm:grid-cols-2">

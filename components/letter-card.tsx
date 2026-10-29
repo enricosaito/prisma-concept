@@ -42,7 +42,7 @@ function LetterMetaLine({
         // separates from the standfirst by face and case as well as by size.
         // Tracking goes up as the size comes down — caps this small close up
         // and stop being scannable without it.
-        "flex flex-wrap items-center gap-x-3 gap-y-1 font-label text-[0.65rem] font-medium tracking-[0.16em] text-muted-foreground uppercase",
+        "flex flex-wrap items-center gap-x-3 gap-y-1 font-label text-[0.65rem] font-semibold tracking-[0.16em] text-muted-foreground uppercase",
         className
       )}
     >
@@ -104,12 +104,13 @@ function LetterCard({ letter }: { letter: LetterMeta }) {
       tiltLimit={6}
       scale={1.02}
       effect="gravitate"
-      className="h-full rounded-xl border border-border bg-card"
+      className="h-full border border-border bg-card"
     >
       <article className="group relative flex h-full flex-col">
         {letter.cover ? (
           // Flush to the card's edges — TiltCard already clips with
-          // overflow-hidden, so the card's own rounded-xl is the only curve.
+          // overflow-hidden. Square, like every corner on the site: the
+          // rounded ones read soft against the firmness the page wants.
           // The grid is max-w-5xl: three up the card settles near 328px, two up
           // it is half the viewport, one up the viewport less the page gutters.
           <LetterCover
@@ -198,7 +199,7 @@ function LetterListItem({
         // title, then the standfirst, then the date, read end to end.
         aria-label={letter.title}
         className={cn(
-          "group flex flex-col items-start gap-4 rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+          "group flex flex-col items-start gap-4 outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
           // A partir do sm a capa volta para o lado do texto. Abaixo disso
           // ela fica em cima, e o motivo é a medida: numa tela de 390px, a
           // capa e as margens deixavam 202px para o título, onde ele quebrava
@@ -220,7 +221,7 @@ function LetterListItem({
             tiltLimit={6}
             scale={1.02}
             effect="gravitate"
-            className="w-40 shrink-0 rounded-xl border border-border sm:w-48"
+            className="w-40 shrink-0 border border-border sm:w-48"
           >
             <LetterCover
               cover={art}

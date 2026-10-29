@@ -81,7 +81,7 @@ function SiteHeader() {
         // pende dela (no fim do <header>). É a superfície do mar, e o fim da
         // página, que entra no mar pela mesma onda, é o fundo.
         //
-        // Ao esconder, a barra sobe a própria altura mais a da onda (h-4 no
+        // Ao esconder, a barra sobe a própria altura mais a da onda (h-6 no
         // sm), para que a onda não fique pendurada no topo da tela.
         "transition-transform duration-200 ease-snappy",
         // Só a partir do `sm`. No mobile a barra fica parada: ela carrega o
@@ -89,7 +89,7 @@ function SiteHeader() {
         // à mão.
         hidden
           ? [
-              "sm:-translate-y-[calc(100%+1rem)]",
+              "sm:-translate-y-[calc(100%+1.5rem)]",
               // Tabbing into a bar parked off-screen would focus something the
               // reader cannot see, so focus brings it back.
               "sm:focus-within:translate-y-0",
