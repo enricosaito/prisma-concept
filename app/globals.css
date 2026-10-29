@@ -272,19 +272,6 @@
     @apply border-border outline-ring/50;
   }
 
-  /* Fraunces ships a quirk axis, WONK, that swaps in flared, slightly
-     off-kilter alternates. It used to be on — WONK 1 was the reason this face
-     was picked. It is now pinned off, and explicitly rather than left out:
-     the publication wants to read serious and firm, and the wonky letters
-     read as whimsy, worst of all in bold.
-
-     `opsz` is deliberately left out of this declaration so that
-     font-optical-sizing keeps matching it to the rendered size — Fraunces is
-     drawn differently at 20px and at 60px, and naming opsz here would freeze it
-     at one value for every heading on the site. */
-  .font-heading {
-    font-variation-settings: "WONK" 0;
-  }
   body {
     @apply bg-background text-foreground;
     font-synthesis-weight: none;
@@ -326,15 +313,17 @@
     @apply mt-5;
   }
   /* Headings run larger than the nominal ratio to the body would suggest,
-     because Fraunces has a 14% smaller x-height than Literata (0.44em against
-     0.51em). At the old 28px a section heading was 1.47x the body on paper but
-     only 1.27x to the eye, which read as slightly larger text rather than as a
-     break. 32px puts the perceived ratio back near 1.45x.
+     because the heading face has a smaller x-height than Literata. The sizes
+     were set for Fraunces (0.44em against 0.51em): at 28px a section heading
+     was 1.47x the body on paper but only 1.27x to the eye, so it went to 32px.
+     Newsreader, which replaced it, measures ~0.47em against Literata's ~0.52em
+     at reading sizes — a smaller gap — and at the same 32px reads ~1.5x, close
+     enough that the sizes stayed.
 
-     No tracking here either: Fraunces carries an optical-size axis that tightens
-     the fitting as the type grows, so the `tracking-tight` these headings
-     inherited from Playfair — a wide-set Didone that needed it — was tightening
-     a face that had already tightened itself. */
+     No tracking here either: Newsreader carries an optical-size axis that
+     tightens the fitting as the type grows, so the `tracking-tight` these
+     headings inherited from Playfair — a wide-set Didone that needed it —
+     would tighten a face that already tightens itself. */
   .prose-letter h2 {
     @apply mt-10 font-heading text-[1.75rem] leading-[1.2] font-medium text-foreground sm:text-[2rem];
   }

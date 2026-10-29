@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Archivo, Fraunces, Literata } from "next/font/google"
+import { Archivo, Literata, Newsreader } from "next/font/google"
 import localFont from "next/font/local"
 
 import "./globals.css"
@@ -10,20 +10,23 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { site } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
-// Titles. Chosen against Literata rather than on its own: both are warm and
-// humanist, where Playfair was a cold high-contrast Didone that only agreed
-// with the body while the body was a neutral sans. Its hairlines were also the
-// wrong bet for a dark-first site — thin strokes on a dark ground get eaten by
-// halation, so the face was quietly at its weakest exactly where this site
-// spends most of its time.
+// Títulos: Newsreader, da Production Type, desenhada para manchete de jornal.
+// Escolhida numa comparação lado a lado com Fraunces, Source Serif 4 e Libre
+// Caslon, compondo os títulos reais do site. A publicação quer ler confiável,
+// séria e firme — e o lema, "Aponte contra um mar de problemas", tem de soar
+// como chamado, não como frase bonita. A Fraunces, mesmo sem as letras tortas
+// do eixo WONK, seguia macia e arredondada; a Newsreader tem a tensão da
+// manchete sem perder o calor que conversa com a Literata do corpo.
 //
-// `opsz` is requested so the browser can size-match automatically — Fraunces is
-// drawn differently at 14px and at 60px. `WONK` is the quirk axis: it swaps in
-// the flared, slightly off-kilter alternates. It is loaded so globals.css can
-// pin it OFF (see `.font-heading` there): the wonky letters read as whimsy.
-const fontHeading = Fraunces({
+// Antes da Fraunces foi a Playfair, uma Didone fria cujos fios finos o fundo
+// escuro comia por halação.
+//
+// `opsz` is requested so the browser can size-match automatically — Newsreader
+// is drawn differently at 14px and at 60px.
+const fontHeading = Newsreader({
   subsets: ["latin"],
-  axes: ["opsz", "WONK"],
+  style: ["normal", "italic"],
+  axes: ["opsz"],
   variable: "--font-heading",
 })
 
