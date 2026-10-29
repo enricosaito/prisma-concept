@@ -36,7 +36,7 @@ export default function GlobalError({
           alignItems: "center",
           justifyContent: "center",
           padding: "0 1.5rem",
-          backgroundColor: "#f9f6f2",
+          backgroundColor: "#f5f1e8",
           color: "#0e1624",
           fontFamily: "ui-serif, Georgia, 'Times New Roman', Times, serif",
           lineHeight: 1.6,
@@ -47,8 +47,8 @@ export default function GlobalError({
             que o next-themes aplicaria. */}
         <style>{`
           @media (prefers-color-scheme: dark) {
-            body { background-color: #080f1c !important; color: #edebe4 !important; }
-            .prisma-sub { color: #abaaa5 !important; }
+            body { background-color: #080f1c !important; color: #f5f1e8 !important; }
+            .prisma-sub { color: #c5d0df !important; }
             .prisma-ref { color: #6f6e6b !important; }
           }
         `}</style>

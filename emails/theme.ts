@@ -7,11 +7,11 @@
  * the same blue-black ink on cream paper as the site. Keep them in step by hand.
  */
 export const email = {
-  background: "#f9f6f2", // --background
-  paper: "#fdfcf9", // --card
+  background: "#f5f1e8", // --background
+  paper: "#f9f7f2", // --card
   foreground: "#0e1624", // --foreground, a tinta azul-preta
   muted: "#575e6a", // --muted-foreground
-  secondary: "#edebe4", // --secondary
+  secondary: "#eae6dc", // --secondary
   border: "#ded7c5", // --border
   accent: "#32589d", // --accent, o azul-mar
 } as const

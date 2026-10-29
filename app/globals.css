@@ -14,9 +14,15 @@
      - Tinta: azul-preta, oklch(0.2 0.03 261). Lê como preto, mas é a tinta
        de caneta-tinteiro — a pena do logo — e casa com o azul em vez de
        brigar com ele.
-     - Papel: um creme leve, matiz 85. O cinza-frio de antes deixava o azul
-       com cara de interface; o creme é o par clássico do azul-marinho, de
-       carta náutica e livro velho, e das capas em gravura.
+     - Papel: marfim quente, #F5F1E8 = oklch(0.9588 0.0127 86.8). O cinza-frio
+       de antes deixava o azul com cara de interface; o marfim é o par
+       clássico do azul-marinho, de carta náutica e livro velho, e das capas
+       em gravura. É o mesmo creme em tudo: o papel, o texto no escuro e no
+       mar, e a pena do favicon. O card fica um degrau mais claro que ele.
+     - Prata-azulada, #C5D0DF = oklch(0.8538 0.0241 256.1): os detalhes do
+       lado escuro — texto secundário, filetes e as linhas da gravura do mar.
+       No papel ela não serve (1.4:1 contra o marfim), então lá o texto
+       secundário segue azul-acinzentado e os filetes seguem quentes.
      - Acento: azul-mar, oklch(0.47 0.12 261), mais claro que o marinho para
        que um link se distinga do texto azul-preto. Pinta o número da
        edição, a seta "Ler", a barra das citações, os marcadores e o hover
@@ -26,17 +32,17 @@
 
      O accent já foi bronze (2.72:1 contra o papel, abaixo do mínimo) e
      depois prata. */
-  --background: oklch(0.975 0.007 85);
+  --background: oklch(0.9588 0.0127 86.8);
   --foreground: oklch(0.2 0.03 261);
-  --card: oklch(0.99 0.004 85);
+  --card: oklch(0.975 0.007 87);
   --card-foreground: oklch(0.2 0.03 261);
-  --popover: oklch(0.99 0.004 85);
+  --popover: oklch(0.975 0.007 87);
   --popover-foreground: oklch(0.2 0.03 261);
   --primary: oklch(0.2 0.03 261);
-  --primary-foreground: oklch(0.975 0.007 85);
-  --secondary: oklch(0.9399 0.0092 89.23);
+  --primary-foreground: oklch(0.9588 0.0127 86.8);
+  --secondary: oklch(0.925 0.014 87);
   --secondary-foreground: oklch(0.2 0.03 261);
-  --muted: oklch(0.9399 0.0092 89.23);
+  --muted: oklch(0.925 0.014 87);
   --muted-foreground: oklch(0.48 0.022 261);
   --accent: oklch(0.47 0.12 261);
   --accent-foreground: oklch(0.2 0.03 261);
@@ -50,11 +56,11 @@
   --chart-4: oklch(0.3867 0 89.88);
   --chart-5: oklch(0.2 0.03 261);
   --radius: 0.25rem;
-  --sidebar: oklch(0.975 0.007 85);
+  --sidebar: oklch(0.9588 0.0127 86.8);
   --sidebar-foreground: oklch(0.2 0.03 261);
   --sidebar-primary: oklch(0.2 0.03 261);
-  --sidebar-primary-foreground: oklch(0.975 0.007 85);
-  --sidebar-accent: oklch(0.9399 0.0092 89.23);
+  --sidebar-primary-foreground: oklch(0.9588 0.0127 86.8);
+  --sidebar-accent: oklch(0.925 0.014 87);
   --sidebar-accent-foreground: oklch(0.2 0.03 261);
   --sidebar-border: oklch(0.8799 0.0254 89.23);
   --sidebar-ring: oklch(0.47 0.12 261);
@@ -83,22 +89,22 @@
 
 .dark {
   --background: oklch(0.17 0.03 261);
-  --foreground: oklch(0.9399 0.0092 89.23);
+  --foreground: oklch(0.9588 0.0127 86.8);
   --card: oklch(0.21 0.032 261);
-  --card-foreground: oklch(0.9399 0.0092 89.23);
+  --card-foreground: oklch(0.9588 0.0127 86.8);
   --popover: oklch(0.21 0.032 261);
-  --popover-foreground: oklch(0.9399 0.0092 89.23);
-  --primary: oklch(0.9399 0.0092 89.23);
+  --popover-foreground: oklch(0.9588 0.0127 86.8);
+  --primary: oklch(0.9588 0.0127 86.8);
   --primary-foreground: oklch(0.17 0.03 261);
   --secondary: oklch(0.25 0.032 261);
-  --secondary-foreground: oklch(0.9399 0.0092 89.23);
+  --secondary-foreground: oklch(0.9588 0.0127 86.8);
   --muted: oklch(0.25 0.032 261);
-  --muted-foreground: oklch(0.7089 0.0141 89.23);
+  --muted-foreground: oklch(0.8538 0.0241 256.1);
   --accent: oklch(0.78 0.09 251);
   --accent-foreground: oklch(0.17 0.03 261);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(0.8799 0.0254 89.23 / 15%);
-  --input: oklch(0.8799 0.0254 89.23 / 20%);
+  --border: oklch(0.8538 0.0241 256.1 / 15%);
+  --input: oklch(0.8538 0.0241 256.1 / 20%);
   --ring: oklch(0.78 0.09 251);
   --chart-1: oklch(0.7404 0.0786 69.79);
   --chart-2: oklch(0.8799 0.0254 89.23);
@@ -106,12 +112,12 @@
   --chart-4: oklch(0.4867 0.0055 248);
   --chart-5: oklch(0.25 0.032 261);
   --sidebar: oklch(0.17 0.03 261);
-  --sidebar-foreground: oklch(0.9399 0.0092 89.23);
+  --sidebar-foreground: oklch(0.9588 0.0127 86.8);
   --sidebar-primary: oklch(0.7404 0.0786 69.79);
   --sidebar-primary-foreground: oklch(0.17 0.03 261);
   --sidebar-accent: oklch(0.25 0.032 261);
-  --sidebar-accent-foreground: oklch(0.9399 0.0092 89.23);
-  --sidebar-border: oklch(0.8799 0.0254 89.23 / 15%);
+  --sidebar-accent-foreground: oklch(0.9588 0.0127 86.8);
+  --sidebar-border: oklch(0.8538 0.0241 256.1 / 15%);
   --sidebar-ring: oklch(0.78 0.09 251);
   --color-1: oklch(0.604 0.008 240);
   --color-2: oklch(0.604 0.018 253);
@@ -176,7 +182,7 @@
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='18' fill='none' stroke='%23efeae0' stroke-opacity='0.09'%3E%3Cpath d='M0 5Q24 1 48 5T96 5'/%3E%3Cpath d='M-48 14Q-24 10 0 14T48 14T96 14T144 14'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='18' fill='none' stroke='%23c5d0df' stroke-opacity='0.09'%3E%3Cpath d='M0 5Q24 1 48 5T96 5'/%3E%3Cpath d='M-48 14Q-24 10 0 14T48 14T96 14T144 14'/%3E%3C/svg%3E");
   -webkit-mask-image: var(
     --sea-mask,
     linear-gradient(to bottom, transparent, black 70%)
