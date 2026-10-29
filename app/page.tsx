@@ -104,11 +104,17 @@ export default function Page() {
           para baixo, com o rodapé, é uma faixa azul Oxford só, nos dois
           temas. O espaço acima da onda é margem, e fica com o fundo da
           página. O rodapé, ao ver que está na home, não desenha a própria
-          onda: esta já é a dele. */}
+          onda: esta já é a dele.
+
+          Abre com o lema, grande, logo abaixo da onda: é onde o mar começa, e
+          o convite para assinar vem como resposta a ele. */}
       <SeaEdge className="mt-16 sm:mt-24" />
-      <section className="dark oxford -mb-px bg-background pt-10 text-foreground sm:pt-14">
+      <section className="dark oxford -mb-px bg-background pt-12 text-foreground sm:pt-20">
         <div className="mx-auto max-w-5xl px-5 sm:px-8">
-          <div className="max-w-[45rem]">
+          <p className="max-w-[18ch] font-heading text-4xl leading-[1.1] font-medium text-balance sm:text-6xl">
+            {site.motto}
+          </p>
+          <div className="mt-12 max-w-[45rem] sm:mt-16">
             <h2 className="font-heading text-xl font-medium">
               Receba a próxima no seu e-mail.
             </h2>
