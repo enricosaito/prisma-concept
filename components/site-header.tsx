@@ -72,8 +72,8 @@ function SiteHeader() {
         // a variante `dark:` casa com qualquer descendente de `.dark`; com a
         // classe aqui, tudo na barra resolve para os valores do escuro, e o
         // ThemeToggle só muda a página embaixo dela (e o próprio ícone).
-        // `oxford` troca o preto do escuro pelo azul da marca, só na barra.
-        "dark oxford",
+        // `navy` troca o preto do escuro pelo azul da marca, só na barra.
+        "dark navy",
         // Fundo sólido, a cor da página. Já foi vidro fosco (translúcido, com
         // blur), mas o conteúdo passando por baixo sujava a barra.
         "bg-background",

@@ -9,11 +9,11 @@
 export const email = {
   background: "#f9f6f2", // --background
   paper: "#fdfcf9", // --card
-  foreground: "#0c1723", // --foreground, a tinta azul-preta
-  muted: "#555e6a", // --muted-foreground
+  foreground: "#0e1624", // --foreground, a tinta azul-preta
+  muted: "#575e6a", // --muted-foreground
   secondary: "#edebe4", // --secondary
   border: "#ded7c5", // --border
-  accent: "#255b9c", // --accent, o azul-mar
+  accent: "#32589d", // --accent, o azul-mar
 } as const
 
 /** Georgia is the only high-contrast serif that is safe everywhere. */

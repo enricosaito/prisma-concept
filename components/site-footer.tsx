@@ -21,7 +21,7 @@ function SiteFooter() {
   const ink = afterALetter ? "text-foreground" : "text-muted-foreground/45"
 
   return (
-    // O fundo do mar, no azul Oxford dos dois temas, com as linhas da
+    // O fundo do mar, no azul-marinho dos dois temas, com as linhas da
     // gravura aparecendo à medida que desce (`sea-texture`).
     //
     // Fora da home ele abre com a própria onda. Na home não: lá a seção de
@@ -33,7 +33,7 @@ function SiteFooter() {
       {onHome ? null : <SeaEdge className="mt-16 sm:mt-24" />}
       <footer
         className={cn(
-          "dark oxford sea-texture bg-background pt-16 text-foreground sm:pt-24",
+          "dark navy sea-texture bg-background pt-16 text-foreground sm:pt-24",
           onHome && "[--sea-mask:none]"
         )}
       >
