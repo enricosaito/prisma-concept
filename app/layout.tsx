@@ -19,8 +19,8 @@ import { cn } from "@/lib/utils"
 //
 // `opsz` is requested so the browser can size-match automatically — Fraunces is
 // drawn differently at 14px and at 60px. `WONK` is the quirk axis: it swaps in
-// the flared, slightly off-kilter alternates. That is the personality dial, and
-// it is the reason to pick this face over a safer one.
+// the flared, slightly off-kilter alternates. It is loaded so globals.css can
+// pin it OFF (see `.font-heading` there): the wonky letters read as whimsy.
 const fontHeading = Fraunces({
   subsets: ["latin"],
   axes: ["opsz", "WONK"],

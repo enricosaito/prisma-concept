@@ -1,13 +1,12 @@
-import { AnimatedGradientText } from "@/components/ui/animated-gradient-text"
-import { SPECTRUM } from "@/lib/spectrum"
 import { cn } from "@/lib/utils"
 
 /**
- * Accent words in headings — the bronze-italic emphasis, now sweeping.
+ * Accent words in headings: italic, in the sea-blue accent, and still.
  *
- * Magic UI's defaults are a neon orange→purple; these are the same muted
- * spectrum the wordmark disperses, so a highlight reads as the same light
- * being split rather than as a second, louder accent.
+ * This used to be an AnimatedGradientText sweeping through the spectrum. A
+ * word that keeps moving reads as playful, which is the opposite of what the
+ * publication wants to project — trust, seriousness — so the emphasis now
+ * comes from the italic and the colour alone.
  */
 function Highlight({
   children,
@@ -16,16 +15,7 @@ function Highlight({
   children: React.ReactNode
   className?: string
 }) {
-  return (
-    <AnimatedGradientText
-      colorFrom={SPECTRUM[0]}
-      colorTo={SPECTRUM[4]}
-      speed={0.6}
-      className={cn("italic", className)}
-    >
-      {children}
-    </AnimatedGradientText>
-  )
+  return <em className={cn("text-accent italic", className)}>{children}</em>
 }
 
 export { Highlight }

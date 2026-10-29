@@ -3,11 +3,9 @@ import type { Metadata } from "next"
 import { LetterListItem } from "@/components/letter-card"
 import { SeaEdge } from "@/components/sea-edge"
 import { SubscribeForm } from "@/components/subscribe-form"
-import { GridPattern } from "@/components/ui/grid-pattern"
 import { getPublishedLetters } from "@/lib/letters/source"
 import { jsonLdHtml, websiteJsonLd } from "@/lib/seo"
 import { site } from "@/lib/site"
-import { cn } from "@/lib/utils"
 
 // Title and description come from the root layout; this exists for the
 // canonical, which the home page needs more than any other route — it is the
@@ -28,21 +26,10 @@ export default function Page() {
         dangerouslySetInnerHTML={{ __html: jsonLdHtml(websiteJsonLd()) }}
       />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        {/* Dashed grid, barely there — masked to a soft radial so it fades out
-            before it reaches the edges of the section. */}
-        <GridPattern
-          width={44}
-          height={44}
-          strokeDasharray="3 5"
-          className={cn(
-            "fill-none stroke-foreground/[0.07] dark:stroke-foreground/[0.09]",
-            "[mask-image:radial-gradient(420px_circle_at_18%_28%,black,transparent)]",
-            "sm:[mask-image:radial-gradient(680px_circle_at_22%_30%,black,transparent)]"
-          )}
-        />
-        <div className="relative mx-auto max-w-5xl px-5 pt-12 pb-10 sm:px-8 sm:pt-20 sm:pb-14">
+      {/* Hero. Sem a grade tracejada que havia atrás: lia como planta
+          técnica, interface, e não como página impressa. */}
+      <section>
+        <div className="mx-auto max-w-5xl px-5 pt-12 pb-10 sm:px-8 sm:pt-20 sm:pb-14">
           {/* No "Ver todas" alongside: the header's own button already goes to
               /cartas, and two links to it a few pixels apart read as a mistake. */}
           <h1 className="mb-6 font-label text-[0.7rem] font-medium tracking-[0.22em] text-muted-foreground uppercase sm:mb-8">

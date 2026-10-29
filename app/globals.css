@@ -272,14 +272,18 @@
     @apply border-border outline-ring/50;
   }
 
-  /* Fraunces ships a quirk axis, and it is the reason this face was chosen over
-     a safer one: WONK 1 swaps in the flared, slightly off-kilter alternates.
+  /* Fraunces ships a quirk axis, WONK, that swaps in flared, slightly
+     off-kilter alternates. It used to be on — WONK 1 was the reason this face
+     was picked. It is now pinned off, and explicitly rather than left out:
+     the publication wants to read serious and firm, and the wonky letters
+     read as whimsy, worst of all in bold.
+
      `opsz` is deliberately left out of this declaration so that
      font-optical-sizing keeps matching it to the rendered size — Fraunces is
      drawn differently at 20px and at 60px, and naming opsz here would freeze it
      at one value for every heading on the site. */
   .font-heading {
-    font-variation-settings: "WONK" 1;
+    font-variation-settings: "WONK" 0;
   }
   body {
     @apply bg-background text-foreground;
