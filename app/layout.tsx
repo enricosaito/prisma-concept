@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Archivo, Literata, Newsreader } from "next/font/google"
+import { Archivo, Literata, Source_Serif_4 } from "next/font/google"
 import localFont from "next/font/local"
 
 import "./globals.css"
@@ -10,20 +10,21 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { site } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
-// Títulos: Newsreader, da Production Type, desenhada para manchete de jornal.
-// Escolhida numa comparação lado a lado com Fraunces, Source Serif 4 e Libre
-// Caslon, compondo os títulos reais do site. A publicação quer ler confiável,
-// séria e firme — e o lema, "Aponte contra um mar de problemas", tem de soar
-// como chamado, não como frase bonita. A Fraunces, mesmo sem as letras tortas
-// do eixo WONK, seguia macia e arredondada; a Newsreader tem a tensão da
-// manchete sem perder o calor que conversa com a Literata do corpo.
+// Títulos: Source Serif 4, da Adobe. Escolhida numa comparação lado a lado com
+// Fraunces, Newsreader e Libre Caslon, compondo os títulos reais do site. A
+// publicação quer ler confiável, séria e firme, e esta é a mais robusta e
+// institucional das quatro: menos vistosa, e é esse o ponto. A Fraunces,
+// mesmo sem as letras tortas do eixo WONK, seguia macia e arredondada; a
+// Newsreader, que chegou a entrar, tinha mais tensão de manchete, mas lia
+// menos sóbria que esta.
 //
 // Antes da Fraunces foi a Playfair, uma Didone fria cujos fios finos o fundo
 // escuro comia por halação.
 //
-// `opsz` is requested so the browser can size-match automatically — Newsreader
-// is drawn differently at 14px and at 60px.
-const fontHeading = Newsreader({
+// `opsz` is requested so the browser can size-match automatically — Source
+// Serif 4 is drawn differently at 14px and at 60px. The italic is a real cut:
+// the Highlight is italic.
+const fontHeading = Source_Serif_4({
   subsets: ["latin"],
   style: ["normal", "italic"],
   axes: ["opsz"],

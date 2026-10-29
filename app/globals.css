@@ -316,11 +316,11 @@
      because the heading face has a smaller x-height than Literata. The sizes
      were set for Fraunces (0.44em against 0.51em): at 28px a section heading
      was 1.47x the body on paper but only 1.27x to the eye, so it went to 32px.
-     Newsreader, which replaced it, measures ~0.47em against Literata's ~0.52em
-     at reading sizes — a smaller gap — and at the same 32px reads ~1.5x, close
-     enough that the sizes stayed.
+     Source Serif 4, which replaced it, measures 0.47em at 32px against
+     Literata's 0.51em at 19px — a smaller gap — and at the same 32px reads
+     ~1.56x, close enough that the sizes stayed.
 
-     No tracking here either: Newsreader carries an optical-size axis that
+     No tracking here either: Source Serif 4 carries an optical-size axis that
      tightens the fitting as the type grows, so the `tracking-tight` these
      headings inherited from Playfair — a wide-set Didone that needed it —
      would tighten a face that already tightens itself. */
