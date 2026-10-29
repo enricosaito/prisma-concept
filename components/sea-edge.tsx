@@ -3,8 +3,8 @@ import { cn } from "@/lib/utils"
 /**
  * A linha d'água: onde o papel termina e o mar do fim da página começa.
  *
- * Uma faixa no azul Oxford recortada em onda por uma máscara (`.sea-edge` em
- * globals.css), posta logo acima de um bloco `dark oxford`. Acima da onda
+ * Uma faixa no azul-marinho recortada em onda por uma máscara (`.sea-edge` em
+ * globals.css), posta logo acima de um bloco `dark navy`. Acima da onda
  * aparece o fundo da página; abaixo, a faixa encosta no azul do bloco, e a
  * página entra no mar por uma onda em vez de uma régua.
  *
@@ -23,7 +23,7 @@ function SeaEdge({ flip, className }: { flip?: boolean; className?: string }) {
     <div
       aria-hidden
       className={cn(
-        "dark oxford sea-edge -mb-px h-4 bg-background sm:h-6",
+        "dark navy sea-edge -mb-px h-4 bg-background sm:h-6",
         flip && "-scale-y-100",
         className
       )}

@@ -88,7 +88,7 @@ export default function Page() {
           página.
 
           É o fundo do mar. A página entra nele pela onda da SeaEdge, e daqui
-          para baixo, com o rodapé, é uma faixa azul Oxford só, nos dois
+          para baixo, com o rodapé, é uma faixa azul-marinho só, nos dois
           temas. O espaço acima da onda é margem, e fica com o fundo da
           página. O rodapé, ao ver que está na home, não desenha a própria
           onda: esta já é a dele.
@@ -104,7 +104,7 @@ export default function Page() {
           comia a borda de baixo do campo e o brilho do botão. O `pb-4` tira o
           formulário de cima da junta. */}
       <SeaEdge className="mt-16 sm:mt-24" />
-      <section className="dark oxford sea-texture relative z-10 -mb-px bg-background pt-12 pb-4 text-foreground [--sea-mask:none] sm:pt-20">
+      <section className="dark navy sea-texture relative z-10 -mb-px bg-background pt-12 pb-4 text-foreground [--sea-mask:none] sm:pt-20">
         <div className="mx-auto max-w-5xl px-5 sm:px-8">
           <p className="max-w-[18ch] font-heading text-4xl leading-[1.1] font-semibold text-balance sm:text-6xl">
             {site.motto}
