@@ -1,6 +1,12 @@
 "use client"
 
-import { useRef, useState, useCallback, useSyncExternalStore } from "react"
+import {
+  useRef,
+  useState,
+  useCallback,
+  useEffect,
+  useSyncExternalStore,
+} from "react"
 import { cn } from "@/lib/utils"
 
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)"
@@ -31,6 +37,13 @@ export interface TiltCardProps {
   effect?: "gravitate" | "evade"
   /** Show a spotlight that follows the cursor on hover */
   spotlight?: boolean
+  /**
+   * Selector for an ancestor whose hover drives the card, instead of the card
+   * alone — e.g. "a" for a cover inside a link that also holds the title.
+   * Outside the card the pointer is clamped to its nearest edge, so the card
+   * leans toward the cursor without going past `tiltLimit`.
+   */
+  hoverArea?: string
   /** Additional class name */
   className?: string
   /** Additional inline styles */
@@ -45,6 +58,7 @@ export function TiltCard({
   perspective = 1200,
   effect = "evade",
   spotlight = true,
+  hoverArea,
   className,
   style,
   children,
@@ -60,12 +74,13 @@ export function TiltCard({
   const dir = effect === "evade" ? -1 : 1
 
   const handlePointerMove = useCallback(
-    (e: React.PointerEvent) => {
+    (e: { clientX: number; clientY: number }) => {
       const el = cardRef.current
       if (!el || reducedMotion) return
       const rect = el.getBoundingClientRect()
-      const px = (e.clientX - rect.left) / rect.width
-      const py = (e.clientY - rect.top) / rect.height
+      const clamp = (v: number) => Math.min(1, Math.max(0, v))
+      const px = clamp((e.clientX - rect.left) / rect.width)
+      const py = clamp((e.clientY - rect.top) / rect.height)
       const xRot = (py - 0.5) * (tiltLimit * 2) * dir
       const yRot = (px - 0.5) * -(tiltLimit * 2) * dir
       setTransform(
@@ -89,12 +104,33 @@ export function TiltCard({
     setIsHovered(false)
   }, [perspective])
 
+  useEffect(() => {
+    const area = hoverArea ? cardRef.current?.closest(hoverArea) : null
+    if (!area) return
+    const move = (e: Event) => handlePointerMove(e as PointerEvent)
+    area.addEventListener("pointerenter", handlePointerEnter)
+    area.addEventListener("pointermove", move)
+    area.addEventListener("pointerleave", handlePointerLeave)
+    return () => {
+      area.removeEventListener("pointerenter", handlePointerEnter)
+      area.removeEventListener("pointermove", move)
+      area.removeEventListener("pointerleave", handlePointerLeave)
+    }
+  }, [hoverArea, handlePointerEnter, handlePointerMove, handlePointerLeave])
+
+  // With a hover area the ancestor's listeners cover the card too.
+  const own = hoverArea
+    ? {}
+    : {
+        onPointerEnter: handlePointerEnter,
+        onPointerMove: handlePointerMove,
+        onPointerLeave: handlePointerLeave,
+      }
+
   return (
     <div
       ref={cardRef}
-      onPointerEnter={handlePointerEnter}
-      onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
+      {...own}
       className={cn(
         "relative overflow-hidden will-change-transform",
         className

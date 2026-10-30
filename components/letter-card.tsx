@@ -221,6 +221,9 @@ function LetterListItem({
             tiltLimit={6}
             scale={1.02}
             effect="gravitate"
+            // The whole row moves it, title included — the cover leans
+            // toward wherever the pointer is on the row.
+            hoverArea="a"
             className="w-40 shrink-0 border border-border sm:w-48"
           >
             <LetterCover
