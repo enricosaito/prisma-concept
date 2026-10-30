@@ -4,7 +4,8 @@ export const site = {
   // Alimenta o título padrão das páginas, montado em app/(site)/layout.tsx.
   // Por morar aqui e não lá, trocar esta linha troca o título em todo lugar
   // que o derive.
-  tagline: "Além do óbvio",
+  // É o lema, abaixo: um só bordão para a marca.
+  tagline: "Aponte contra um mar de problemas",
   description:
     "PRISMA é uma carta semanal onde nos aprofundamos sobre cultura, filosofia, tecnologia e arte — e o que acontece quando essas quatro coisas se atravessam.",
   signature: "Prisma Concept",
