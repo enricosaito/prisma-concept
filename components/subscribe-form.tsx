@@ -17,7 +17,17 @@ type Status = "idle" | "loading" | "success" | "error"
  */
 const FIELD = "h-10 rounded-none"
 
-function SubscribeForm({ className }: { className?: string }) {
+/**
+ * `joined` sets the button flush against the field, one bar on every width,
+ * instead of stacking on a phone and sitting a gap apart above that.
+ */
+function SubscribeForm({
+  className,
+  joined = false,
+}: {
+  className?: string
+  joined?: boolean
+}) {
   const [email, setEmail] = React.useState("")
   const [status, setStatus] = React.useState<Status>("idle")
   const [message, setMessage] = React.useState("")
@@ -68,7 +78,13 @@ function SubscribeForm({ className }: { className?: string }) {
 
   return (
     <div className={className}>
-      <form onSubmit={onSubmit} className="flex flex-col gap-3 sm:flex-row">
+      <form
+        onSubmit={onSubmit}
+        className={cn(
+          "flex",
+          joined ? "flex-row" : "flex-col gap-3 sm:flex-row"
+        )}
+      >
         {/* A placeholder is not an accessible name, so the field keeps a real
             label — just a visually hidden one. */}
         <label htmlFor="subscribe-email" className="sr-only">
@@ -78,23 +94,34 @@ function SubscribeForm({ className }: { className?: string }) {
             borda, e o "Assinar" era o arco-íris animado: no lugar exato em que
             se pede o e-mail do leitor, os dois liam como truque de startup e
             custavam confiança. Firmeza aqui é não se mexer. */}
-        <div className="sm:flex-1">
+        <div className={joined ? "min-w-0 flex-1" : "sm:flex-1"}>
           <Input
             id="subscribe-email"
             type="email"
             required
             autoComplete="email"
-            placeholder="seu@email.com"
+            placeholder="Digite seu email..."
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             aria-invalid={status === "error" || undefined}
-            className={cn(FIELD, "w-full px-4")}
+            className={cn(
+              FIELD,
+              "w-full px-4",
+              // Flush against the button, the focus ring spilled over its
+              // edge. The caret is the focus cue here.
+              joined &&
+                "focus-visible:border-input focus-visible:ring-0 aria-invalid:ring-0"
+            )}
           />
         </div>
         <Button
           type="submit"
           disabled={status === "loading"}
-          className={cn(FIELD, "w-full px-6 text-xs sm:w-auto")}
+          className={cn(
+            FIELD,
+            "px-6 text-xs",
+            joined ? "shrink-0" : "w-full sm:w-auto"
+          )}
         >
           {status === "loading" ? (
             <>
