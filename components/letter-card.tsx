@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { RiArrowRightLine } from "@remixicon/react"
 
+import { BrushStroke } from "@/components/brush-stroke"
 import { LetterCover } from "@/components/letter-cover"
 import { TiltCard } from "@/components/tilt-card"
 import { formatDate, formatDateShort, formatIssue } from "@/lib/letters/format"
@@ -124,8 +125,9 @@ function LetterCard({ letter }: { letter: LetterMeta }) {
           <h3 className="mt-3 font-heading text-xl leading-snug font-medium text-pretty">
             <Link href={`/cartas/${letter.slug}`} className="outline-none">
               <span className="absolute inset-0" />
-              <span className="bg-[linear-gradient(var(--accent),var(--accent))] box-decoration-clone bg-[length:0%_1px] bg-[position:0_100%] bg-no-repeat transition-[background-size] duration-500 group-hover:bg-[length:100%_1px]">
+              <span className="relative isolate block">
                 {letter.title}
+                <BrushStroke />
               </span>
             </Link>
           </h3>
@@ -260,8 +262,9 @@ function LetterListItem({
                 : "text-xl leading-[1.2] sm:text-[1.875rem]"
             )}
           >
-            <span className="bg-[linear-gradient(var(--accent),var(--accent))] box-decoration-clone bg-[length:0%_1px] bg-[position:0_100%] bg-no-repeat transition-[background-size] duration-500 group-hover:bg-[length:100%_1px]">
+            <span className="relative isolate block">
               {letter.title}
+              <BrushStroke />
             </span>
           </h3>
           <p

@@ -81,7 +81,7 @@ function SubscribeDialog({ className }: { className?: string }) {
                 Aponte contra um mar de problemas.
               </Dialog.Description>
 
-              <SubscribeForm joined className="mt-10 w-full text-left" />
+              <SubscribeForm className="mt-10 w-full text-left" />
 
               <p className="mt-4 text-xs text-muted-foreground">
                 Inscrição gratuita. Cancele quando quiser.

@@ -61,17 +61,26 @@ export default function Page() {
             already a list, and a second one would read as more of the same. */}
         <div className="mt-5 grid gap-7 border-t border-foreground/80 pt-8 sm:mt-6 sm:pt-9 md:grid-cols-[0.85fr_1.15fr] md:gap-14">
           <p className="font-heading text-2xl leading-snug font-bold text-balance sm:text-[2rem]">
-            Vivemos cercados de informação — mas onde estão as ideias que
-            realmente nos transformam?
+            A dominação da tecnologia, distrações e conteúdo raso nos traz um
+            propósito.
           </p>
           {/* Na tinta cheia, não no cinza de apoio: é o argumento da página, e
-              no cinza lia como nota de rodapé. */}
+              no cinza lia como nota de rodapé.
+
+              Texto do autor, escrito para esta seção. Não é o
+              `site.description`, que segue descrevendo a publicação nas
+              metatags. */}
           <div className="space-y-5 text-lg leading-relaxed text-pretty text-foreground">
-            <p>{site.description}</p>
             <p>
-              Juntamos arte, histórias e ideias que te conectam com o universo.
-              Torne-se um pensador mais afiado e pronto para navegar pelo mar de
-              incertezas do futuro.
+              Reunimos filosofia, arte e histórias com o objetivo de te conectar
+              com ideias que importam — Como viver melhor. Pensar com mais
+              clareza. Fundamentar-se na realidade.
+            </p>
+            <p>
+              Te damos as ferramentas para se tornar um pensador mais afiado
+              capaz de questionar o universo à sua volta, navegar pelas
+              incertezas do futuro e resgatar a infinita beleza escondida em sua
+              vida.
             </p>
           </div>
         </div>
