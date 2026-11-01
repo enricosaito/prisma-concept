@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 
 import { LetterListItem } from "@/components/letter-card"
 import { SeaEdge } from "@/components/sea-edge"
@@ -6,6 +7,7 @@ import { SubscribeForm } from "@/components/subscribe-form"
 import { getPublishedLetters } from "@/lib/letters/source"
 import { jsonLdHtml, websiteJsonLd } from "@/lib/seo"
 import { site } from "@/lib/site"
+import navio from "@/public/brand/navio.png"
 
 // Title and description come from the root layout; this exists for the
 // canonical, which the home page needs more than any other route — it is the
@@ -61,8 +63,8 @@ export default function Page() {
             already a list, and a second one would read as more of the same. */}
         <div className="mt-5 grid gap-7 border-t border-foreground/80 pt-8 sm:mt-6 sm:pt-9 md:grid-cols-[0.85fr_1.15fr] md:gap-14">
           <p className="font-heading text-2xl leading-snug font-bold text-balance sm:text-[2rem]">
-            A dominação da tecnologia, distrações e conteúdo raso nos traz um
-            propósito.
+            Vivemos cercados de informação — mas onde estão as ideias que
+            realmente nos transformam?
           </p>
           {/* Na tinta cheia, não no cinza de apoio: é o argumento da página, e
               no cinza lia como nota de rodapé.
@@ -111,22 +113,38 @@ export default function Page() {
           `relative z-10` porque o rodapé logo abaixo é posicionado (por causa
           da textura) e, vindo depois, pintava por cima do fim desta seção —
           comia a borda de baixo do campo e o brilho do botão. O `pb-4` tira o
-          formulário de cima da junta. */}
+          formulário de cima da junta.
+
+          Duas colunas a partir do md: o lema e o convite à esquerda, o navio à
+          direita — a gravura enfrentando o mar que o lema nomeia. No celular o
+          navio desce para baixo do formulário, menor, para que o convite
+          continue logo abaixo da onda. A gravura é branca sobre transparente,
+          recolorida para o marfim do texto (#F5F1E8), e por isso só funciona
+          sobre o azul; é decorativa, então `alt=""`. */}
       <SeaEdge className="mt-16 sm:mt-24" />
       <section className="dark navy sea-texture relative z-10 -mb-px bg-background pt-12 pb-4 text-foreground [--sea-mask:none] sm:pt-20">
-        <div className="mx-auto max-w-5xl px-5 sm:px-8">
-          <p className="max-w-[18ch] font-heading text-4xl leading-[1.1] font-semibold text-balance sm:text-6xl">
-            {site.motto}
-          </p>
-          <div className="mt-12 max-w-[45rem] sm:mt-16">
-            <h2 className="font-heading text-xl font-medium">
-              Receba a próxima no seu e-mail.
-            </h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Inscreva-se gratuitamente e receba as próximas cartas toda semana.
+        <div className="mx-auto grid max-w-5xl items-center gap-12 px-5 sm:px-8 md:grid-cols-2 md:gap-10">
+          <div>
+            <p className="max-w-[18ch] font-heading text-4xl leading-[1.1] font-semibold text-balance sm:text-6xl">
+              {site.motto}
             </p>
-            <SubscribeForm className="mt-6" />
+            <div className="mt-12 sm:mt-16">
+              <h2 className="font-heading text-xl font-medium">
+                Junte-se a quem não se contenta com o óbvio.
+              </h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Ideias para expandir sua maneira de ver o mundo, direto na sua
+                caixa de entrada
+              </p>
+              <SubscribeForm className="mt-6" />
+            </div>
           </div>
+          <Image
+            src={navio}
+            alt=""
+            sizes="(min-width: 1024px) 460px, (min-width: 768px) 45vw, 320px"
+            className="mx-auto h-auto w-full max-w-xs md:max-w-md"
+          />
         </div>
       </section>
     </>

@@ -352,6 +352,13 @@
   .prose-letter h3 {
     @apply mt-9 font-heading text-[1.5rem] leading-[1.25] font-medium text-foreground;
   }
+  /* The small headings — "#### " to "###### " — had no rule and rendered as
+     body text, indistinguishable from the paragraph under them. They take the
+     label face the home page uses for its section names: a third rank that
+     separates by case and face, not by size. */
+  .prose-letter :is(h4, h5, h6) {
+    @apply mt-9 font-label text-xs font-semibold tracking-[0.18em] text-muted-foreground uppercase;
+  }
   .prose-letter blockquote {
     @apply border-l-2 border-accent pl-5 text-foreground/70 italic dark:text-foreground/85;
   }
