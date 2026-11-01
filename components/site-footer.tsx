@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation"
 
 import { SeaEdge } from "@/components/sea-edge"
 import { Signature } from "@/components/signature"
+import { SubscribeForm } from "@/components/subscribe-form"
 import { site } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
@@ -38,6 +39,22 @@ function SiteFooter() {
         )}
       >
         <div className="mx-auto flex max-w-5xl flex-col items-center gap-4 px-5 py-10 sm:px-8">
+          {/* O campo de assinar, logo acima da assinatura: uma carta acaba no
+              próprio texto, sem um bloco de "gostou?" depois dele, e o convite
+              fica aqui. Só sob uma carta, porque a pergunta é sobre ela — na
+              home a seção logo acima já traz o formulário, e no arquivo e nas
+              páginas de erro não há carta de que gostar. */}
+          {!afterALetter ? null : (
+            <div className="mb-12 w-full max-w-md text-center sm:mb-16">
+              {/* Na mesma voz do convite da home: a serifa dos títulos, não a
+                  etiqueta em caixa alta. */}
+              <h2 className="font-heading text-xl font-medium">
+                Gostou dessa carta e quer mais?
+              </h2>
+              <SubscribeForm className="mt-5 text-left" />
+            </div>
+          )}
+
           {/* Drawn once when the footer scrolls into view. It takes the column's
             width up to 23rem, so it shrinks with the gutters on a narrow phone
             rather than running past them. */}

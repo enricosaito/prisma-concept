@@ -2,10 +2,13 @@ import type { Metadata } from "next"
 
 import { notFound } from "next/navigation"
 
+import { CommentSection } from "@/components/comments/comment-section"
 import { LetterBody } from "@/components/letter-body"
 import { LetterCard, LetterMetaLine } from "@/components/letter-card"
+import { LetterContents } from "@/components/letter-contents"
 import { LetterCover } from "@/components/letter-cover"
-import { SubscribeForm } from "@/components/subscribe-form"
+import { PrismaIcon } from "@/components/prisma-icon"
+import { commentsEnabled } from "@/lib/comments/config"
 import {
   getLetterBySlug,
   getLetterMetadata,
@@ -123,25 +126,33 @@ export default async function Page({
         <div className="mx-auto mt-8 max-w-[45rem] sm:mt-10">
           <LetterBody markdown={letter.body} />
         </div>
+        <LetterContents />
 
-        {/* The letter ends here. This rule used to be the top border of the
-          sign-off block; the signature moved to the footer but the line still
-          earns its place, because without it the subscribe block reads as one
-          more section of the letter rather than as what comes after it. */}
-        <hr className="mx-auto mt-12 max-w-[45rem] border-foreground/80 sm:mt-16" />
+        {/* The letter ends on its own last sentence. There used to be a "Gostou
+          desta carta?" block here; the invitation to subscribe moved to the
+          footer, above the signature, so nothing stands between the text and
+          the conversation about it.
 
-        {/* No panel around this one. Boxing it made it read as an advertisement
-          dropped into the page; unboxed it reads as the letter still talking. */}
-        <div className="mx-auto mt-10 max-w-[45rem] sm:mt-12">
-          <h2 className="font-heading text-xl font-medium">
-            Gostou desta carta?
-          </h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Inscreva-se gratuitamente e receba as próximas no seu e-mail toda
-            semana.
-          </p>
-          <SubscribeForm className="mt-6" />
+          The end mark, as a printed magazine closes an article: the nib,
+          small and muted, between two hairlines that fade out toward the
+          edges. Distinct from the `---` rules inside a letter, which are a
+          plain full line — those divide parts, this one says it is over. */}
+        <div
+          role="separator"
+          className="mx-auto mt-14 flex max-w-[45rem] items-center gap-5 sm:mt-20"
+        >
+          <span className="h-px flex-1 bg-linear-to-r from-transparent to-muted-foreground/40" />
+          <PrismaIcon bare className="size-4 text-muted-foreground/70" />
+          <span className="h-px flex-1 bg-linear-to-l from-transparent to-muted-foreground/40" />
         </div>
+
+        {/* Behind a flag while the comments are a prototype; see
+          lib/comments/config.ts. */}
+        {commentsEnabled ? (
+          <div className="mx-auto mt-12 max-w-[45rem] sm:mt-16">
+            <CommentSection essayId={letter.slug} />
+          </div>
+        ) : null}
 
         {more.length > 0 ? (
           <section className="mx-auto mt-16 max-w-5xl sm:mt-24">
