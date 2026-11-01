@@ -45,6 +45,22 @@ export type Cover = {
 }
 
 /**
+ * A video at the head of the letter, played in place of the cover. The cover
+ * stays in the frontmatter all the same: it is still what a shared link
+ * shows, and what the listings fall back to.
+ */
+export type LetterVideo = {
+  /** A path under `public/`, starting with `/`. MP4 (H.264 + AAC). */
+  src: string
+  /** The still shown before play. Without one the browser shows frame one. */
+  poster?: string
+  /** What the video is, for someone who cannot see it. */
+  title: string
+  /** Small print under the player — a credit, a source. Printed as typed. */
+  caption?: string
+}
+
+/**
  * Everything about a letter except the letter.
  *
  * Listings, the sitemap and `generateMetadata` take this rather than `Letter`,
@@ -80,6 +96,8 @@ export type LetterMeta = {
   readingMinutes: number
   /** Runs at the head of the letter itself. Without one it goes text-only. */
   cover?: Cover
+  /** Takes the cover's place at the head of the letter, and only there. */
+  video?: LetterVideo
   /**
    * Shown where the letter is listed instead of `cover`, for art that suits a
    * narrow upright slot better than a wide one. Falls back to `cover`.

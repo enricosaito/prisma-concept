@@ -7,6 +7,7 @@ import { LetterBody } from "@/components/letter-body"
 import { LetterCard, LetterMetaLine } from "@/components/letter-card"
 import { LetterContents } from "@/components/letter-contents"
 import { LetterCover } from "@/components/letter-cover"
+import { VideoPlayer } from "@/components/video-player"
 import { PrismaIcon } from "@/components/prisma-icon"
 import { commentsEnabled } from "@/lib/comments/config"
 import {
@@ -109,7 +110,25 @@ export default async function Page({
           <LetterMetaLine letter={letter} className="mt-6" />
         </header>
 
-        {letter.cover ? (
+        {/* A video, when the letter has one, takes the cover's place here —
+            and only here: the cover still feeds the shared-link preview. */}
+        {letter.video ? (
+          <figure className="mx-auto mt-8 max-w-[45rem] sm:mt-10">
+            <VideoPlayer
+              src={letter.video.src}
+              poster={letter.video.poster}
+              title={letter.video.title}
+            />
+            {/* Small print, in the same face as the captions under the images
+                in the body, but centred under the player and a step quieter:
+                a credit, not part of the reading. */}
+            {letter.video.caption ? (
+              <figcaption className="mt-3 text-center font-label text-xs text-muted-foreground/60">
+                {letter.video.caption}
+              </figcaption>
+            ) : null}
+          </figure>
+        ) : letter.cover ? (
           // Kept to the reading column rather than run full-bleed, so the letter
           // reads as one measure from the title down. It is the widest image on
           // the page and sits near the top, hence eager.
