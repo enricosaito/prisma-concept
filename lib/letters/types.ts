@@ -66,6 +66,12 @@ export type LetterMeta = {
   title: string
   /** One-line standfirst shown under the title in listings. */
   dek: string
+  /**
+   * A few lines of the letter, written by the author for the listing, shown
+   * between the date and "Continuar lendo". Printed as typed; without one the
+   * listing goes straight to the button.
+   */
+  preview?: string
   category: Category
   /** ISO date, YYYY-MM-DD. Sorts the archive and fills the <time> element. */
   date: string

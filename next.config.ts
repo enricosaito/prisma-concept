@@ -33,6 +33,19 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: false,
       },
+      // A carta 1 trocou de título, e o endereço acompanhou o título novo.
+      // O antigo já tinha sido compartilhado. As versões em /carta e
+      // /biblioteca vêm antes das regras genéricas abaixo para ir direto ao
+      // endereço novo, num salto só.
+      ...[
+        "/cartas/tudo-que-precisava-ser-dito-ja-foi-dito",
+        "/carta/tudo-que-precisava-ser-dito-ja-foi-dito",
+        "/biblioteca/tudo-que-precisava-ser-dito-ja-foi-dito",
+      ].map((source) => ({
+        source,
+        destination: "/cartas/voce-precisa-ser-um-louco-para-comecar",
+        permanent: true,
+      })),
       {
         source: "/carta",
         destination: "/cartas",

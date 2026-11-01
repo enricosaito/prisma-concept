@@ -14,6 +14,8 @@ export const site = {
   // "arms" — então não é citação e não leva crédito, e não deve ser
   // "corrigida" para uma tradução do Shakespeare.
   motto: "Aponte contra um mar de problemas",
+  // A linha sob o nome no masthead da home, nas palavras do autor.
+  descriptor: "Uma curadoria de filosofia, literatura, arte e tecnologia.",
   // The canonical host, with the `www.` — the apex 308s here, and this feeds
   // `metadataBase`, the OG tags and the link in the welcome email. The bare
   // `prismaconcept.com` that used to sit here belongs to someone else.
