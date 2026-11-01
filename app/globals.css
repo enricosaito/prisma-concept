@@ -347,10 +347,21 @@
      headings inherited from Playfair — a wide-set Didone that needed it —
      would tighten a face that already tightens itself. */
   .prose-letter h2 {
-    @apply mt-10 font-heading text-[1.75rem] leading-[1.2] font-medium text-foreground sm:text-[2rem];
+    @apply mt-10 scroll-mt-28 font-heading text-[1.75rem] leading-[1.2] font-medium text-foreground sm:text-[2rem];
+  }
+  /* A `---` in the Markdown, as on Substack. It only draws the line: the
+     contents rail is built from the "## " headings, so a rule can be added
+     anywhere, or a section left without one, and the rail stays the same.
+     A heading right after a rule drops its own top margin, so the rule's
+     space is the only gap. */
+  .prose-letter hr {
+    @apply mt-12 mb-10 border-border sm:mt-14 sm:mb-12;
+  }
+  .prose-letter hr + * {
+    @apply mt-0;
   }
   .prose-letter h3 {
-    @apply mt-9 font-heading text-[1.5rem] leading-[1.25] font-medium text-foreground;
+    @apply mt-9 scroll-mt-28 font-heading text-[1.5rem] leading-[1.25] font-medium text-foreground;
   }
   /* The small headings — "#### " to "###### " — had no rule and rendered as
      body text, indistinguishable from the paragraph under them. They take the

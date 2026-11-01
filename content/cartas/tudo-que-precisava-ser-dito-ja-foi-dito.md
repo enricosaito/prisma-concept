@@ -39,12 +39,14 @@ Mas eu gostaria de criar um espaço para ideias que são difíceis de encaixar e
 Obrigado por ler a primeira.
 
 
+---
+
 ## Sobre Originalidade
 
 Li essa frase que pela primeira vez no livro que me inspirou a começar a escrever estas cartas. "Roube como um artista" do Austin Kleon.
 
 Link do Livro
-https://amzn.to/3VXvyMw
+<https://amzn.to/3VXvyMw>
 
 E a ideia dela é que nada é completamente original. Todo trabalho criativo constrói em cima do que veio antes. (...)
 
@@ -61,6 +63,8 @@ Se nos libertarmos do peso de tentar ser totalmente originais, podemos parar de 
 Não precisamos ser extraordinários desde o começo. Afinal, se toda criação é construída sobre aquilo que veio antes, por que exigir de nós mesmos que saibamos construir algo grandioso logo na primeira tentativa?
 
 Talvez o problema não seja a falta de ideias originais, mas a nossa relutância em começar com as ideias que já temos. Queremos escrever sem escrever mal, empreender sem cometer erros, aprender sem parecer ignorantes. Queremos, em outras palavras, colher os frutos de um processo sem nos submetermos ao processo em si.
+
+---
 
 ## O Tolo / O Louco
 
@@ -117,7 +121,7 @@ O conjunto é composto por 21 cartas numeradas (geralmente em algarismos romanos
 
 **XIX** – O Sol *(The Sun)*
 
-**XX** – O Julgamento *(Judgement)
+**XX** – O Julgamento *(Judgement)*
 
 **XXI** – O Mundo *(The World)*
 
@@ -126,6 +130,10 @@ O conjunto é composto por 21 cartas numeradas (geralmente em algarismos romanos
 Neste artigo vamos focar especialmente na carta do *Tolo*, apesar de haver muito do que se aprender observando as demais Arcanas Maiores. 
 
 O que exatamente a carta do *Tolo* tem a ver com o tema deste artigo? 
+
+---
+
+![A carta O Louco do tarô Rider-Waite, em cores, sobre outras cartas espalhadas: um jovem com uma trouxa no ombro e uma rosa branca na mão olha para o céu à beira de um penhasco, com um cachorro branco saltando aos seus pés. Ao pé da carta, THE FOOL.](/imagens/o-tolo.webp)
 
 ## A Utilidade do Tolo
 
