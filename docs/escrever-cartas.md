@@ -59,21 +59,22 @@ futuro, porque quase sempre é um ano digitado errado.
 
 ## A frontmatter
 
-| Campo            | Obrigatório | O que é                                                        |
-| ---------------- | ----------- | -------------------------------------------------------------- |
-| `issue`          | sim         | O número da carta. Único, e não muda depois de publicada.      |
-| `status`         | sim¹        | `draft` ou `published`.                                        |
-| `date`           | sim         | `"AAAA-MM-DD"`. Ordena o arquivo e aparece sob o título.       |
-| `category`       | sim         | `Tecnologia`, `Arte`, `Design` ou `Escrita`.                   |
-| `readingMinutes` | sim         | Minutos de leitura, do seu próprio julgamento.                 |
-| `title`          | sim         | O título da carta.                                             |
-| `dek`            | sim         | A linha que aparece sob o título nas listagens.                |
-| `preview`        | não         | Um trecho curto na listagem, entre a data e o botão.           |
-| `cover`          | não         | A imagem no topo da carta. `src` + `alt`.                      |
-| `thumb`          | não         | A imagem nas listagens, quando a arte pede um formato em pé.   |
-| `updated`        | não         | `"AAAA-MM-DD"`, só quando você revisa uma carta já publicada.  |
-| `seoTitle`       | não         | Substitui o título no Google, quando ele ficaria longo demais. |
-| `seoDescription` | não         | Substitui o `dek` na descrição de busca.                       |
+| Campo            | Obrigatório | O que é                                                                                       |
+| ---------------- | ----------- | --------------------------------------------------------------------------------------------- |
+| `issue`          | sim         | O número da carta. Único, e não muda depois de publicada.                                     |
+| `status`         | sim¹        | `draft` ou `published`.                                                                       |
+| `date`           | sim         | `"AAAA-MM-DD"`. Ordena o arquivo e aparece sob o título.                                      |
+| `category`       | sim         | `Tecnologia`, `Arte`, `Design` ou `Escrita`.                                                  |
+| `readingMinutes` | sim         | Minutos de leitura, do seu próprio julgamento.                                                |
+| `title`          | sim         | O título da carta.                                                                            |
+| `dek`            | sim         | A linha que aparece sob o título nas listagens.                                               |
+| `preview`        | não         | Um trecho curto na listagem, entre a data e o botão.                                          |
+| `cover`          | não         | A imagem no topo da carta. `src` + `alt`.                                                     |
+| `thumb`          | não         | A imagem nas listagens, quando a arte pede um formato em pé.                                  |
+| `video`          | não         | Vídeo no topo da carta, no lugar da `cover`. `src` + `title`; `poster` e `caption` opcionais. |
+| `updated`        | não         | `"AAAA-MM-DD"`, só quando você revisa uma carta já publicada.                                 |
+| `seoTitle`       | não         | Substitui o título no Google, quando ele ficaria longo demais.                                |
+| `seoDescription` | não         | Substitui o `dek` na descrição de busca.                                                      |
 
 ¹ Se você esquecer `status`, a carta é tratada como rascunho. É de propósito:
 esquecer um campo deve custar uma carta que não saiu, nunca uma que saiu antes

@@ -5,6 +5,7 @@ import type {
   Letter,
   LetterMeta,
   LetterStatus,
+  LetterVideo,
 } from "./types.ts"
 
 /**
@@ -37,6 +38,7 @@ const KNOWN_KEYS = new Set([
   "readingMinutes",
   "cover",
   "thumb",
+  "video",
   "seoTitle",
   "seoDescription",
 ])
@@ -197,6 +199,49 @@ function optionalCover(
   }
 }
 
+function optionalVideo(
+  file: string,
+  data: Record<string, unknown>
+): LetterVideo | undefined {
+  const value = data.video
+  if (value === undefined || value === null) return undefined
+  if (typeof value !== "object" || Array.isArray(value)) {
+    fail(file, `"video", se presente, precisa ter src e title.`)
+  }
+
+  const video = value as Record<string, unknown>
+  const { src, title } = video
+  const poster = video.poster ?? undefined
+  const caption = video.caption ?? undefined
+
+  if (typeof src !== "string" || !src.startsWith("/")) {
+    fail(
+      file,
+      `"video.src" precisa ser um caminho dentro de /public começando com "/" — ` +
+        `recebido ${JSON.stringify(src)}.`
+    )
+  }
+  if (typeof title !== "string" || !title.trim()) {
+    fail(file, `"video.title" é obrigatório — diga o que o vídeo mostra.`)
+  }
+  if (
+    poster !== undefined &&
+    (typeof poster !== "string" || !poster.startsWith("/"))
+  ) {
+    fail(file, `"video.poster" precisa ser um caminho começando com "/".`)
+  }
+  if (caption !== undefined && typeof caption !== "string") {
+    fail(file, `"video.caption", se presente, precisa ser um texto.`)
+  }
+
+  return {
+    src,
+    title,
+    ...(poster ? { poster } : {}),
+    ...(caption ? { caption } : {}),
+  }
+}
+
 /**
  * @param slug  Taken from the filename. The frontmatter has no slug key, so
  *              there is nothing for the URL and the file to disagree about.
@@ -229,6 +274,7 @@ export function parseLetter(source: string, slug: string, file: string): Letter 
   const updated = requireDate(file, data.updated, "updated", false)
   const cover = optionalCover(file, data, "cover")
   const thumb = optionalCover(file, data, "thumb")
+  const video = optionalVideo(file, data)
   const seoTitle = optionalString(file, data, "seoTitle")
   const seoDescription = optionalString(file, data, "seoDescription")
   const preview = optionalString(file, data, "preview")
@@ -246,6 +292,7 @@ export function parseLetter(source: string, slug: string, file: string): Letter 
     ...(updated ? { updated } : {}),
     ...(cover ? { cover } : {}),
     ...(thumb ? { thumb } : {}),
+    ...(video ? { video } : {}),
     ...(seoTitle ? { seoTitle } : {}),
     ...(seoDescription ? { seoDescription } : {}),
     body,

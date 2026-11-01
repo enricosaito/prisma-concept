@@ -193,6 +193,57 @@
   );
 }
 
+/* As linhas do player de vídeo (components/video-player.tsx): trilho fino e
+   arredondado, a parte já tocada em branco cheio e o resto em branco a 30%,
+   com uma bolinha branca. `--progress` vem do componente. Os dois motores
+   precisam das próprias regras: Chromium/Safari e Firefox não compartilham
+   pseudo-elementos de range. */
+.video-range {
+  appearance: none;
+  height: 1rem;
+  background: transparent;
+  cursor: pointer;
+}
+.video-range::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to right,
+    white var(--progress, 0%),
+    rgb(255 255 255 / 0.3) var(--progress, 0%)
+  );
+}
+.video-range::-webkit-slider-thumb {
+  appearance: none;
+  margin-top: -5px;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background: white;
+}
+.video-range::-moz-range-track {
+  height: 4px;
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.3);
+}
+.video-range::-moz-range-progress {
+  height: 4px;
+  border-radius: 9999px;
+  background: white;
+}
+.video-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 0;
+  border-radius: 9999px;
+  background: white;
+}
+.video-range:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 0.7);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 @theme inline {
   --font-sans: var(--font-sans);
   --font-heading: var(--font-heading);

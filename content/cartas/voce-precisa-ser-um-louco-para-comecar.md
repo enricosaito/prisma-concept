@@ -19,6 +19,11 @@ thumb:
     caminha para a beira de um penhasco com um cachorro saltando aos seus pés,
     sob um céu carregado. Ao pé da carta, as palavras THE FOOL.
   ratio: 3 / 5
+video:
+  src: /videos/genio-indomavel.mp4
+  poster: /videos/genio-indomavel-poster.webp
+  title: Cena do filme Gênio Indomável
+  caption: "Gênio Indomável (Good Will Hunting, 1997)"
 ---
 ## Introdução 
 
