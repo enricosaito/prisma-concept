@@ -22,11 +22,13 @@ thumb:
     sob um céu carregado. Ao pé da carta, as palavras THE FOOL.
   ratio: 3 / 5
 ---
-Seja bem-vindo, leitor!\
-\
-Antes de tudo, gostaria de começar agradecendo por você estar aqui.\
-\
-Escrever sempre é um voto de confiança. Falamos com um abismo. Não sabemos exatamente quem vai ler, ou se algo vai importar. Mas acredito firmemente no potencial transformador da escrita e da leitura, principalmente nos dias de hoje.
+## Introdução 
+
+Seja bem-vindo, leitor!
+
+Antes de tudo, gostaria de começar agradecendo por você estar aqui.
+
+Escrever sempre é um voto de confiança. Não sabemos exatamente quem a nossa carta vai alcançar ainda, ou se algo vai importar. Mas acredito firmemente no potencial transformador da escrita e da leitura, principalmente nos dias de hoje.
 
 Tempo e atenção são a moeda do momento, e saber que você está depositando o seu bem mais precioso na leitura deste conteúdo me enche de gratidão.
 
@@ -36,28 +38,125 @@ Mas eu gostaria de criar um espaço para ideias que são difíceis de encaixar e
 
 Obrigado por ler a primeira.
 
-> Tudo que precisava ser dito já foi dito. Mas, como ninguém estava ouvindo, é preciso dizer tudo de novo.
-> 
-> — André Gide
 
-## Nada vem do nada
+## Sobre Originalidade
 
-A ideia por trás dessa frase é simples e um pouco desconfortável: nada é completamente original. Todo trabalho criativo é construído em cima do que veio antes. Não existe página em branco absoluta — existe uma pilha de coisas que você leu, viu e ouviu, e um recorte seu feito em cima dela.
+Li essa frase que pela primeira vez no livro que me inspirou a começar a escrever estas cartas. "Roube como um artista" do Austin Kleon.
 
-Isso não é uma descoberta moderna, nem um sintoma da internet. Está no Eclesiastes, alguns milhares de anos antes de qualquer discussão sobre plágio em rede social:
+Link do Livro
+https://amzn.to/3VXvyMw
 
-> Não há nada novo debaixo do sol.
-> 
-> — Eclesiastes 1:9
+E a ideia dela é que nada é completamente original. Todo trabalho criativo constrói em cima do que veio antes. (...)
 
-## Quando alguém diz que algo é original
+Está até na Bíblia: "Não há nada novo de baixo do sol" - Ecclesiastes 1:9.
 
-Repare no que costuma acontecer quando chamam alguma coisa de original: nove em cada dez vezes, quem diz isso apenas não conhece a referência. Não viu a fonte, não sabe de onde aquilo saiu, não reconhece a linhagem. Originalidade, na prática, é muitas vezes o nome que damos a uma influência que não identificamos.
+Quando as pessoas chamam algo de original, nove de cada dez vezes elas só não conhecem a referência, ou as fontes originais envolvidas.
 
-## O que acontece a partir de agora
+Bom, se tudo que precisava ser dito já foi dito, mas ninguém estava ouvindo, portanto, tudo precisa ser dito novamente.
 
-Se tudo que precisava ser dito já foi dito, mas ninguém estava ouvindo, então tudo precisa ser dito novamente. Algumas pessoas acham essa ideia deprimente. A mim ela enche de esperança.
+Algumas pessoas podem se chatear com essa ideia, mas ela me enche de esperança.
 
-Porque ela devolve o trabalho ao tamanho certo. Livres do peso de tentar ser totalmente originais, podemos parar de tentar criar algo do nada e passar a abraçar as influências, em vez de fugir delas.
+Se nos libertarmos do peso de tentar ser totalmente originais, podemos parar de tentar criar algo do nada e abraçar nossas influências, em vez de fugir delas.
 
-A melhor hora pra começar é agora.
+Não precisamos ser extraordinários desde o começo. Afinal, se toda criação é construída sobre aquilo que veio antes, por que exigir de nós mesmos que saibamos construir algo grandioso logo na primeira tentativa?
+
+Talvez o problema não seja a falta de ideias originais, mas a nossa relutância em começar com as ideias que já temos. Queremos escrever sem escrever mal, empreender sem cometer erros, aprender sem parecer ignorantes. Queremos, em outras palavras, colher os frutos de um processo sem nos submetermos ao processo em si.
+
+## O Tolo / O Louco
+
+A ilustração que abre esta primeira carta pertence ao baralho de tarô. Não sou particularmente interessado no jogo em si, mas devo admitir que há algo curiosamente artístico no simbolismo de suas imagens.
+
+Se você não conhece o baralho de tarô, é parecido com aqueles que vemos em jogos de como *Poker*, *Buraco* ou *Truco* (se você matava aula na faculdade, vai saber) — tendo quatro naipes e numerados de Ás a dez.
+
+As ***Arcanas Maiores*** são o núcleo principal e mais simbólico de um baralho de Tarô (que possui 78 cartas no total). A palavra "arcano" vem do latim _arcanum_, que significa "segredo" ou "mistério".
+
+Elas retratam os grandes ciclos da experiência humana, arquétipos universais, momentos de forte transformação, escolhas decisivas e lições espirituais ou psicológicas.
+
+O conjunto é composto por 21 cartas numeradas (geralmente em algarismos romanos de I a XXI) e uma carta sem número fixo (ou numerada como 0), que é *O Tolo*.
+
+(Caso esteja interessado, aqui está uma lista das 22 Arcanas Maiores:)
+###### Arcanas Maiores
+
+**0** – O Louco (The Fool)
+
+**I** – O Mago (The Magician)
+
+**II** – A Sacerdotisa (The High Priestess)
+
+**III** – A Imperatriz *(The Empress)*
+
+**IV** – O Imperador *(The Emperor)*
+
+**V** – O Papa *(The Hierophant)*
+
+**VI** – Os Enamorados *(The Lovers)*
+
+**VII** – O Carro *(The Chariot)*
+
+**VIII** – A Força *(Strength)*
+
+**IX** – O Eremita *(The Hermit)*
+
+**X** – A Roda da Fortuna *(Wheel of Fortune)*
+
+**XI** – A Justiça *(Justice)*
+
+**XII** – O Enforcado *(The Hanged Man)*
+
+**XIII** – A Morte *(Death)*
+
+**XIV** – A Temperança *(Temperance)*
+
+**XV** – O Diabo *(The Devil)*
+
+**XVI** – A Torre *(The Tower)*
+
+**XVII** – A Estrela *(The Star)*
+
+**XVIII** – A Lua *(The Moon)*
+
+**XIX** – O Sol *(The Sun)*
+
+**XX** – O Julgamento *(Judgement)
+
+**XXI** – O Mundo *(The World)*
+
+###### Continuando!
+
+Neste artigo vamos focar especialmente na carta do *Tolo*, apesar de haver muito do que se aprender observando as demais Arcanas Maiores. 
+
+O que exatamente a carta do *Tolo* tem a ver com o tema deste artigo? 
+
+## A Utilidade do Tolo
+
+É necessário e útil ser, e de algumas maneiras permanecer, um iniciante.
+
+Por esse motivo, as cartas de tarô adoradas pelos intuitivos, românticos,
+videntes e outros charlatões trazem o *Tolo* (também chamado de *Louco*)
+como uma carta positiva, uma versão ilustrada semelhante à que abre este
+capítulo. 
+
+O Tolo é um homem jovem e bonito, que olha para cima, caminhando pelas montanhas, banhado pela reluzente luz do sol  — prestes a despencar desatentamente em um abismo.
+
+A primeira vista, parece um detalhe inquietante. Será que não percebe o perigo? 
+
+Sua força, porém, é exatamente sua disposição para se arriscar à queda; para correr o risco de voltar à base. Somente uma pessoa disposta a ser um tolo iniciante é capaz
+de aprender. É por esse motivo, entre outros, que Carl Jung considerava o
+Tolo o precursor arquetípico da figura igualmente arquetípica do Redentor,
+o indivíduo aperfeiçoado.
+
+O iniciante, o tolo, precisa ser continuamente paciente e tolerante — com
+ele mesmo e, na mesma medida, com os outros. Suas demonstrações de
+ignorância, inexperiência e falta de habilidades ainda podem, às vezes, ser
+corretamente atribuídas à irresponsabilidade e justamente condenadas pelos
+outros. Mas a insuficiência do tolo é, muitas vezes, mais bem considerada
+como uma consequência inevitável da vulnerabilidade essencial de cada
+indivíduo, em vez de uma verdadeira falha moral. Muito do que é ótimo
+começa pequeno, ignorante e inútil.
+
+O iniciante de hoje é o mestre de amanhã.
+Assim, é necessário até mesmo para o mais realizado (que, todavia, deseja
+realizar ainda mais) manter a identificação com os que ainda não tiveram
+sucesso, valorizar a luta pela competência, subordinar-se ao jogo atual de
+forma cuidadosa e com humildade autêntica e desenvolver o conhecimento,
+o autocontrole e a disciplina necessários para dar o próximo passo.

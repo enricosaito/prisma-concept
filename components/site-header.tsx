@@ -120,9 +120,18 @@ function SiteHeader() {
 
           No mobile três medidas mandam: `--nib`, a altura da pena; `--cap`, a
           altura de maiúscula do nome; e `--btn`, a altura dos botões. A pena
-          fica cerca de um terço acima das maiúsculas, e os três dividem o
-          mesmo centro. */}
-      <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between gap-4 px-5 [--btn:32px] [--cap:15.5px] [--nib:21px] sm:grid sm:h-20 sm:grid-cols-[1fr_auto_1fr] sm:px-8 sm:[--btn:40px]">
+          fica cerca de um terço acima das maiúsculas (1.355×), e os três
+          dividem o mesmo centro.
+
+          A marca ocupa o que sobra da linha, cerca de dois terços dela, e os
+          botões o resto: num telefone o nome é o que identifica a página, e
+          a 15.5px de maiúscula ele ficava num terço da tela. `--cap` cresce
+          com a largura — a marca mede ~7.03× a maiúscula, e os botões, as
+          margens e o vão somam ~187px: 26px num iPhone de 375px, 18px
+          num de 320px, e no máximo 30px, para que nos telefones largos o
+          nome não passe a disputar com o masthead do desktop. A barra sobe
+          para h-16 para a pena maior respirar. */}
+      <div className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between gap-4 px-5 [--btn:32px] [--cap:clamp(15.5px,calc((100vw-190px)/7.1),30px)] [--nib:calc(var(--cap)*1.355)] sm:grid sm:h-20 sm:grid-cols-[1fr_auto_1fr] sm:px-8 sm:[--btn:40px]">
         {/* Só no desktop. A pena vazada, como no mobile, e não mais o selo:
             sobre o azul da barra o quadrado creme pesava mais que o nome.
 

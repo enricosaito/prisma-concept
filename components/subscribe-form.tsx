@@ -105,7 +105,10 @@ function SubscribeForm({ className }: { className?: string }) {
         <Button
           type="submit"
           disabled={status === "loading"}
-          className={cn(FIELD, "shrink-0 px-6 text-xs")}
+          // `bg-clip-border`: the Button paints its fill inside a transparent
+          // 1px border, so beside the field the fill sat a pixel short of its
+          // outline at top and bottom. Same fix as the header button.
+          className={cn(FIELD, "shrink-0 bg-clip-border px-6 text-xs")}
         >
           {status === "loading" ? (
             <>
