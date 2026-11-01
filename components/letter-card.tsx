@@ -67,19 +67,24 @@ function LetterMetaLine({
 }
 
 /**
- * "Ler →" at the foot of a listed letter. On its own: the reading time reads
- * as metadata and belongs on the date line, not inside the call to action.
+ * "Continuar lendo →" at the foot of a listed letter. On its own: the reading
+ * time reads as metadata and belongs on the date line, not inside the call to
+ * action.
+ *
+ * Underlined, arrow included, so it reads as a link at rest and not only on
+ * hover. A border rather than `text-decoration`, which would stop at the text
+ * and leave the arrow hanging off the end of the line.
  */
 function ReadCta({ className }: { className?: string }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2 text-sm font-medium text-foreground",
+        "inline-flex items-center gap-1.5 border-b border-foreground pb-0.5 text-sm font-medium text-foreground",
         className
       )}
     >
-      Ler
-      <RiArrowRightLine className="size-3.5 text-accent transition-transform duration-300 group-hover:translate-x-1" />
+      Continuar lendo
+      <RiArrowRightLine className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
     </span>
   )
 }
@@ -281,6 +286,19 @@ function LetterListItem({
             showIssue={false}
             className="mt-3"
           />
+          {/* A preview the author wrote for the listing, as typed. Set in the
+              full ink, like the opening of the letter it comes from, so it
+              reads as the text and not as another caption. */}
+          {letter.preview ? (
+            <p
+              className={cn(
+                "mt-5 leading-relaxed text-pretty text-foreground",
+                lead ? "text-base" : "text-sm"
+              )}
+            >
+              {letter.preview}
+            </p>
+          ) : null}
           {/* Set off from the date rather than tucked under it, which drops it
               into the lower half of the cover beside it. */}
           <ReadCta className="mt-7" />

@@ -2,7 +2,9 @@
 
 import * as React from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
+import { MASTHEAD_ID } from "@/components/home-masthead"
 import { PrismaIcon } from "@/components/prisma-icon"
 import { SeaEdge } from "@/components/sea-edge"
 import { SubscribeDialog } from "@/components/subscribe-dialog"
@@ -60,13 +62,48 @@ function useHiddenOnScrollDown() {
   return hidden
 }
 
+/**
+ * Whether the home page's masthead is still on screen. Starts `true` on the
+ * home page so the bar does not flash over the masthead before the observer
+ * reports in.
+ */
+function useMastheadInView(onHome: boolean) {
+  const [inView, setInView] = React.useState(onHome)
+
+  React.useEffect(() => {
+    const masthead = onHome ? document.getElementById(MASTHEAD_ID) : null
+    if (!masthead) {
+      const frame = requestAnimationFrame(() => setInView(false))
+      return () => cancelAnimationFrame(frame)
+    }
+    const observer = new IntersectionObserver(([entry]) =>
+      setInView(entry.isIntersecting)
+    )
+    observer.observe(masthead)
+    return () => observer.disconnect()
+  }, [onHome])
+
+  return inView
+}
+
 function SiteHeader() {
-  const hidden = useHiddenOnScrollDown()
+  const scrolledDown = useHiddenOnScrollDown()
+  const pathname = usePathname()
+  // A letter's own URL, not the /cartas archive — same test as the footer's.
+  const onLetter = /^\/cartas\/[^/]+$/.test(pathname)
+  // Na home o masthead faz o papel da barra enquanto está à vista: a barra
+  // fica fora da tela, e fora da ordem de Tab (`inert`), e só desce quando
+  // ele sai. Por isso ali ela é `fixed` e não `sticky` — não ocupa lugar no
+  // fluxo acima do masthead.
+  const onHome = pathname === "/"
+  const behindMasthead = useMastheadInView(onHome)
+  const hidden = scrolledDown || behindMasthead
 
   return (
     <header
+      inert={behindMasthead}
       className={cn(
-        "sticky top-0 z-50",
+        onHome ? "fixed inset-x-0 top-0 z-50" : "sticky top-0 z-50",
         // A barra é escura nos dois temas. Os tokens de cor (`--background`,
         // `--foreground`…) são redefinidos dentro de `.dark` em globals.css, e
         // a variante `dark:` casa com qualquer descendente de `.dark`; com a
@@ -84,18 +121,25 @@ function SiteHeader() {
         // Ao esconder, a barra sobe a própria altura mais a da onda (h-6 no
         // sm), para que a onda não fique pendurada no topo da tela.
         "transition-transform duration-200 ease-snappy",
-        // Só a partir do `sm`. No mobile a barra fica parada: ela carrega o
-        // botão da newsletter, e lá ele não tem outro lugar onde esteja sempre
-        // à mão.
+        // No mobile, só numa carta. Fora dela a barra fica parada no celular:
+        // carrega o botão da newsletter, e lá ele não tem outro lugar onde
+        // esteja sempre à mão. Numa carta a tela é pequena demais para dividir
+        // com uma barra fixa enquanto se lê, e o convite já está no rodapé;
+        // rolar para cima a traz de volta. A onda do mobile é h-4, daí o 1rem.
         hidden
           ? [
-              "sm:-translate-y-[calc(100%+1.5rem)]",
+              onLetter || behindMasthead
+                ? "-translate-y-[calc(100%+1rem)] sm:-translate-y-[calc(100%+1.5rem)]"
+                : "sm:-translate-y-[calc(100%+1.5rem)]",
               // Tabbing into a bar parked off-screen would focus something the
               // reader cannot see, so focus brings it back.
-              "sm:focus-within:translate-y-0",
+              "focus-within:translate-y-0",
               // Sliding the nav on every direction change is exactly what
               // reduced motion is asking us not to do: leave it in place.
-              "sm:motion-reduce:translate-y-0",
+              // Except behind the masthead, where showing it would stack two
+              // headers; it stays off screen (and, with no transition, just
+              // appears once the masthead is gone).
+              !behindMasthead && "motion-reduce:translate-y-0",
             ]
           : "translate-y-0",
         "motion-reduce:transition-none"

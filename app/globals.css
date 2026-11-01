@@ -294,6 +294,14 @@
     @apply border-border outline-ring/50;
   }
 
+  /* O Tailwind 4 deixa botões com o cursor padrão, e aqui quase todo botão
+     se lê como link — "Newsletter", "Assine — grátis", "Assinar", o tema.
+     A mãozinha volta para todos de uma vez, menos os desativados. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
   body {
     @apply bg-background text-foreground;
     font-synthesis-weight: none;

@@ -1,5 +1,6 @@
 "use client"
 
+import * as React from "react"
 import { Dialog } from "@base-ui/react/dialog"
 import { RiArrowRightSLine, RiCloseLine } from "@remixicon/react"
 
@@ -26,17 +27,28 @@ import { cn } from "@/lib/utils"
  * vista, e o brilho animado ali competia com a leitura. O arco-íris segue no
  * "Assinar" do formulário, que é onde a assinatura de fato acontece.
  */
-function SubscribeDialog({ className }: { className?: string }) {
+function SubscribeDialog({
+  className,
+  children,
+}: {
+  className?: string
+  /** Um gatilho em texto, sem o Button: como os links do masthead da home. */
+  children?: React.ReactNode
+}) {
   return (
     <Dialog.Root>
-      <Dialog.Trigger render={<Button />} className={className}>
-        {/* O Button centra a caixa do texto, e com a Literata isso já põe a
-            tinta das maiúsculas no meio. Mas "Newsletter" é quase todo caixa
-            baixa, cujo centro fica ~2px abaixo, e a palavra lia baixa. Um
-            pixel acima divide a diferença entre os dois centros. O <span> é
-            item flex, então o `translate` vale nele. */}
-        <span className="-translate-y-px">{navCta.label}</span>
-      </Dialog.Trigger>
+      {children ? (
+        <Dialog.Trigger className={className}>{children}</Dialog.Trigger>
+      ) : (
+        <Dialog.Trigger render={<Button />} className={className}>
+          {/* O Button centra a caixa do texto, e com a Literata isso já põe a
+              tinta das maiúsculas no meio. Mas "Newsletter" é quase todo caixa
+              baixa, cujo centro fica ~2px abaixo, e a palavra lia baixa. Um
+              pixel acima divide a diferença entre os dois centros. O <span> é
+              item flex, então o `translate` vale nele. */}
+          <span className="-translate-y-px">{navCta.label}</span>
+        </Dialog.Trigger>
+      )}
 
       <Dialog.Portal>
         {/* A tela inteira, no mar: o convite toma a página em vez de flutuar

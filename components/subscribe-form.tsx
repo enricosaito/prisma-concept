@@ -26,6 +26,9 @@ function SubscribeForm({ className }: { className?: string }) {
   const [email, setEmail] = React.useState("")
   const [status, setStatus] = React.useState<Status>("idle")
   const [message, setMessage] = React.useState("")
+  // Unique per form: the home page shows two, and a shared id would point
+  // both labels at the first field.
+  const fieldId = React.useId()
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -76,7 +79,7 @@ function SubscribeForm({ className }: { className?: string }) {
       <form onSubmit={onSubmit} className="flex">
         {/* A placeholder is not an accessible name, so the field keeps a real
             label — just a visually hidden one. */}
-        <label htmlFor="subscribe-email" className="sr-only">
+        <label htmlFor={fieldId} className="sr-only">
           Seu e-mail
         </label>
         {/* Parado. Aqui já houve uma ShineBorder, um brilho correndo pela
@@ -85,7 +88,7 @@ function SubscribeForm({ className }: { className?: string }) {
             custavam confiança. Firmeza aqui é não se mexer. */}
         <div className="min-w-0 flex-1">
           <Input
-            id="subscribe-email"
+            id={fieldId}
             type="email"
             required
             autoComplete="email"

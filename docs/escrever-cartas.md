@@ -68,6 +68,7 @@ futuro, porque quase sempre é um ano digitado errado.
 | `readingMinutes` | sim         | Minutos de leitura, do seu próprio julgamento.                 |
 | `title`          | sim         | O título da carta.                                             |
 | `dek`            | sim         | A linha que aparece sob o título nas listagens.                |
+| `preview`        | não         | Um trecho curto na listagem, entre a data e o botão.           |
 | `cover`          | não         | A imagem no topo da carta. `src` + `alt`.                      |
 | `thumb`          | não         | A imagem nas listagens, quando a arte pede um formato em pé.   |
 | `updated`        | não         | `"AAAA-MM-DD"`, só quando você revisa uma carta já publicada.  |

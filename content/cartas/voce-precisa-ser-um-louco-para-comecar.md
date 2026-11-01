@@ -1,13 +1,11 @@
 ---
-title: Tudo que precisava ser dito já foi dito, mas ninguém estava ouvindo
+title: Você precisa ser um louco para começar
 status: published
 issue: 1
 date: 2026-10-01
 category: Arte
 readingMinutes: 5
-dek: >-
-  Nada é completamente original — e por que essa deveria ser a melhor notícia do
-  seu dia.
+dek: A coragem de ser um iniciante e como começar algo novo para 2027.
 cover:
   src: /covers/tudo-que-precisava-ser-dito-ja-foi-dito.jpg
   alt: >-

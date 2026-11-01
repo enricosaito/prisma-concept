@@ -30,6 +30,7 @@ const KNOWN_KEYS = new Set([
   "status",
   "title",
   "dek",
+  "preview",
   "category",
   "date",
   "updated",
@@ -230,6 +231,7 @@ export function parseLetter(source: string, slug: string, file: string): Letter 
   const thumb = optionalCover(file, data, "thumb")
   const seoTitle = optionalString(file, data, "seoTitle")
   const seoDescription = optionalString(file, data, "seoDescription")
+  const preview = optionalString(file, data, "preview")
 
   return {
     issue: requirePositiveInt(file, data, "issue"),
@@ -240,6 +242,7 @@ export function parseLetter(source: string, slug: string, file: string): Letter 
     category: requireCategory(file, data),
     date: requireDate(file, data.date, "date", true)!,
     readingMinutes: requirePositiveInt(file, data, "readingMinutes"),
+    ...(preview ? { preview } : {}),
     ...(updated ? { updated } : {}),
     ...(cover ? { cover } : {}),
     ...(thumb ? { thumb } : {}),
