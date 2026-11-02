@@ -28,7 +28,7 @@ import { SPECTRUM } from "@/lib/spectrum"
 export const FAVORITAS = [
   {
     slug: "voce-precisa-ser-um-louco-para-comecar",
-    titulo: "Você precisa ser um louco para começar",
+    titulo: "Tudo que precisava ser dito já foi dito, mas ninguém estava ouvindo",
   },
 ] as const
 

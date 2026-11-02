@@ -1,5 +1,5 @@
 ---
-title: Você precisa ser um louco para começar
+title: "Tudo que precisava ser dito já foi dito, mas ninguém estava ouvindo"
 status: published
 issue: 1
 date: 2026-10-01
